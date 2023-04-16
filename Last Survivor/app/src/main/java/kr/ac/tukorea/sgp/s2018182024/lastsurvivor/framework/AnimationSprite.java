@@ -8,11 +8,17 @@ public class AnimationSprite extends Sprite {
     protected int frameCount;
     protected int frameWidth, frameHeight;
     protected float fps;
-    protected float createdTime;
+    protected long createdTime;
 
     public AnimationSprite(int resId, float x, float y, float width, float height, float fps, int frameCount) {
         super(resId, x, y, width, height);
         this.fps = fps;
+        this.frameCount = frameCount;
+        setRectFrame(frameCount);
+        createdTime = System.currentTimeMillis();
+    }
+
+    private void setRectFrame(int frameCount) {
         int imageWidth = bitmap.getWidth();
         frameHeight = bitmap.getHeight();
         if(frameCount == 0){
@@ -23,7 +29,11 @@ public class AnimationSprite extends Sprite {
             this.frameCount = frameCount;
         }
         srcRect.set(0, 0, frameWidth, frameHeight);
-        createdTime = System.currentTimeMillis();
+    }
+
+    public void changeResource(int resId) {
+        setBitmapResource(resId);
+        setRectFrame(this.frameCount);
     }
 
     @Override
