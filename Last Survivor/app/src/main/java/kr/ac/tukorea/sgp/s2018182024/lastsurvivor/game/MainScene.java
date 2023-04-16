@@ -13,6 +13,9 @@ public class MainScene extends BaseScene {
     public MainScene() {
         player = new Player();
         addObject(player);
+
+        Enemy enemy = new Enemy(38 * 0.02f, 50 * 0.02f);
+        addObject(enemy);
     }
 
     @Override

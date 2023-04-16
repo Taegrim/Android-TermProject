@@ -32,8 +32,12 @@ public class AnimationSprite extends Sprite {
     }
 
     public void changeResource(int resId) {
+        changeResource(resId, this.frameCount);
+    }
+
+    public void changeResource(int resId, int frameCount) {
         setBitmapResource(resId);
-        setRectFrame(this.frameCount);
+        setRectFrame(frameCount);
     }
 
     @Override
