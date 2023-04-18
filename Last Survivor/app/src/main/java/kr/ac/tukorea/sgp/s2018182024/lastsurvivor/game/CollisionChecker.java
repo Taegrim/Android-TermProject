@@ -1,6 +1,8 @@
-package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework;
+package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game;
 
 import android.graphics.RectF;
+
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.CollisionObject;
 
 public class CollisionChecker {
     public static boolean collide(CollisionObject obj1, CollisionObject obj2){

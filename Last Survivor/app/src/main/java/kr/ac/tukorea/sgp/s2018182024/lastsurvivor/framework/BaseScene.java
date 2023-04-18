@@ -66,6 +66,10 @@ public class BaseScene {
         return objects.size();
     }
 
+    public ArrayList<GameObject> getAllObjects() {
+        return objects;
+    }
+
     public void update(long timeElapsed) {
         frameTime = timeElapsed / 1_000_000_000f;
         for(GameObject object : objects){

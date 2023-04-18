@@ -65,6 +65,14 @@ public class Player extends AnimationSprite implements CollisionObject {
         fixRect();
     }
 
+    public float getX() {
+        return this.x;
+    }
+
+    public float getY() {
+        return this.y;
+    }
+
     @Override
     public RectF getCollisionRect() {
         return collisionRect;

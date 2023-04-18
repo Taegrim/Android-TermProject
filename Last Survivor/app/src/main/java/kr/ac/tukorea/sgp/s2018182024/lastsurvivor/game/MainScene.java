@@ -1,6 +1,5 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game;
 
-import android.util.Log;
 import android.view.MotionEvent;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
@@ -16,6 +15,7 @@ public class MainScene extends BaseScene {
 
         Enemy enemy = new Enemy(38 * 0.02f, 50 * 0.02f);
         addObject(enemy);
+        addObject(new MagicGenerator());
     }
 
     @Override
