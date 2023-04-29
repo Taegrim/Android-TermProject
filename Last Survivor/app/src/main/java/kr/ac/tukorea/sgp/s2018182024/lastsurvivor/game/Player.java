@@ -16,9 +16,13 @@ public class Player extends AnimationSprite implements CollisionObject {
     private static final float PLAYER_WIDTH = 35 * Metrics.bitmapRatio;
     private static final float PLAYER_HEIGHT = 64 * Metrics.bitmapRatio;
     private static final float SPEED = 5.f;
+
     private int dir;
     private float tx, ty;
     private float dx, dy;
+    private float hp, maxHp;
+    private float invincibleTime, maxInvincibleTime;
+    private boolean isInvincible;
     private RectF collisionRect = new RectF();
 
     private static final int[] resId = {
@@ -33,6 +37,9 @@ public class Player extends AnimationSprite implements CollisionObject {
         tx = x;
         ty = y;
         dx = dy = 0;
+        hp = maxHp = 100.0f;
+        maxInvincibleTime = 0.5f;
+        isInvincible = false;
         setCollisionRect();
     }
 
@@ -64,6 +71,17 @@ public class Player extends AnimationSprite implements CollisionObject {
             dy = 0;
         }
 
+        // 최대 무적 시간이 0이 아닐경우 무적상태에 들어 갔음을 확인
+        // 타이머를 증가시켜 일정 시간이 지나면
+        if(isInvincible) {
+            invincibleTime += BaseScene.frameTime;
+
+            if(invincibleTime > maxInvincibleTime) {
+                invincibleTime = 0.0f;
+                isInvincible = false;
+            }
+        }
+
         fixRect();
         setCollisionRect();
     }
@@ -74,6 +92,18 @@ public class Player extends AnimationSprite implements CollisionObject {
 
     public float getY() {
         return this.y;
+    }
+
+    public boolean getIsInvincible() {
+        return isInvincible;
+    }
+
+    public boolean decreaseHp(float damage) {
+        hp -= damage;
+        isInvincible = true;
+        if(hp <= 0)
+            return true;
+        return false;
     }
 
     public void setCollisionRect() {

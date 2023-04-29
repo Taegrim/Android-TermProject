@@ -16,7 +16,7 @@ public class BulletGenerator extends Generator {
     private Player player;
 
     public BulletGenerator(Player player) {
-        generation_interval = 3.0f;
+        generation_interval = 1.0f;
         generation_number = 1;
         this.player = player;
     }

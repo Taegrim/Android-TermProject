@@ -19,14 +19,19 @@ public class MainScene extends BaseScene {
     public MainScene() {
         initLayers(Layer.COUNT);
 
+        // player
         player = new Player();
         addObject(Layer.PLAYER, player);
 
+        // generator
         generator = new Generator();
         generator.addGenerator(new SwamGenerator());
         addObject(Layer.CONTROLLER, generator);
 
         generator.addGenerator(new BulletGenerator(player));
+
+        // collision
+        addObject(Layer.CONTROLLER, new CollisionChecker());
     }
 
     @Override

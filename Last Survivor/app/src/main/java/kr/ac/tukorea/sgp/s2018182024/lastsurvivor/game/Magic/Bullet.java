@@ -52,8 +52,12 @@ public class Bullet extends Sprite implements CollisionObject, Recyclable {
         setCollisionRect();
 
         if(rect.top > Metrics.gameHeight) {
-            BaseScene.getTopScene().removeObject(MainScene.Layer.MAGIC, this);
+            BaseScene.getTopScene().removeObject(MainScene.Layer.MAGIC, this, false);
         }
+    }
+
+    public float getDamage() {
+        return damage;
     }
 
     @Override
