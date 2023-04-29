@@ -1,6 +1,7 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game;
 
 import android.graphics.RectF;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -11,8 +12,9 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.CollisionObject;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
 
 public class Player extends AnimationSprite implements CollisionObject {
-    private static final float PLAYER_WIDTH = 35 * 0.02f;
-    private static final float PLAYER_HEIGHT = 64 * 0.02f;
+    private static final String TAG = Player.class.getSimpleName();
+    private static final float PLAYER_WIDTH = 35 * Metrics.bitmapRatio;
+    private static final float PLAYER_HEIGHT = 64 * Metrics.bitmapRatio;
     private static final float SPEED = 5.f;
     private int dir;
     private float tx, ty;

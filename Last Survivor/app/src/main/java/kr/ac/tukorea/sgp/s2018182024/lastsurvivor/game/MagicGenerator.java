@@ -14,22 +14,7 @@ public class MagicGenerator implements GameObject {
 
     @Override
     public void update() {
-        MainScene scene = (MainScene) BaseScene.getTopScene();
-        ArrayList<GameObject> arr = scene.getAllObjects();
-        for(GameObject obj1 : arr){
-            if(!(obj1 instanceof Magic)) continue;
 
-            MagicObject magic = (MagicObject) obj1;
-            if(magic.checkCast()) {
-                for(GameObject obj2 : arr){
-                    if(!(obj2 instanceof Player)) continue;
-
-                    Player player = (Player) obj2;
-                    scene.addObject(new Bullet(R.mipmap.bullet, player.getX(), player.getY(),
-                            1.f, 1.f));
-                }
-            }
-        }
     }
 
     @Override

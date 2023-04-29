@@ -70,7 +70,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
         }
         else{
             Metrics.xOffset = 0;
-            Metrics.yOffset = (int) ((h - w * gameRatio) / 2);
+            Metrics.yOffset = (int) ((h - w / gameRatio) / 2);
             Metrics.scale = w / Metrics.gameWidth;
         }
     }

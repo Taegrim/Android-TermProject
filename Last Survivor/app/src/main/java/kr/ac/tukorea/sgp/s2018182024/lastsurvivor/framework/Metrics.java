@@ -5,7 +5,7 @@ public class Metrics {
     public static float gameWidth = 9.0f;
     public static float gameHeight = 16.0f;
     public static int xOffset = 0, yOffset = 0;
-    public static float bitmapRatio = 0.0243f;
+    public static float bitmapRatio = 0.02f;
 
     public static void setGameSize(float width, float height){
         gameWidth = width;
