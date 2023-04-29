@@ -1,9 +1,10 @@
-package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game;
+package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic;
 
 import android.graphics.Canvas;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.Magic;
 
 public class Bullet extends Magic {
     private static int SPEED = 2;

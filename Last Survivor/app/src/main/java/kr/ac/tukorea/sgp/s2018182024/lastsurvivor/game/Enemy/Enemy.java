@@ -1,7 +1,5 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy;
 
-import android.util.Log;
-
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.AnimationSprite;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;

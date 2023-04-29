@@ -1,10 +1,11 @@
-package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game;
+package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic;
 
 import android.graphics.RectF;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.AnimationSprite;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.CollisionObject;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MagicObject;
 
 public class Magic extends AnimationSprite implements CollisionObject, MagicObject {
     protected RectF collisionRect = new RectF();

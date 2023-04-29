@@ -4,20 +4,18 @@ import android.view.MotionEvent;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.EnemyGenerator;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.Swam;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.SwamGenerator;
 
 public class MainScene extends BaseScene {
     private static final String TAG = MainScene.class.getSimpleName();
     public final Player player;
-    private final EnemyGenerator generator;
+    private final Generator generator;
 
     public MainScene() {
         player = new Player();
         addObject(player);
 
-        generator = new EnemyGenerator();
+        generator = new Generator();
         generator.addGenerator(new SwamGenerator());
         addObject(generator);
     }

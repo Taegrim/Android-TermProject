@@ -1,7 +1,5 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
