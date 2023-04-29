@@ -4,4 +4,5 @@ import android.graphics.RectF;
 
 public interface CollisionObject {
     public RectF getCollisionRect();
+    public void setCollisionRect();
 }

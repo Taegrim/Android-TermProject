@@ -1,11 +1,14 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy;
 
+import android.graphics.RectF;
+
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.AnimationSprite;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.CollisionObject;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Player;
 
-public class Enemy extends AnimationSprite {
+public class Enemy extends AnimationSprite implements CollisionObject {
     private float dx, dy;
     private float tx, ty;
     protected float speed;
@@ -14,6 +17,7 @@ public class Enemy extends AnimationSprite {
     private Player player;
     protected float damage;
     protected float hp, maxHp;
+    protected RectF collisionRect = new RectF();
 
     public Enemy(int resId, float x, float y, float width, float height, float fps, int frameCount) {
         super(resId, x, y, width, height, fps, frameCount);
@@ -57,5 +61,15 @@ public class Enemy extends AnimationSprite {
         if(hp <= 0)
             return true;
         return false;
+    }
+
+    @Override
+    public RectF getCollisionRect() {
+        return collisionRect;
+    }
+
+    @Override
+    public void setCollisionRect() {
+
     }
 }

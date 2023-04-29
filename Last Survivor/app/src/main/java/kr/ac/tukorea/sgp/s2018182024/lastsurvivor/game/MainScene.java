@@ -5,11 +5,12 @@ import android.view.MotionEvent;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.SwamGenerator;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.BulletGenerator;
 
 public class MainScene extends BaseScene {
     private static final String TAG = MainScene.class.getSimpleName();
     public final Player player;
-    private final Generator generator;
+    public final Generator generator;
 
     public MainScene() {
         player = new Player();
@@ -18,6 +19,8 @@ public class MainScene extends BaseScene {
         generator = new Generator();
         generator.addGenerator(new SwamGenerator());
         addObject(generator);
+
+        generator.addGenerator(new BulletGenerator(player));
     }
 
     @Override

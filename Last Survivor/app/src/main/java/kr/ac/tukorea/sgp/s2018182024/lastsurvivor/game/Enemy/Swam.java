@@ -21,17 +21,31 @@ public class Swam extends Enemy implements Recyclable {
         return swam;
     }
 
-    public Swam(float x, float y, int level) {
+    private Swam(float x, float y, int level) {
         super(R.mipmap.enemy1_move, x, y, WIDTH, HEIGHT, 5, 4);
         speed = 1.0f;
+        init(level);
     }
 
     private void init(int level) {
         hp = maxHp = (level + 1) * 10;
+        setCollisionRect();
     }
 
     @Override
     public void onRecycle() {
 
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        setCollisionRect();
+    }
+
+    @Override
+    public void setCollisionRect() {
+        collisionRect.set(rect);
+        collisionRect.inset(0.15f, 0.15f);
     }
 }

@@ -9,7 +9,7 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.AnimationSprite;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.CollisionObject;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.Magic;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.BulletGenerator;
 
 public class Player extends AnimationSprite implements CollisionObject {
     private static final String TAG = Player.class.getSimpleName();
@@ -20,7 +20,6 @@ public class Player extends AnimationSprite implements CollisionObject {
     private float tx, ty;
     private float dx, dy;
     private RectF collisionRect = new RectF();
-    private ArrayList<Magic> magics = new ArrayList<>();
 
     private static final int[] resId = {
             R.mipmap.player_idle, R.mipmap.player_move_updown, R.mipmap.player_move_left,
@@ -34,6 +33,7 @@ public class Player extends AnimationSprite implements CollisionObject {
         tx = x;
         ty = y;
         dx = dy = 0;
+        setCollisionRect();
     }
 
     public void changeResource() {
@@ -65,6 +65,7 @@ public class Player extends AnimationSprite implements CollisionObject {
         }
 
         fixRect();
+        setCollisionRect();
     }
 
     public float getX() {
@@ -75,6 +76,10 @@ public class Player extends AnimationSprite implements CollisionObject {
         return this.y;
     }
 
+    public void setCollisionRect() {
+        collisionRect.set(rect);
+        collisionRect.inset(0.1f, 0.1f);
+    }
     @Override
     public RectF getCollisionRect() {
         return collisionRect;
