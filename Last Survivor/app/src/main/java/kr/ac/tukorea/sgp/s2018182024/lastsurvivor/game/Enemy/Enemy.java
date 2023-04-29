@@ -14,6 +14,8 @@ public class Enemy extends AnimationSprite {
     private int frames;
     private static final int UPDATE_FRAME = 30;
     private Player player;
+    protected float damage;
+    protected float hp, maxHp;
 
     public Enemy(int resId, float x, float y, float width, float height, float fps, int frameCount) {
         super(resId, x, y, width, height, fps, frameCount);
@@ -46,5 +48,16 @@ public class Enemy extends AnimationSprite {
         y += dy * time;
 
         fixRect();
+    }
+
+    public float getDamage() {
+        return damage;
+    }
+
+    public boolean decreaseHp(float damage) {
+        hp -= damage;
+        if(hp <= 0)
+            return true;
+        return false;
     }
 }

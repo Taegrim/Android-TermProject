@@ -7,6 +7,7 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
 
 public class SwamGenerator extends EnemyGenerator{
     private float time;
+    private int wave;
     private Random r = new Random();
 
     public SwamGenerator() {
@@ -15,13 +16,17 @@ public class SwamGenerator extends EnemyGenerator{
     }
 
     private void generate() {
+        ++wave;
         float x, y;
         MainScene scene = (MainScene) BaseScene.getTopScene();
         for(int i = 0; i < generation_number; ++i) {
-
             x = (float)r.nextInt(10);
             y = (float)r.nextInt(10);
-            scene.addObject(new Swam(x, y));
+
+            int level = (wave + 10) / 10 - r.nextInt(2);
+            if(level < 0)
+                level = 0;
+            scene.addObject(Swam.get(x, y, level));
         }
     }
 

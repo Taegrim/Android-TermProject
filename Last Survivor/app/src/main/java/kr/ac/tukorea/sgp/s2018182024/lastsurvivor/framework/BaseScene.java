@@ -61,6 +61,10 @@ public class BaseScene {
             @Override
             public void run() {
                 objects.remove(object);
+
+                if(object instanceof Recyclable) {
+                    RecycleBin.collect((Recyclable) object);
+                }
             }
         });
         return objects.size();
