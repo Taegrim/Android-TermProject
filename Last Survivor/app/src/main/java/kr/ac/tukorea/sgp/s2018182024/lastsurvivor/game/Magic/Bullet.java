@@ -11,6 +11,7 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Recyclable;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.RecycleBin;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Sprite;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
 
 public class Bullet extends Sprite implements CollisionObject, Recyclable {
     private float speed = 8.0f;
@@ -51,7 +52,7 @@ public class Bullet extends Sprite implements CollisionObject, Recyclable {
         setCollisionRect();
 
         if(rect.top > Metrics.gameHeight) {
-            BaseScene.getTopScene().removeObject(this);
+            BaseScene.getTopScene().removeObject(MainScene.Layer.MAGIC, this);
         }
     }
 

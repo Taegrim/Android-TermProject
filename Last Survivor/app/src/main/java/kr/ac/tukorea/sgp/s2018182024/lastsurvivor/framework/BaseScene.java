@@ -13,10 +13,18 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.BuildConfig;
 
 public class BaseScene {
     private static ArrayList<BaseScene> stack = new ArrayList<>();
-    protected ArrayList<GameObject> objects = new ArrayList<>();
+    protected ArrayList<ArrayList<GameObject>> layers;
     public static float frameTime;
     protected static Handler handler = new Handler();
     private static Paint collisionPaint;
+
+    protected <E extends Enum<E>> void initLayers(E enumCount) {
+        int layerCount = enumCount.ordinal();
+        layers = new ArrayList<>();
+        for(int i = 0; i < layerCount; ++i) {
+            layers.add(new ArrayList<>());
+        }
+    }
 
     public static BaseScene getTopScene() {
         int top = stack.size() - 1;
@@ -33,7 +41,11 @@ public class BaseScene {
     }
 
     public int getObjectCount() {
-        return objects.size();
+        int count = 0;
+        for(ArrayList<GameObject> objects : layers) {
+            count += objects.size();
+        }
+        return count;
     }
 
     public int pushScene() {
@@ -46,44 +58,63 @@ public class BaseScene {
         return stack.size();
     }
 
-    public int addObject(GameObject object) {
+    public <E extends Enum<E>> void addObject(E layerIndex, GameObject object, boolean immediate) {
+        if(immediate) {
+            addObject(layerIndex, object);
+            return;
+        }
+
         handler.post(new Runnable() {
             @Override
             public void run() {
-                objects.add(object);
+                addObject(layerIndex, object);
             }
         });
-        return objects.size();
     }
 
-    public int removeObject(GameObject object) {
+    public <E extends Enum<E>> void addObject(E layerIndex, GameObject object) {
+        layers.get(layerIndex.ordinal()).add(object);
+    }
+
+    public <E extends Enum<E>> void removeObject(E layerIndex, GameObject object, boolean immediate) {
+        if(immediate) {
+            removeObject(layerIndex, object);
+            return;
+        }
+
         handler.post(new Runnable() {
             @Override
             public void run() {
-                objects.remove(object);
-
-                if(object instanceof Recyclable) {
-                    RecycleBin.collect((Recyclable) object);
-                }
+                removeObject(layerIndex, object);
             }
         });
-        return objects.size();
     }
 
-    public ArrayList<GameObject> getAllObjects() {
-        return objects;
+    public <E extends Enum<E>> void removeObject(E layerIndex, GameObject object) {
+        boolean removed = getObjects(layerIndex).remove(object);
+        if(removed && object instanceof Recyclable) {
+            RecycleBin.collect((Recyclable) object);
+        }
+    }
+
+    public <E extends Enum<E>> ArrayList<GameObject> getObjects(Enum layerIndex) {
+        return layers.get(layerIndex.ordinal());
     }
 
     public void update(long timeElapsed) {
         frameTime = timeElapsed / 1_000_000_000f;
-        for(GameObject object : objects){
-            object.update();
+        for(ArrayList<GameObject> objects : layers) {
+            for(int i = objects.size() - 1; i >= 0; --i){
+                objects.get(i).update();
+            }
         }
     }
 
     public void draw(Canvas canvas) {
-        for(GameObject object : objects){
-            object.draw(canvas);
+        for(ArrayList<GameObject> objects : layers) {
+            for(GameObject obj : objects){
+                obj.draw(canvas);
+            }
         }
 
         if(BuildConfig.DEBUG){
@@ -92,11 +123,13 @@ public class BaseScene {
                 collisionPaint.setStyle(Paint.Style.STROKE);
                 collisionPaint.setColor(Color.RED);
             }
-            for(GameObject obj : objects){
-                if(!(obj instanceof  CollisionObject)) continue;
+            for(ArrayList<GameObject> objects : layers) {
+                for (GameObject obj : objects) {
+                    if (!(obj instanceof CollisionObject)) continue;
 
-                RectF rect = ((CollisionObject) obj).getCollisionRect();
-                canvas.drawRect(rect, collisionPaint);
+                    RectF rect = ((CollisionObject) obj).getCollisionRect();
+                    canvas.drawRect(rect, collisionPaint);
+                }
             }
         }
     }

@@ -36,7 +36,7 @@ public class SwamGenerator extends Generator {
             int level = (wave + 10) / 10 - r.nextInt(2);
             if(level < 0)
                 level = 0;
-            scene.addObject(Swam.get(x, y, level));
+            scene.addObject(MainScene.Layer.ENEMY, Swam.get(x, y, level));
         }
     }
 

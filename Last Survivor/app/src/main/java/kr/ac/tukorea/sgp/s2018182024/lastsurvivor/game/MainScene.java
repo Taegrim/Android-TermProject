@@ -12,13 +12,19 @@ public class MainScene extends BaseScene {
     public final Player player;
     public final Generator generator;
 
+    public enum Layer {
+        BG, ENEMY, MAGIC, PLAYER, UI,CONTROLLER, COUNT
+    }
+
     public MainScene() {
+        initLayers(Layer.COUNT);
+
         player = new Player();
-        addObject(player);
+        addObject(Layer.PLAYER, player);
 
         generator = new Generator();
         generator.addGenerator(new SwamGenerator());
-        addObject(generator);
+        addObject(Layer.CONTROLLER, generator);
 
         generator.addGenerator(new BulletGenerator(player));
     }

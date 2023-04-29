@@ -29,7 +29,7 @@ public class BulletGenerator extends Generator {
         MainScene scene = (MainScene) BaseScene.getTopScene();
 
         for(int i = 0; i < generation_number; ++i) {
-            scene.addObject(Bullet.get(player.getX(), player.getY()));
+            scene.addObject(MainScene.Layer.MAGIC, Bullet.get(player.getX(), player.getY()));
         }
     }
 
