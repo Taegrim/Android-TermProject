@@ -10,7 +10,7 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.SwamGenerator;
 
 public class MainScene extends BaseScene {
     private static final String TAG = MainScene.class.getSimpleName();
-    private final Player player;
+    public final Player player;
     private final EnemyGenerator generator;
 
     public MainScene() {
