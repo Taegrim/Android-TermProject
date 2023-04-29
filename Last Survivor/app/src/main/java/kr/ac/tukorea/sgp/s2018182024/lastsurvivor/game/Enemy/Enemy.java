@@ -52,6 +52,14 @@ public class Enemy extends AnimationSprite implements CollisionObject {
         fixRect();
     }
 
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
     public float getDamage() {
         return damage;
     }

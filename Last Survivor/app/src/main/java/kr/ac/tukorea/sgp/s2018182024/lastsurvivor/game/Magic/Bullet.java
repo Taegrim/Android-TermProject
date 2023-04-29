@@ -20,13 +20,14 @@ public class Bullet extends Sprite implements CollisionObject, Recyclable {
     private static final float HEIGHT = 24 * Metrics.bitmapRatio;
 
     private RectF collisionRect = new RectF();
+    private float dx, dy, angle;
 
-    public static Bullet get(float x, float y) {
+    public static Bullet get(float x, float y, float dx, float dy, float angle, float speed) {
         Bullet bullet = (Bullet) RecycleBin.get(Bullet.class);
         if(bullet == null) {
-            return new Bullet(x, y);
+            return new Bullet(x, y, dx, dy, angle, speed);
         }
-        bullet.init();
+        bullet.init(dx, dy, angle, speed);
         bullet.x = x;
         bullet.y = y;
         bullet.fixRect();
@@ -34,22 +35,30 @@ public class Bullet extends Sprite implements CollisionObject, Recyclable {
     }
 
 
-    private Bullet(float x, float y) {
+    private Bullet(float x, float y, float dx, float dy, float angle, float speed) {
         super(R.mipmap.bullet, x, y, WIDTH, HEIGHT);
-        init();
+        init(dx, dy, angle, speed);
     }
 
-    public void init() {
+    public void init(float dx, float dy, float angle, float speed) {
         setCollisionRect();
+        this.dx = dx;
+        this.dy = dy;
+        this.angle = angle;
+        this.speed = speed;
     }
-
 
     @Override
     public void draw(Canvas canvas) {
+        canvas.save();
+        canvas.rotate(angle, x, y);
         super.draw(canvas);
-        y += speed * BaseScene.frameTime;
         fixRect();
         setCollisionRect();
+        canvas.restore();
+
+        x += dx * speed * BaseScene.frameTime;
+        y += dy * speed * BaseScene.frameTime;
 
         if(rect.top > Metrics.gameHeight) {
             BaseScene.getTopScene().removeObject(MainScene.Layer.MAGIC, this, false);
