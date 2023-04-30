@@ -10,13 +10,14 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.BuildConfig;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.Enemy;
 
 public class BaseScene {
     private static ArrayList<BaseScene> stack = new ArrayList<>();
     protected ArrayList<ArrayList<GameObject>> layers;
     public static float frameTime;
     protected static Handler handler = new Handler();
-    private static Paint collisionPaint;
+    private static Paint collisionPaint, debugPaint;
 
     protected <E extends Enum<E>> void initLayers(E enumCount) {
         int layerCount = enumCount.ordinal();
@@ -118,13 +119,25 @@ public class BaseScene {
         }
 
         if(BuildConfig.DEBUG){
-            if(collisionPaint == null){
+            if(collisionPaint == null) {
                 collisionPaint = new Paint();
                 collisionPaint.setStyle(Paint.Style.STROKE);
                 collisionPaint.setColor(Color.RED);
             }
+            if(debugPaint == null) {
+                debugPaint = new Paint();
+                debugPaint.setColor(Color.RED);
+                debugPaint.setTextSize(1);
+            }
+
             for(ArrayList<GameObject> objects : layers) {
                 for (GameObject obj : objects) {
+                    if(obj instanceof Enemy) {
+                        Enemy enemy = (Enemy) obj;
+                        canvas.drawText(Integer.toString(objects.indexOf(obj)),
+                                enemy.getX(), enemy.getY(), debugPaint);
+                    }
+
                     if (!(obj instanceof CollisionObject)) continue;
 
                     RectF rect = ((CollisionObject) obj).getCollisionRect();

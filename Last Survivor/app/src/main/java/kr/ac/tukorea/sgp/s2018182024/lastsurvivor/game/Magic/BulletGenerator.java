@@ -23,6 +23,7 @@ public class BulletGenerator extends Generator {
         generation_interval = 1.0f;
         generation_number = 1;
         this.player = player;
+        speed = 8.0f;
     }
 
     public void setPlayer(Player player) {
@@ -33,46 +34,46 @@ public class BulletGenerator extends Generator {
         return (float) (Math.pow((x2 - x1), 2.0) + Math.pow((y2 - y1), 2.0));
     }
 
-    private void generate() {
+    public void getCloseEnemyDir() {
         MainScene scene = (MainScene) BaseScene.getTopScene();
         ArrayList<GameObject> enemies = scene.getObjects(MainScene.Layer.ENEMY);
 
         float playerX = player.getX();
         float playerY = player.getY();
-        float enemyX, enemyY;
         float dist, min = 100000.0f;
         int index = 0;
 
-        // 가장 가까운 적 구하기
         for(int i = enemies.size() - 1; i >= 0; --i) {
             Enemy enemy = (Enemy) enemies.get(i);
 
-            enemyX = enemy.getX();
-            enemyY = enemy.getY();
-            dist = getDistance(playerX, playerY, enemyX, enemyY);
+            dist = getDistance(playerX, playerY, enemy.getX(), enemy.getY());
             if(dist < min) {
                 min = dist;
                 index = i;
             }
         }
-        
-        // 가장 가까운 적의 방향으로 마법 발사
+
+        Enemy enemy = (Enemy) enemies.get(index);
+        float directionX = enemy.getX() - playerX;
+        float directionY = enemy.getY() - playerY;
+        double radian = Math.atan2(directionY, directionX);
+        this.dx = (float) (speed * Math.cos(radian));
+        this.dy = (float) (speed * Math.sin(radian));
+        this.angle = (float) Math.toDegrees(radian);
+    }
+
+    private void generate() {
+        MainScene scene = (MainScene) BaseScene.getTopScene();
+        ArrayList<GameObject> enemies = scene.getObjects(MainScene.Layer.ENEMY);
+
         if(enemies.size() == 0) {
             return;
         }
-        Enemy enemy = (Enemy) enemies.get(index);
-        float directionX = playerX - enemy.getX();
-        float directionY = playerY - enemy.getY();
-        double radian = Math.atan2(directionY, directionX);
-        this.dx = (float) Math.cos(radian);
-        this.dx = (float) Math.cos(radian);
-        this.angle = (float) Math.toDegrees(radian);
-
-        Log.d(TAG, "dx : " + dx + " dy : " + dy);
+        getCloseEnemyDir();
 
         for(int i = 0; i < generation_number; ++i) {
             scene.addObject(MainScene.Layer.MAGIC,
-                    Bullet.get(playerX, playerY, this.dx, this.dy, this.angle, 8.0f));
+                    Bullet.get(player.getX(), player.getY(), this.dx, this.dy, this.angle));
         }
     }
 

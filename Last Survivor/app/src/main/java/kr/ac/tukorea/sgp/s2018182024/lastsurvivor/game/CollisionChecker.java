@@ -40,6 +40,7 @@ public class CollisionChecker implements GameObject {
                     boolean death = enemy.decreaseHp(bullet.getDamage());
                     if(death) {
                         scene.removeObject(MainScene.Layer.ENEMY, enemy);
+                        scene.player.increaseExp(enemy.getExp());
                     }
                     break;
                 }

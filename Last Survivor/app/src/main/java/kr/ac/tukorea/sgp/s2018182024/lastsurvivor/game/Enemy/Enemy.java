@@ -16,7 +16,7 @@ public class Enemy extends AnimationSprite implements CollisionObject {
     private static final int UPDATE_FRAME = 30;
     private Player player;
     protected float damage;
-    protected float hp, maxHp;
+    protected float hp, maxHp, exp;
     protected RectF collisionRect = new RectF();
 
     public Enemy(int resId, float x, float y, float width, float height, float fps, int frameCount) {
@@ -62,6 +62,10 @@ public class Enemy extends AnimationSprite implements CollisionObject {
 
     public float getDamage() {
         return damage;
+    }
+
+    public float getExp() {
+        return exp;
     }
 
     public boolean decreaseHp(float damage) {

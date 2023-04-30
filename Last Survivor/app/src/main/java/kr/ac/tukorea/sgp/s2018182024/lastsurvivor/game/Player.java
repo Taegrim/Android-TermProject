@@ -1,6 +1,10 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game;
 
+import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.RectF;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -21,6 +25,8 @@ public class Player extends AnimationSprite implements CollisionObject {
     private float tx, ty;
     private float dx, dy;
     private float hp, maxHp;
+    private float exp, maxExp;
+    private int level;
     private float invincibleTime, maxInvincibleTime;
     private boolean isInvincible;
     private RectF collisionRect = new RectF();
@@ -40,7 +46,16 @@ public class Player extends AnimationSprite implements CollisionObject {
         hp = maxHp = 100.0f;
         maxInvincibleTime = 0.5f;
         isInvincible = false;
+        exp = 0.0f;
+        maxExp = 20.0f;
+        level = 1;
+
         setCollisionRect();
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
     }
 
     public void changeResource() {
@@ -104,6 +119,25 @@ public class Player extends AnimationSprite implements CollisionObject {
         if(hp <= 0)
             return true;
         return false;
+    }
+
+    public void increaseExp(float exp) {
+        this.exp += exp;
+
+        Log.d(TAG, "level : " + this.level + " exp : " + this.exp +
+                " maxExp : " + this.maxExp);
+        // 레벨업 가능할 때까지 반복
+        while(this.exp >= this.maxExp) {
+            Log.d(TAG, "Level Up!");
+            ++this.level;
+            this.exp -= maxExp;
+            this.maxExp = (float) Math.floor(this.maxExp * 1.5f);
+            onLevelUp();
+        }
+    }
+
+    public void onLevelUp() {
+        // 레벨업 했을 때 하는 처리
     }
 
     public void setCollisionRect() {
