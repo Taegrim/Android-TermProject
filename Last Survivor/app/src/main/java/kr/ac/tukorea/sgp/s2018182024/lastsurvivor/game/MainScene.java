@@ -2,6 +2,7 @@ package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game;
 
 import android.view.MotionEvent;
 
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.SwamGenerator;
@@ -13,7 +14,7 @@ public class MainScene extends BaseScene {
     public final Generator generator;
 
     public enum Layer {
-        BG, ENEMY, MAGIC, PLAYER, UI,CONTROLLER, COUNT
+        BG, ENEMY, MAGIC, PLAYER, UI, CONTROLLER, COUNT
     }
 
     public MainScene() {
@@ -32,6 +33,9 @@ public class MainScene extends BaseScene {
 
         // collision
         addObject(Layer.CONTROLLER, new CollisionChecker());
+
+        // bg
+        addObject(Layer.BG, new Background(R.mipmap.land_a));
     }
 
     @Override
