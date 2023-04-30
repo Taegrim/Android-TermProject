@@ -18,12 +18,14 @@ public class BulletGenerator extends Generator {
     private float time;
     private Player player;
     private float dx, dy, angle, speed;
+    private float damage;
 
     public BulletGenerator(Player player) {
         generation_interval = 1.0f;
         generation_number = 1;
         this.player = player;
         speed = 8.0f;
+        damage = 10.0f;
     }
 
     public void setPlayer(Player player) {
@@ -34,10 +36,7 @@ public class BulletGenerator extends Generator {
         return (float) (Math.pow((x2 - x1), 2.0) + Math.pow((y2 - y1), 2.0));
     }
 
-    public void getCloseEnemyDir() {
-        MainScene scene = (MainScene) BaseScene.getTopScene();
-        ArrayList<GameObject> enemies = scene.getObjects(MainScene.Layer.ENEMY);
-
+    public void getCloseEnemyDir(ArrayList<GameObject> enemies) {
         float playerX = player.getX();
         float playerY = player.getY();
         float dist, min = 100000.0f;
@@ -69,11 +68,12 @@ public class BulletGenerator extends Generator {
         if(enemies.size() == 0) {
             return;
         }
-        getCloseEnemyDir();
+        getCloseEnemyDir(enemies);
 
         for(int i = 0; i < generation_number; ++i) {
             scene.addObject(MainScene.Layer.MAGIC,
-                    Bullet.get(player.getX(), player.getY(), this.dx, this.dy, this.angle));
+                    Bullet.get(player.getX(), player.getY(), this.dx, this.dy, this.angle,
+                            this.damage));
         }
     }
 

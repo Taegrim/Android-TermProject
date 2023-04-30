@@ -7,6 +7,7 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.SwamGenerator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.BulletGenerator;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.ThunderGenerator;
 
 public class MainScene extends BaseScene {
     private static final String TAG = MainScene.class.getSimpleName();
@@ -29,7 +30,8 @@ public class MainScene extends BaseScene {
         generator.addGenerator(new SwamGenerator());
         addObject(Layer.CONTROLLER, generator);
 
-        generator.addGenerator(new BulletGenerator(player));
+        //generator.addGenerator(new BulletGenerator(player));
+        generator.addGenerator(new ThunderGenerator(player));
 
         // collision
         addObject(Layer.CONTROLLER, new CollisionChecker());

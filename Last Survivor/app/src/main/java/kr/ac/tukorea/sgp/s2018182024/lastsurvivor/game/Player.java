@@ -124,8 +124,8 @@ public class Player extends AnimationSprite implements CollisionObject {
     public void increaseExp(float exp) {
         this.exp += exp;
 
-        Log.d(TAG, "level : " + this.level + " exp : " + this.exp +
-                " maxExp : " + this.maxExp);
+//        Log.d(TAG, "level : " + this.level + " exp : " + this.exp +
+//                " maxExp : " + this.maxExp);
         // 레벨업 가능할 때까지 반복
         while(this.exp >= this.maxExp) {
             Log.d(TAG, "Level Up!");

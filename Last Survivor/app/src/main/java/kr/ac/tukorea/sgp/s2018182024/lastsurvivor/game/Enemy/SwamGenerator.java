@@ -10,7 +10,6 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
 public class SwamGenerator extends Generator {
     private float time;
     private int wave;
-    private Random r = new Random();
 
     public SwamGenerator() {
         generation_interval = 3.0f;

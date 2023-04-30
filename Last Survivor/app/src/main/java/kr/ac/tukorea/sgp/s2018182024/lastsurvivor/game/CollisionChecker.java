@@ -1,6 +1,7 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game;
 
 import android.graphics.Canvas;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -9,6 +10,7 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.CollisionHelper;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameObject;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.Enemy;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.Bullet;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.Magic;
 
 public class CollisionChecker implements GameObject {
     private static final String TAG = CollisionChecker.class.getSimpleName();
@@ -33,13 +35,13 @@ public class CollisionChecker implements GameObject {
             
             // 마법과 적의 충돌 처리
             for(int j = magics.size() - 1; j >= 0; --j) {
-                Bullet bullet = (Bullet) magics.get(j);
+                Magic magic = (Magic) magics.get(j);
 
-                if(CollisionHelper.collide(enemy, bullet)) {
-                    scene.removeObject(MainScene.Layer.MAGIC, bullet);
-                    boolean death = enemy.decreaseHp(bullet.getDamage());
+                if(CollisionHelper.collide(enemy, magic)) {
+//                    scene.removeObject(MainScene.Layer.MAGIC, magic, false);
+                    boolean death = enemy.decreaseHp(magic.getDamage());
                     if(death) {
-                        scene.removeObject(MainScene.Layer.ENEMY, enemy);
+                        scene.removeObject(MainScene.Layer.ENEMY, enemy, false);
                         scene.player.increaseExp(enemy.getExp());
                     }
                     break;
