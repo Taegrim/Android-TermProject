@@ -15,7 +15,7 @@ public class MainScene extends BaseScene {
     public final Generator generator;
 
     public enum Layer {
-        BG, ENEMY, MAGIC, PLAYER, UI, CONTROLLER, COUNT
+        BG, ITEM, ENEMY, MAGIC, PLAYER, UI, CONTROLLER, COUNT
     }
 
     public MainScene() {
@@ -24,6 +24,9 @@ public class MainScene extends BaseScene {
         // player
         player = new Player();
         addObject(Layer.PLAYER, player);
+
+        // item
+        addObject(Layer.ITEM, ExpOrb.get(1, 1));
 
         // generator
         generator = new Generator();

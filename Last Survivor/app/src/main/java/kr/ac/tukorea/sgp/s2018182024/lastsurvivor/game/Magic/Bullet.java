@@ -25,7 +25,6 @@ public class Bullet extends Magic {
         bullet.init(dx, dy, angle, damage, attackType);
         bullet.x = x;
         bullet.y = y;
-        bullet.fixRect();
         return bullet;
     }
 
@@ -44,6 +43,7 @@ public class Bullet extends Magic {
         this.angle = angle;
         this.damage = damage;
         this.attackType = attackType;
+        fixRect();
         setCollisionRect();
     }
 

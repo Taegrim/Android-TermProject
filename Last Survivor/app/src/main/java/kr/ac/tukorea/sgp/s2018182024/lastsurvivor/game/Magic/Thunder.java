@@ -33,7 +33,6 @@ public class Thunder extends Magic {
         }
         thunder.x = x;
         thunder.y = y;
-        thunder.fixRect();
         thunder.setBitmapResource(resIds[resIndex]);
         thunder.init(damage, lifeTime, attackType, paint);
         return thunder;
@@ -53,6 +52,7 @@ public class Thunder extends Magic {
         this.attackType = attackType;
         this.sharedPaint = paint;
         this.isCollision = true;
+        fixRect();
         setCollisionRect();
     }
 

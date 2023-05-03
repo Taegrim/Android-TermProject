@@ -17,7 +17,6 @@ public class Swam extends Enemy implements Recyclable {
         swam.init(level);
         swam.x = x;
         swam.y = y;
-        swam.fixRect();
         return swam;
     }
 
@@ -31,6 +30,7 @@ public class Swam extends Enemy implements Recyclable {
         hp = maxHp = (level + 1) * 10;
         damage = 10.0f;
         exp = (level + 1) * 2;
+        fixRect();
         setCollisionRect();
     }
 
