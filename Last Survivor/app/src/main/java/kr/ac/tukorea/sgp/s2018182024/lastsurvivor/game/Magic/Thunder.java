@@ -1,7 +1,7 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic;
 
 import android.graphics.Canvas;
-import android.util.Log;
+import android.graphics.Paint;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
@@ -11,36 +11,38 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
 
 public class Thunder extends Magic {
     private static final String TAG = Thunder.class.getSimpleName();
-    private static final float WIDTH = 55 * Metrics.bitmapRatio;
-    private static final float HEIGHT = 440 * Metrics.bitmapRatio;
-    private static final float LIFE_TIME = 2.0f;
+    private static final float WIDTH = 1.0f;
+    private static final float HEIGHT = Metrics.gameHeight + 2.0f;
+    private static final float LIFE_TIME = 0.5f;
     private long createdTime;
+    private Paint sharedPaint;
 
     private static final int resIds[] = {
             R.mipmap.thunder_strom_a,R.mipmap.thunder_strom_b, R.mipmap.thunder_strom_c
     };
 
-    public static Thunder get(float x, float y, float damage, int resIndex) {
+    public static Thunder get(float x, float y, float damage, int resIndex, Paint paint) {
         Thunder thunder = (Thunder) RecycleBin.get(Thunder.class);
         if(thunder == null) {
-            return new Thunder(x, y, damage, resIndex);
+            return new Thunder(x, y, damage, resIndex, paint);
         }
         thunder.x = x;
         thunder.y = y;
         thunder.fixRect();
         thunder.setBitmapResource(resIds[resIndex]);
-        thunder.init(damage);
+        thunder.init(damage, paint);
         return thunder;
     }
 
-    private Thunder(float x, float y, float damage, int resIndex) {
+    private Thunder(float x, float y, float damage, int resIndex, Paint paint) {
         super(resIds[resIndex], x, y, WIDTH, HEIGHT);
-        init(damage);
+        init(damage, paint);
     }
 
-    public void init(float damage) {
+    public void init(float damage, Paint paint) {
         this.damage = damage;
         this.createdTime = System.currentTimeMillis();
+        this.sharedPaint = paint;
         setCollisionRect();
     }
 
@@ -53,7 +55,7 @@ public class Thunder extends Magic {
             scene.removeObject(MainScene.Layer.MAGIC, this, false);
         }
 
-        canvas.drawBitmap(bitmap, null, rect, null);
+        canvas.drawBitmap(bitmap, null, rect, sharedPaint);
     }
 
     protected void fixRect() {

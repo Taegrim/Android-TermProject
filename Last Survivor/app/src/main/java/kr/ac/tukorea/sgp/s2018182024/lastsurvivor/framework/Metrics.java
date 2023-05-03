@@ -12,6 +12,15 @@ public class Metrics {
         gameHeight = height;
     }
 
+    public static boolean isInGameView(float x, float y) {
+        if(x > gameWidth) return false;
+        if(x < 0) return false;
+        if(y > gameHeight) return false;
+        if(y < 0) return false;
+
+        return true;
+    }
+
     public static float toGameX(float x){
         return (x - xOffset) / scale;
     }
