@@ -27,7 +27,7 @@ public class MainScene extends BaseScene {
         addObject(Layer.PLAYER, player);
 
         // item
-        addObject(Layer.ITEM, ExpOrb.get(ExpOrb.Type.MEDIUM, 1, 1));
+        addObject(Layer.ITEM, ExpOrb.get(ExpOrb.Type.LARGE, 1, 1));
 
         // generator
         generator = new Generator();
