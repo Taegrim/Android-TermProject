@@ -1,4 +1,4 @@
-package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game;
+package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Item;
 
 import android.graphics.Canvas;
 import android.graphics.RectF;
