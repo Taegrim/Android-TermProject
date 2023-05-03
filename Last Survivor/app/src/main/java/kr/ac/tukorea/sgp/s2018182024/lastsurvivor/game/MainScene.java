@@ -30,7 +30,7 @@ public class MainScene extends BaseScene {
         generator.addGenerator(new SwamGenerator());
         addObject(Layer.CONTROLLER, generator);
 
-        //generator.addGenerator(new BulletGenerator(player));
+        generator.addGenerator(new BulletGenerator(player));
         generator.addGenerator(new ThunderGenerator(player));
 
         // collision

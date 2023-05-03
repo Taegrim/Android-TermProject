@@ -15,12 +15,14 @@ public class Bullet extends Magic {
     private static final float HEIGHT = 24 * Metrics.bitmapRatio;
     private float dx, dy, angle;
 
-    public static Bullet get(float x, float y, float dx, float dy, float angle, float damage) {
+    public static Bullet get(float x, float y, float dx, float dy, float angle, float damage,
+                             AttackType attackType)
+    {
         Bullet bullet = (Bullet) RecycleBin.get(Bullet.class);
         if(bullet == null) {
-            return new Bullet(x, y, dx, dy, angle, damage);
+            return new Bullet(x, y, dx, dy, angle, damage, attackType);
         }
-        bullet.init(dx, dy, angle, damage);
+        bullet.init(dx, dy, angle, damage, attackType);
         bullet.x = x;
         bullet.y = y;
         bullet.fixRect();
@@ -28,17 +30,26 @@ public class Bullet extends Magic {
     }
 
 
-    private Bullet(float x, float y, float dx, float dy, float angle, float damage) {
+    private Bullet(float x, float y, float dx, float dy, float angle, float damage,
+                   AttackType attackType)
+    {
         super(R.mipmap.bullet, x, y, WIDTH, HEIGHT);
-        init(dx, dy, angle, damage);
+        attackType = AttackType.NORMAL;
+        init(dx, dy, angle, damage, attackType);
     }
 
-    public void init(float dx, float dy, float angle, float damage) {
+    public void init(float dx, float dy, float angle, float damage, AttackType attackType) {
         this.dx = dx;
         this.dy = dy;
         this.angle = angle;
         this.damage = damage;
+        this.attackType = attackType;
         setCollisionRect();
+    }
+
+    @Override
+    public void update() {
+        super.update();
     }
 
     @Override
@@ -52,10 +63,6 @@ public class Bullet extends Magic {
 
         x += dx * BaseScene.frameTime;
         y += dy * BaseScene.frameTime;
-
-        if(rect.top > Metrics.gameHeight) {
-            BaseScene.getTopScene().removeObject(MainScene.Layer.MAGIC, this, false);
-        }
     }
 
     @Override

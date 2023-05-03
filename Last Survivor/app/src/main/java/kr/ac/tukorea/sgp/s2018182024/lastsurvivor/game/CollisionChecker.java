@@ -38,7 +38,10 @@ public class CollisionChecker implements GameObject {
                 Magic magic = (Magic) magics.get(j);
 
                 if(CollisionHelper.collide(enemy, magic)) {
-//                    scene.removeObject(MainScene.Layer.MAGIC, magic, false);
+                    // 공격 타입이 일반형일때만 삭제, 관통형은 삭제 X
+                    if(Magic.AttackType.NORMAL == magic.getType()) {
+                        scene.removeObject(MainScene.Layer.MAGIC, magic, false);
+                    }
                     boolean death = enemy.decreaseHp(magic.getDamage());
                     if(death) {
                         scene.removeObject(MainScene.Layer.ENEMY, enemy, false);

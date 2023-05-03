@@ -22,6 +22,7 @@ public class ThunderGenerator extends Generator {
     private static final int MAX_ALPHA = 255;
     private float time, lifeTime = 0.5f;
     private Player player;
+    public Magic.AttackType attackType;
     private Paint paint;
     private float damage;
     //private Set<Integer> enemyIndices = new HashSet<>();
@@ -29,9 +30,10 @@ public class ThunderGenerator extends Generator {
 
     public ThunderGenerator(Player player) {
         generation_interval = 2.0f;
-        generation_number = 2;
+        generation_number = 1;
         this.player = player;
-        damage = 20.0f;
+        damage = 10.0f;
+        attackType = Magic.AttackType.PENETRATION;
         paint = new Paint();
     }
 
@@ -44,7 +46,7 @@ public class ThunderGenerator extends Generator {
             Enemy enemy = (Enemy) enemies.get(i);
 
             // 화면 내에 있는 적들만 처리
-            if(Metrics.isInGameView(enemy.getX(), enemy.getY())) {
+            if(Metrics.isInGameView(enemy.getX(), enemy.getY(), -1.0f, -2.0f)) {
                enemyIndices.add(i);
             }
         }
@@ -73,7 +75,6 @@ public class ThunderGenerator extends Generator {
             return;
         }
 
-        paint.setAlpha(MAX_ALPHA);
         getRandomTargetEnemy(enemies);
 
         for(int index : enemyIndices) {
@@ -81,7 +82,8 @@ public class ThunderGenerator extends Generator {
             Log.d(TAG, "generate index : " + index);
 
             scene.addObject(MainScene.Layer.MAGIC,
-                    Thunder.get(enemy.getX(), enemy.getY(), this.damage, r.nextInt(RES_COUNT), paint));
+                    Thunder.get(enemy.getX(), enemy.getY(), this.damage, r.nextInt(RES_COUNT),
+                            lifeTime, attackType, paint));
         }
         
         // 비우기
@@ -97,6 +99,7 @@ public class ThunderGenerator extends Generator {
         }
 
         if(time > generation_interval) {
+            paint.setAlpha(MAX_ALPHA);
             generate();
             time -= generation_interval;
         }

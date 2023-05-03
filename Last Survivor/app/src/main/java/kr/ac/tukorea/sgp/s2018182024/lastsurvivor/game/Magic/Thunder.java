@@ -13,7 +13,10 @@ public class Thunder extends Magic {
     private static final String TAG = Thunder.class.getSimpleName();
     private static final float WIDTH = 1.0f;
     private static final float HEIGHT = Metrics.gameHeight + 2.0f;
-    private static final float LIFE_TIME = 0.5f;
+    private static final float COLLISION_TIME = 0.15f;
+    private float lifeTime;
+    private boolean isCollision;
+    private float size = WIDTH;
     private long createdTime;
     private Paint sharedPaint;
 
@@ -21,28 +24,35 @@ public class Thunder extends Magic {
             R.mipmap.thunder_strom_a,R.mipmap.thunder_strom_b, R.mipmap.thunder_strom_c
     };
 
-    public static Thunder get(float x, float y, float damage, int resIndex, Paint paint) {
+    public static Thunder get(float x, float y, float damage, int resIndex, float lifeTime,
+                              AttackType attackType, Paint paint)
+    {
         Thunder thunder = (Thunder) RecycleBin.get(Thunder.class);
         if(thunder == null) {
-            return new Thunder(x, y, damage, resIndex, paint);
+            return new Thunder(x, y, damage, resIndex, lifeTime, attackType, paint);
         }
         thunder.x = x;
         thunder.y = y;
         thunder.fixRect();
         thunder.setBitmapResource(resIds[resIndex]);
-        thunder.init(damage, paint);
+        thunder.init(damage, lifeTime, attackType, paint);
         return thunder;
     }
 
-    private Thunder(float x, float y, float damage, int resIndex, Paint paint) {
+    private Thunder(float x, float y, float damage, int resIndex, float lifeTime,
+                    AttackType attackType, Paint paint)
+    {
         super(resIds[resIndex], x, y, WIDTH, HEIGHT);
-        init(damage, paint);
+        init(damage, lifeTime, attackType, paint);
     }
 
-    public void init(float damage, Paint paint) {
+    public void init(float damage, float lifeTime, AttackType attackType, Paint paint) {
         this.damage = damage;
         this.createdTime = System.currentTimeMillis();
+        this.lifeTime = lifeTime;
+        this.attackType = attackType;
         this.sharedPaint = paint;
+        this.isCollision = true;
         setCollisionRect();
     }
 
@@ -50,7 +60,13 @@ public class Thunder extends Magic {
     public void draw(Canvas canvas) {
         long now = System.currentTimeMillis();
         float time = (now - createdTime) / 1000.0f;
-        if(time > LIFE_TIME) {
+
+        if(time > COLLISION_TIME) {
+            collisionRect.setEmpty();
+            isCollision = false;
+        }
+
+        if(time > lifeTime) {
             MainScene scene = (MainScene) BaseScene.getTopScene();
             scene.removeObject(MainScene.Layer.MAGIC, this, false);
         }
@@ -71,6 +87,10 @@ public class Thunder extends Magic {
 
     @Override
     public void setCollisionRect() {
-        //collisionRect.set(rect);
+        if(!isCollision)
+            return;
+        float halfSize = size / 2;
+        collisionRect.set(x - halfSize, y - halfSize,
+                x + halfSize, y + halfSize);
     }
 }

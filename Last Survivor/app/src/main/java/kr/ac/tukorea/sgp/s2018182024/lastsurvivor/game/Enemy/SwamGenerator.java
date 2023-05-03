@@ -13,7 +13,7 @@ public class SwamGenerator extends Generator {
 
     public SwamGenerator() {
         generation_interval = 3.0f;
-        generation_number = 3;
+        generation_number = 4;
     }
 
     private void generate() {

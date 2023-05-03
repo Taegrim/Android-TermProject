@@ -17,6 +17,7 @@ public class BulletGenerator extends Generator {
     private static final String TAG = BulletGenerator.class.getSimpleName();
     private float time;
     private Player player;
+    public Magic.AttackType attackType;
     private float dx, dy, angle, speed;
     private float damage;
 
@@ -26,6 +27,7 @@ public class BulletGenerator extends Generator {
         this.player = player;
         speed = 8.0f;
         damage = 10.0f;
+        attackType = Magic.AttackType.NORMAL;
     }
 
     public void setPlayer(Player player) {
@@ -73,7 +75,7 @@ public class BulletGenerator extends Generator {
         for(int i = 0; i < generation_number; ++i) {
             scene.addObject(MainScene.Layer.MAGIC,
                     Bullet.get(player.getX(), player.getY(), this.dx, this.dy, this.angle,
-                            this.damage));
+                            this.damage, attackType));
         }
     }
 

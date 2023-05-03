@@ -13,10 +13,18 @@ public class Metrics {
     }
 
     public static boolean isInGameView(float x, float y) {
-        if(x > gameWidth) return false;
-        if(x < 0) return false;
-        if(y > gameHeight) return false;
-        if(y < 0) return false;
+        return isInGameView(x, y, 0.0f, 0.0f);
+    }
+
+    public static boolean isInGameView(float x, float y, float offset) {
+        return isInGameView(x, y, offset, offset);
+    }
+
+    public static boolean isInGameView(float x, float y, float xOffset, float yOffset) {
+        if(x > gameWidth + xOffset) return false;
+        if(x < -xOffset) return false;
+        if(y > gameHeight + yOffset) return false;
+        if(y < -yOffset) return false;
 
         return true;
     }
