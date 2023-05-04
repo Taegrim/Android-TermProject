@@ -29,25 +29,22 @@ public class CollisionChecker implements GameObject {
         for(int i = items.size() - 1; i >= 0; --i) {
             Item item = (Item) items.get(i);
 
-            // ExpOrb 처리
+            // ExpOrb 의 경우 이벤트 충돌을 따로 검사
             if(item instanceof ExpOrb) {
                 ExpOrb orb = (ExpOrb) item;
 
-                // 이벤트 충돌
                 if(CollisionHelper.eventCollide(orb, player)) {
                     boolean absorption = orb.setAbsorption(true);
                     if(absorption)
                         orb.setTarget(player);
                 }
-
-                // 충돌
-                if(CollisionHelper.collide(orb, player)) {
-                    scene.removeObject(MainScene.Layer.ITEM, orb, false);
-                }
             }
 
+            if(CollisionHelper.collide(item, player)) {
+                item.onCollision(player);
+                scene.removeObject(MainScene.Layer.ITEM, item, false);
+            }
         }
-
 
         // enemy 에 대한 처리
         for(int i = enemies.size() - 1; i >= 0; --i) {

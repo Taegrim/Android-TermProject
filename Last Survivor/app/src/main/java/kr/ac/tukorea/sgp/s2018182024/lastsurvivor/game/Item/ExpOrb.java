@@ -20,7 +20,7 @@ public class ExpOrb extends Item implements EventCollision {
     private RectF eventCollision = new RectF();
     private float dx, dy;
     private boolean isAbsorption;
-    private float absorptionRange = 0.5f;
+    private float absorptionRange = 0.3f;
     private float time;
 
     public enum Type {
@@ -104,6 +104,11 @@ public class ExpOrb extends Item implements EventCollision {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onCollision(Player player) {
+        player.increaseExp(type.exp());
     }
 
     @Override
