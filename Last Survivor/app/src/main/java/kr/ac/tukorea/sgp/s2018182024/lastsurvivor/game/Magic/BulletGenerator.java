@@ -1,20 +1,13 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic;
 
-import android.graphics.Canvas;
-import android.util.Log;
-
 import java.util.ArrayList;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameObject;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.Enemy;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.FLOAT;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Generator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Player;
 
-public class BulletGenerator extends MagicGenerator {
+public class BulletGenerator extends MagicManager {
     private static final String TAG = BulletGenerator.class.getSimpleName();
 
     public BulletGenerator(Player player) {
@@ -24,10 +17,8 @@ public class BulletGenerator extends MagicGenerator {
         speed = 8.0f;
         attackType = Magic.AttackType.NORMAL;
 
-        // 데미지 배율 200%, 피해 증가량 1.0
-        coefficient = 2.0f;
-        increaseRate = 1.0f;
-        calculateDamage(player);
+        magicType = MagicType.BULLET;
+        magicType.calculateDamage(player);
     }
 
     private void generate() {
@@ -42,7 +33,7 @@ public class BulletGenerator extends MagicGenerator {
         for(int i = 0; i < generation_number; ++i) {
             scene.addObject(MainScene.Layer.MAGIC,
                     Bullet.get(player.getX(), player.getY(), this.dx, this.dy, this.angle,
-                            this.damage, attackType));
+                            magicType.damage(), attackType));
         }
     }
 

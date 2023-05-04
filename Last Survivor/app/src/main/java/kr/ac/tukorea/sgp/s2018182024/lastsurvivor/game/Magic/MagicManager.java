@@ -1,5 +1,7 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameObject;
@@ -8,34 +10,49 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.Enemy;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Generator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Player;
 
-public class MagicGenerator extends Generator {
-    private static final String TAG = MagicGenerator.class.getSimpleName();
+public class MagicManager extends Generator {
+    private static final String TAG = MagicManager.class.getSimpleName();
     protected Player player;
     protected Magic.AttackType attackType;
+    protected MagicType magicType;
     protected float damage;
-    protected float coefficient, increaseRate;
     protected float dx, dy, angle, speed;
     protected ArrayList<Integer> enemyIndices = new ArrayList<>();
 
-    public MagicGenerator(){}
+    public enum MagicType {
+        BULLET, THUNDER;
+
+        float coefficient() { return coefficients[this.ordinal()]; }
+        float increaseRate() { return increaseRates[this.ordinal()]; }
+        float damage() { return damages[this.ordinal()]; }
+        void calculateDamage(Player player) {
+            damages[this.ordinal()] = player.getPower() * this.coefficient() *
+                    this.increaseRate() * player.getDamageAmp();
+        }
+
+        static final float[] coefficients = { 2.0f, 5.8f };
+        static float[] increaseRates = { 1.0f, 1.0f };
+        static float[] damages = { 1.0f, 1.0f };
+    }
+
+
+    public MagicManager(){}
 
     public void setPlayer(Player player) {
         this.player = player;
     }
 
-    // 데미지 계산식 = 플레이어 공격력 * 계수 * 피해 증가량 * 플레이어 마법 피해 증폭량
-    protected void calculateDamage(Player player) {
-        this.damage = player.getPower() * coefficient * increaseRate * player.getDamageAmp();
-    }
-
     // 스킬 피해 증가량 변경 set/change
-    public void setIncreaseRate(float value) {
-        this.increaseRate = value;
+    public static void setIncreaseRate(MagicType type, Player player, float value) {
+        MagicType.increaseRates[type.ordinal()] = value;
+        type.calculateDamage(player);
     }
 
-    public void changeIncreaseRate(float value) {
-        this.increaseRate += value;
+    public static void changeIncreaseRate(MagicType type, Player player, float value) {
+        MagicType.increaseRates[type.ordinal()] += value;
+        type.calculateDamage(player);
     }
+
 
     // 적 타겟팅 함수
     protected float getDistance(float x1, float y1, float x2, float y2) {

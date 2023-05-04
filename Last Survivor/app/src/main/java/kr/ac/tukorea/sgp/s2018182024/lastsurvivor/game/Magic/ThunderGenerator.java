@@ -7,12 +7,11 @@ import java.util.ArrayList;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameObject;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.Enemy;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Player;
 
-public class ThunderGenerator extends MagicGenerator {
+public class ThunderGenerator extends MagicManager {
     private static final String TAG = ThunderGenerator.class.getSimpleName();
     private static final int RES_COUNT = 3;
     private static final int MAX_ALPHA = 255;
@@ -26,9 +25,8 @@ public class ThunderGenerator extends MagicGenerator {
         attackType = Magic.AttackType.PENETRATION;
         paint = new Paint();
 
-        coefficient = 5.8f;
-        increaseRate = 1.0f;
-        calculateDamage(player);
+        magicType = MagicType.THUNDER;
+        magicType.calculateDamage(player);
     }
 
     private void generate() {
@@ -45,7 +43,7 @@ public class ThunderGenerator extends MagicGenerator {
             Log.d(TAG, "generate index : " + index);
 
             scene.addObject(MainScene.Layer.MAGIC,
-                    Thunder.get(enemy.getX(), enemy.getY(), this.damage, r.nextInt(RES_COUNT),
+                    Thunder.get(enemy.getX(), enemy.getY(), magicType.damage(), r.nextInt(RES_COUNT),
                             LIFE_TIME, attackType, paint));
         }
         

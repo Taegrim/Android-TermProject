@@ -1,20 +1,15 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game;
 
-import android.content.Intent;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.Log;
-
-import java.util.ArrayList;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.AnimationSprite;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.CollisionObject;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameView;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.BulletGenerator;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.MagicManager;
 
 public class Player extends AnimationSprite implements CollisionObject {
     private static final String TAG = Player.class.getSimpleName();
@@ -160,7 +155,8 @@ public class Player extends AnimationSprite implements CollisionObject {
 
     public void onLevelUp() {
         // 레벨업 했을 때 하는 처리
-        
+        MagicManager.changeIncreaseRate(MagicManager.MagicType.BULLET, this, 0.5f);
+
     }
 
     public void setCollisionRect() {

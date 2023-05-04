@@ -1,7 +1,6 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game;
 
 import android.graphics.Canvas;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -18,12 +17,10 @@ public class Generator implements GameObject {
 
     public void addGenerator(Generator gen) {
         generators.add(gen);
-        Log.d(TAG, "Generator added! : " + gen.getClass().getName());
     }
 
     public void removeGenerator(Generator gen) {
         generators.remove(gen);
-        Log.d(TAG, "Generator removed! : " + gen.getClass().getName());
     }
 
     @Override

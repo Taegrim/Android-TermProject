@@ -8,7 +8,6 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Recyclable;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Sprite;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Player;
 
 public class Magic extends Sprite implements CollisionObject, Recyclable {
     protected float damage;
