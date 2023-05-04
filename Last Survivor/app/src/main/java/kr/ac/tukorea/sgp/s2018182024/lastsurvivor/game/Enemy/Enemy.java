@@ -2,9 +2,12 @@ package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy;
 
 import android.graphics.RectF;
 
+import java.util.ArrayList;
+
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.AnimationSprite;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.CollisionObject;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.MagicManager;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Player;
 
@@ -17,6 +20,7 @@ public class Enemy extends AnimationSprite implements CollisionObject {
     private Player player;
     protected float damage;
     protected float hp, maxHp, exp;
+    protected ArrayList<Boolean> collisionFlag = new ArrayList<>();
     protected RectF collisionRect = new RectF();
 
     public Enemy(int resId, float x, float y, float width, float height, float fps, int frameCount) {
@@ -25,6 +29,10 @@ public class Enemy extends AnimationSprite implements CollisionObject {
         MainScene scene = (MainScene) BaseScene.getTopScene();
         player = scene.player;
         targetUpdate();
+
+        for(int i = 0; i < MagicManager.MagicType.COUNT.ordinal(); ++i) {
+            collisionFlag.add(false);
+        }
     }
 
     private void targetUpdate() {
@@ -73,6 +81,14 @@ public class Enemy extends AnimationSprite implements CollisionObject {
         if(hp <= 0)
             return true;
         return false;
+    }
+
+    public void setCollisionFlag(MagicManager.MagicType type, boolean value) {
+        collisionFlag.set(type.ordinal(), value);
+    }
+
+    public boolean getCollisionFlag(MagicManager.MagicType type) {
+        return collisionFlag.get(type.ordinal());
     }
 
     @Override

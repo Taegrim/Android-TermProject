@@ -21,7 +21,6 @@ public class ThunderGenerator extends MagicManager {
     public ThunderGenerator(Player player) {
         generation_interval = 2.0f;
         this.player = player;
-        attackType = Magic.AttackType.PENETRATION;
         paint = new Paint();
 
         magicType = MagicType.THUNDER;
@@ -43,8 +42,8 @@ public class ThunderGenerator extends MagicManager {
             Log.d(TAG, "generate index : " + index);
 
             scene.addObject(MainScene.Layer.MAGIC,
-                    Thunder.get(enemy.getX(), enemy.getY(), magicType.damage(), r.nextInt(RES_COUNT),
-                            LIFE_TIME, attackType, paint));
+                    Thunder.get(magicType, enemy.getX(), enemy.getY(), magicType.damage(),
+                            r.nextInt(RES_COUNT), LIFE_TIME, magicType.attackType(), paint));
         }
         
         // 비우기

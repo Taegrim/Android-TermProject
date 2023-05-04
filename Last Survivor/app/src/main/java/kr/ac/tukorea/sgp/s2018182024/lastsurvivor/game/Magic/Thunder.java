@@ -24,12 +24,12 @@ public class Thunder extends Magic {
             R.mipmap.thunder_strom_a,R.mipmap.thunder_strom_b, R.mipmap.thunder_strom_c
     };
 
-    public static Thunder get(float x, float y, float damage, int resIndex, float lifeTime,
-                              AttackType attackType, Paint paint)
+    public static Thunder get(MagicManager.MagicType type, float x, float y, float damage, int resIndex, float lifeTime,
+                              MagicManager.AttackType attackType, Paint paint)
     {
         Thunder thunder = (Thunder) RecycleBin.get(Thunder.class);
         if(thunder == null) {
-            return new Thunder(x, y, damage, resIndex, lifeTime, attackType, paint);
+            return new Thunder(type, x, y, damage, resIndex, lifeTime, attackType, paint);
         }
         thunder.x = x;
         thunder.y = y;
@@ -38,14 +38,15 @@ public class Thunder extends Magic {
         return thunder;
     }
 
-    private Thunder(float x, float y, float damage, int resIndex, float lifeTime,
-                    AttackType attackType, Paint paint)
+    private Thunder(MagicManager.MagicType type, float x, float y, float damage, int resIndex,
+                    float lifeTime, MagicManager.AttackType attackType, Paint paint)
     {
         super(resIds[resIndex], x, y, WIDTH, HEIGHT);
+        magicType = type;
         init(damage, lifeTime, attackType, paint);
     }
 
-    public void init(float damage, float lifeTime, AttackType attackType, Paint paint) {
+    public void init(float damage, float lifeTime, MagicManager.AttackType attackType, Paint paint) {
         this.damage = damage;
         this.createdTime = System.currentTimeMillis();
         this.lifeTime = lifeTime;

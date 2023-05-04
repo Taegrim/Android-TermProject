@@ -11,11 +11,9 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
 
 public class Magic extends Sprite implements CollisionObject, Recyclable {
     protected float damage;
-    protected AttackType attackType;
+    protected MagicManager.AttackType attackType;
+    protected MagicManager.MagicType magicType;
     protected RectF collisionRect = new RectF();
-    public enum AttackType {
-        NORMAL, PENETRATION, COUNT
-    }
 
     public Magic(int resId, float x, float y, float width, float height) {
         super(resId, x, y, width, height);
@@ -43,8 +41,12 @@ public class Magic extends Sprite implements CollisionObject, Recyclable {
 
     }
 
-    public AttackType getType() {
+    public MagicManager.AttackType getAttackType() {
         return this.attackType;
+    }
+
+    public MagicManager.MagicType getMagicType() {
+        return this.magicType;
     }
 
     @Override

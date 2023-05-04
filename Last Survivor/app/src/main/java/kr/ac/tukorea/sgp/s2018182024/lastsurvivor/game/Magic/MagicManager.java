@@ -14,11 +14,13 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Player;
 public class MagicManager extends Generator {
     private static final String TAG = MagicManager.class.getSimpleName();
     protected Player player;
-    protected Magic.AttackType attackType;
     protected MagicType magicType;
-    protected float damage;
     protected float dx, dy, angle, speed;
     protected ArrayList<Integer> enemyIndices = new ArrayList<>();
+
+    public enum AttackType {
+        NORMAL, PENETRATION, COUNT
+    }
 
     public enum MagicType {
         BULLET, THUNDER, COUNT;
@@ -29,6 +31,7 @@ public class MagicManager extends Generator {
         int count() { return counts[this.ordinal()]; }
         float defaultCooldown() { return defaultCooldowns[this.ordinal()]; }
         float cooldown() { return cooldowns[this.ordinal()].get(); }
+        AttackType attackType() { return attackTypes[this.ordinal()]; }
 
         void setCooldown(float value) {
             if(cooldowns[this.ordinal()] == null) {
@@ -42,12 +45,15 @@ public class MagicManager extends Generator {
                     this.increaseRate() * player.getDamageAmp();
         }
 
-        static final float[] coefficients = { 2.0f, 5.8f };
+        static final float[] coefficients = { 2.0f, 1.0f };
         static float[] increaseRates = { 1.0f, 1.0f };
         static float[] damages = { 1.0f, 1.0f };
         static int[] counts = { 1, 1 };
         static final float[] defaultCooldowns = { 0.75f, 2.2f };
         static FLOAT[] cooldowns = new FLOAT[COUNT.ordinal()];
+        static AttackType[] attackTypes = {
+                AttackType.NORMAL,
+                AttackType.PENETRATION };
     }
 
 
@@ -112,12 +118,25 @@ public class MagicManager extends Generator {
     }
 
     protected void getRandomTargetEnemy(ArrayList<GameObject> enemies) {
-        for(int i = enemies.size() - 1; i >= 0; --i) {
-            Enemy enemy = (Enemy) enemies.get(i);
+        if(AttackType.PENETRATION == magicType.attackType()) {
+            for(int i = enemies.size() - 1; i >= 0; --i) {
+                Enemy enemy = (Enemy) enemies.get(i);
+                enemy.setCollisionFlag(magicType, false);
 
-            // 화면 내에 있는 적들만 처리
-            if(Metrics.isInGameView(enemy.getX(), enemy.getY(), -1.0f, -2.0f)) {
-                enemyIndices.add(i);
+                // 화면 내에 있는 적들만 처리
+                if(Metrics.isInGameView(enemy.getX(), enemy.getY(), -1.0f, -2.0f)) {
+                    enemyIndices.add(i);
+                }
+            }
+        }
+        else {
+            for(int i = enemies.size() - 1; i >= 0; --i) {
+                Enemy enemy = (Enemy) enemies.get(i);
+
+                // 화면 내에 있는 적들만 처리
+                if(Metrics.isInGameView(enemy.getX(), enemy.getY(), -1.0f, -2.0f)) {
+                    enemyIndices.add(i);
+                }
             }
         }
 

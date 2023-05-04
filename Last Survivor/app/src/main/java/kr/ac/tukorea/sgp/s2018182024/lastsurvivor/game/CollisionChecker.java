@@ -1,7 +1,6 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game;
 
 import android.graphics.Canvas;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -11,8 +10,8 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameObject;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.Enemy;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Item.ExpOrb;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Item.Item;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.Bullet;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.Magic;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.MagicManager;
 
 public class CollisionChecker implements GameObject {
     private static final String TAG = CollisionChecker.class.getSimpleName();
@@ -62,10 +61,19 @@ public class CollisionChecker implements GameObject {
                 Magic magic = (Magic) magics.get(j);
 
                 if(CollisionHelper.collide(enemy, magic)) {
-                    // 공격 타입이 일반형일때만 삭제, 관통형은 삭제 X
-                    if(Magic.AttackType.NORMAL == magic.getType()) {
+                    MagicManager.AttackType attackType = magic.getAttackType();
+                    MagicManager.MagicType magicType = magic.getMagicType();
+
+                    if(MagicManager.AttackType.NORMAL == attackType) {
                         scene.removeObject(MainScene.Layer.MAGIC, magic, false);
                     }
+                    else if(MagicManager.AttackType.PENETRATION == attackType) {
+                        if(enemy.getCollisionFlag(magicType)) {
+                            break;
+                        }
+                        enemy.setCollisionFlag(magicType, true);
+                    }
+
                     boolean death = enemy.decreaseHp(magic.getDamage());
                     if(death) {
                         scene.removeObject(MainScene.Layer.ENEMY, enemy, false);

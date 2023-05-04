@@ -14,7 +14,6 @@ public class BulletGenerator extends MagicManager {
         generation_interval = 1.0f;
         this.player = player;
         speed = 8.0f;
-        attackType = Magic.AttackType.NORMAL;
 
         magicType = MagicType.BULLET;
         magicType.calculateDamage(player);
@@ -32,8 +31,8 @@ public class BulletGenerator extends MagicManager {
 
         for(int i = 0; i < magicType.count(); ++i) {
             scene.addObject(MainScene.Layer.MAGIC,
-                    Bullet.get(player.getX(), player.getY(), this.dx, this.dy, this.angle,
-                            magicType.damage(), attackType));
+                    Bullet.get(magicType, player.getX(), player.getY(), this.dx, this.dy, this.angle,
+                            magicType.damage(), magicType.attackType()));
         }
     }
 
