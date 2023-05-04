@@ -10,6 +10,7 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameObject;
 
 public class Generator implements GameObject {
     private static final String TAG = Generator.class.getSimpleName();
+    protected float time;
     protected int generation_number;
     protected float generation_interval;
     protected Random r = new Random();

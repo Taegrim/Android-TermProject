@@ -8,7 +8,6 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Generator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
 
 public class SwamGenerator extends Generator {
-    private float time;
     private int wave;
 
     public SwamGenerator() {

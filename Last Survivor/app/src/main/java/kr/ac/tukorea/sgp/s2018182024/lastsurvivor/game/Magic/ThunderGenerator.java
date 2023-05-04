@@ -4,67 +4,31 @@ import android.graphics.Paint;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Vector;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameObject;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.Enemy;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Generator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Player;
 
-public class ThunderGenerator extends Generator {
+public class ThunderGenerator extends MagicGenerator {
     private static final String TAG = ThunderGenerator.class.getSimpleName();
     private static final int RES_COUNT = 3;
     private static final int MAX_ALPHA = 255;
-    private float time, lifeTime = 0.5f;
-    private Player player;
-    public Magic.AttackType attackType;
+    private static final float LIFE_TIME = 0.5f;
     private Paint paint;
-    private float damage;
-    //private Set<Integer> enemyIndices = new HashSet<>();
-    private ArrayList<Integer> enemyIndices = new ArrayList<>();
 
     public ThunderGenerator(Player player) {
         generation_interval = 2.0f;
         generation_number = 1;
         this.player = player;
-        damage = 10.0f;
         attackType = Magic.AttackType.PENETRATION;
         paint = new Paint();
-    }
 
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
-    private void getRandomTargetEnemy(ArrayList<GameObject> enemies) {
-        for(int i = enemies.size() - 1; i >= 0; --i) {
-            Enemy enemy = (Enemy) enemies.get(i);
-
-            // 화면 내에 있는 적들만 처리
-            if(Metrics.isInGameView(enemy.getX(), enemy.getY(), -1.0f, -2.0f)) {
-               enemyIndices.add(i);
-            }
-        }
-
-        int size = enemyIndices.size();
-        // 화면 내 적이 생성 수보다 많다면 랜덤 뽑기, 적다면 화면 내 모든 적에게 처리
-        if(size > generation_number) {
-            for(int i = 0; i < generation_number; ++i) {
-                int randomIndex = r.nextInt(size - i) + i;
-                int enemyIndex = enemyIndices.get(randomIndex);
-                enemyIndices.set(randomIndex, enemyIndices.get(i));
-                enemyIndices.set(i, enemyIndex);
-            }
-
-            for(int i = size - 1; i >= generation_number; --i) {
-                enemyIndices.remove(i);
-            }
-        }
+        coefficient = 5.8f;
+        increaseRate = 1.0f;
+        calculateDamage(player);
     }
 
     private void generate() {
@@ -74,7 +38,6 @@ public class ThunderGenerator extends Generator {
         if(enemies.size() == 0) {
             return;
         }
-
         getRandomTargetEnemy(enemies);
 
         for(int index : enemyIndices) {
@@ -83,7 +46,7 @@ public class ThunderGenerator extends Generator {
 
             scene.addObject(MainScene.Layer.MAGIC,
                     Thunder.get(enemy.getX(), enemy.getY(), this.damage, r.nextInt(RES_COUNT),
-                            lifeTime, attackType, paint));
+                            LIFE_TIME, attackType, paint));
         }
         
         // 비우기
@@ -94,8 +57,8 @@ public class ThunderGenerator extends Generator {
     public void update() {
         time += BaseScene.frameTime;
 
-        if(time < lifeTime) {
-            paint.setAlpha(MAX_ALPHA - (int)(MAX_ALPHA * (time / lifeTime)));
+        if(time < LIFE_TIME) {
+            paint.setAlpha(MAX_ALPHA - (int)(MAX_ALPHA * (time / LIFE_TIME)));
         }
 
         if(time > generation_interval) {

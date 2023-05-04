@@ -27,7 +27,7 @@ public class Swam extends Enemy implements Recyclable {
     }
 
     private void init(int level) {
-        hp = maxHp = (level + 1) * 10;
+        hp = maxHp = (level + 1) * 50.0f + 10.0f;
         damage = 10.0f;
         exp = (level + 1) * 2;
         fixRect();

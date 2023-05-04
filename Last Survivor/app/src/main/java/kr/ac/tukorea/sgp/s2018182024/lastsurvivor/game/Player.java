@@ -31,6 +31,8 @@ public class Player extends AnimationSprite implements CollisionObject {
     private float invincibleTime, maxInvincibleTime;
     private boolean isInvincible;
     private RectF collisionRect = new RectF();
+    private FLOAT power = new FLOAT();
+    private FLOAT damageAmp = new FLOAT();
 
     private static final int[] resId = {
             R.mipmap.player_idle, R.mipmap.player_move_updown, R.mipmap.player_move_left,
@@ -50,6 +52,9 @@ public class Player extends AnimationSprite implements CollisionObject {
         exp = 0.0f;
         maxExp = 20.0f;
         level = 1;
+
+        power.set(30.0f);
+        damageAmp.set(1.0f);
 
         setCollisionRect();
     }
@@ -112,6 +117,14 @@ public class Player extends AnimationSprite implements CollisionObject {
 
     public boolean getIsInvincible() {
         return isInvincible;
+    }
+
+    public float getPower() {
+        return power.get();
+    }
+
+    public float getDamageAmp() {
+        return damageAmp.get();
     }
 
     public boolean decreaseHp(float damage) {

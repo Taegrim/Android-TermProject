@@ -14,54 +14,20 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Generator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Player;
 
-public class BulletGenerator extends Generator {
+public class BulletGenerator extends MagicGenerator {
     private static final String TAG = BulletGenerator.class.getSimpleName();
-    private float time;
-    private Player player;
-    public Magic.AttackType attackType;
-    private float dx, dy, angle, speed;
-    private float damage;
 
     public BulletGenerator(Player player) {
         generation_interval = 1.0f;
         generation_number = 1;
         this.player = player;
         speed = 8.0f;
-        damage = 10.0f;
         attackType = Magic.AttackType.NORMAL;
-    }
 
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
-    private float getDistance(float x1, float y1, float x2, float y2) {
-        return (float) (Math.pow((x2 - x1), 2.0) + Math.pow((y2 - y1), 2.0));
-    }
-
-    private void getCloseEnemyDir(ArrayList<GameObject> enemies) {
-        float playerX = player.getX();
-        float playerY = player.getY();
-        float dist, min = 100000.0f;
-        int index = 0;
-
-        for(int i = enemies.size() - 1; i >= 0; --i) {
-            Enemy enemy = (Enemy) enemies.get(i);
-
-            dist = getDistance(playerX, playerY, enemy.getX(), enemy.getY());
-            if(dist < min) {
-                min = dist;
-                index = i;
-            }
-        }
-
-        Enemy enemy = (Enemy) enemies.get(index);
-        float directionX = enemy.getX() - playerX;
-        float directionY = enemy.getY() - playerY;
-        double radian = Math.atan2(directionY, directionX);
-        this.dx = (float) (speed * Math.cos(radian));
-        this.dy = (float) (speed * Math.sin(radian));
-        this.angle = (float) Math.toDegrees(radian);
+        // 데미지 배율 200%, 피해 증가량 1.0
+        coefficient = 2.0f;
+        increaseRate = 1.0f;
+        calculateDamage(player);
     }
 
     private void generate() {
