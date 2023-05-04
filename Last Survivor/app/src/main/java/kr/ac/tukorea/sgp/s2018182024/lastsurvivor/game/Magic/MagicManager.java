@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameObject;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.Enemy;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.FLOAT;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Generator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Player;
 
@@ -20,11 +21,22 @@ public class MagicManager extends Generator {
     protected ArrayList<Integer> enemyIndices = new ArrayList<>();
 
     public enum MagicType {
-        BULLET, THUNDER;
+        BULLET, THUNDER, COUNT;
 
         float coefficient() { return coefficients[this.ordinal()]; }
         float increaseRate() { return increaseRates[this.ordinal()]; }
         float damage() { return damages[this.ordinal()]; }
+        int count() { return counts[this.ordinal()]; }
+        float defaultCooldown() { return defaultCooldowns[this.ordinal()]; }
+        float cooldown() { return cooldowns[this.ordinal()].get(); }
+
+        void setCooldown(float value) {
+            if(cooldowns[this.ordinal()] == null) {
+                cooldowns[this.ordinal()] = new FLOAT();
+            }
+            cooldowns[this.ordinal()].set(value);
+        }
+
         void calculateDamage(Player player) {
             damages[this.ordinal()] = player.getPower() * this.coefficient() *
                     this.increaseRate() * player.getDamageAmp();
@@ -33,6 +45,9 @@ public class MagicManager extends Generator {
         static final float[] coefficients = { 2.0f, 5.8f };
         static float[] increaseRates = { 1.0f, 1.0f };
         static float[] damages = { 1.0f, 1.0f };
+        static int[] counts = { 1, 1 };
+        static final float[] defaultCooldowns = { 0.75f, 2.2f };
+        static FLOAT[] cooldowns = new FLOAT[COUNT.ordinal()];
     }
 
 
@@ -49,8 +64,20 @@ public class MagicManager extends Generator {
     }
 
     public static void changeIncreaseRate(MagicType type, Player player, float value) {
-        MagicType.increaseRates[type.ordinal()] += value;
-        type.calculateDamage(player);
+        setIncreaseRate(type, player, type.increaseRate() + value);
+    }
+
+    public static void setMagicCount(MagicType type, int value) {
+        MagicType.counts[type.ordinal()] = value;
+    }
+
+    public static void changeMagicCount(MagicType type, int value) {
+        setMagicCount(type, type.count() + value);
+    }
+
+    public static void increaseCooldownRatio(MagicType type, float value) {
+        MagicType.cooldowns[type.ordinal()].increaseRatio(value);
+        Log.d(TAG, "cooldown : " + type.cooldown());
     }
 
 
@@ -95,16 +122,17 @@ public class MagicManager extends Generator {
         }
 
         int size = enemyIndices.size();
+        int count = magicType.count();
         // 화면 내 적이 생성 수보다 많다면 랜덤 뽑기, 적다면 화면 내 모든 적에게 처리
-        if(size > generation_number) {
-            for(int i = 0; i < generation_number; ++i) {
+        if(size > count) {
+            for(int i = 0; i < count; ++i) {
                 int randomIndex = r.nextInt(size - i) + i;
                 int enemyIndex = enemyIndices.get(randomIndex);
                 enemyIndices.set(randomIndex, enemyIndices.get(i));
                 enemyIndices.set(i, enemyIndex);
             }
 
-            for(int i = size - 1; i >= generation_number; --i) {
+            for(int i = size - 1; i >= count; --i) {
                 enemyIndices.remove(i);
             }
         }

@@ -1,19 +1,19 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game;
 
 public class FLOAT {
-    private float value;
+    private float defaultValue;
     private float ratio = 1.0f;
     private float result;
 
     public FLOAT() {}
 
     public FLOAT(float value) {
-        this.value = value;
+        this.defaultValue = value;
         this.result = value;
     }
 
     public void set(float value) {
-        this.value = value;
+        this.defaultValue = value;
         this.result = value;
     }
 
@@ -32,7 +32,7 @@ public class FLOAT {
     }
 
     private void changeResult() {
-        result = value * ratio;
+        result = defaultValue * ratio;
     }
 
 }

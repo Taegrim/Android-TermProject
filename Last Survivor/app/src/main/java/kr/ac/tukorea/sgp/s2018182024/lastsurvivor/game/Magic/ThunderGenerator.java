@@ -20,13 +20,13 @@ public class ThunderGenerator extends MagicManager {
 
     public ThunderGenerator(Player player) {
         generation_interval = 2.0f;
-        generation_number = 1;
         this.player = player;
         attackType = Magic.AttackType.PENETRATION;
         paint = new Paint();
 
         magicType = MagicType.THUNDER;
         magicType.calculateDamage(player);
+        magicType.setCooldown(magicType.defaultCooldown());
     }
 
     private void generate() {
@@ -59,10 +59,10 @@ public class ThunderGenerator extends MagicManager {
             paint.setAlpha(MAX_ALPHA - (int)(MAX_ALPHA * (time / LIFE_TIME)));
         }
 
-        if(time > generation_interval) {
+        if(time > magicType.cooldown()) {
             paint.setAlpha(MAX_ALPHA);
             generate();
-            time -= generation_interval;
+            time -= magicType.cooldown();
         }
     }
 }

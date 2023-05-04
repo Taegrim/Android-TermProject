@@ -156,7 +156,8 @@ public class Player extends AnimationSprite implements CollisionObject {
     public void onLevelUp() {
         // 레벨업 했을 때 하는 처리
         MagicManager.changeIncreaseRate(MagicManager.MagicType.BULLET, this, 0.5f);
-
+        MagicManager.increaseCooldownRatio(MagicManager.MagicType.THUNDER, -0.1f);
+        MagicManager.changeMagicCount(MagicManager.MagicType.THUNDER, 1);
     }
 
     public void setCollisionRect() {

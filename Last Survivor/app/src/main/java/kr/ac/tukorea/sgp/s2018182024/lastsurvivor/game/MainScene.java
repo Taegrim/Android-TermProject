@@ -9,6 +9,7 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.SwamGenerator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Item.ExpOrb;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Item.HealthOrb;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.BulletGenerator;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.MagicManager;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.ThunderGenerator;
 
 public class MainScene extends BaseScene {

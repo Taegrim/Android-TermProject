@@ -12,13 +12,13 @@ public class BulletGenerator extends MagicManager {
 
     public BulletGenerator(Player player) {
         generation_interval = 1.0f;
-        generation_number = 1;
         this.player = player;
         speed = 8.0f;
         attackType = Magic.AttackType.NORMAL;
 
         magicType = MagicType.BULLET;
         magicType.calculateDamage(player);
+        magicType.setCooldown(magicType.defaultCooldown());
     }
 
     private void generate() {
@@ -30,7 +30,7 @@ public class BulletGenerator extends MagicManager {
         }
         getCloseEnemyDir(enemies);
 
-        for(int i = 0; i < generation_number; ++i) {
+        for(int i = 0; i < magicType.count(); ++i) {
             scene.addObject(MainScene.Layer.MAGIC,
                     Bullet.get(player.getX(), player.getY(), this.dx, this.dy, this.angle,
                             magicType.damage(), attackType));
@@ -40,9 +40,9 @@ public class BulletGenerator extends MagicManager {
     @Override
     public void update() {
         time += BaseScene.frameTime;
-        if(time > generation_interval) {
+        if(time > magicType.cooldown()) {
             generate();
-            time -= generation_interval;
+            time -= magicType.cooldown();
         }
     }
 }

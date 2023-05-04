@@ -11,8 +11,8 @@ public class SwamGenerator extends Generator {
     private int wave;
 
     public SwamGenerator() {
-        generation_interval = 3.0f;
-        generation_number = 4;
+        generation_interval = 2.0f;
+        generation_number = 6;
     }
 
     private void generate() {
