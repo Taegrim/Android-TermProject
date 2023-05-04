@@ -41,7 +41,7 @@ public class ThunderGenerator extends Generator {
         this.player = player;
     }
 
-    public void getRandomTargetEnemy(ArrayList<GameObject> enemies) {
+    private void getRandomTargetEnemy(ArrayList<GameObject> enemies) {
         for(int i = enemies.size() - 1; i >= 0; --i) {
             Enemy enemy = (Enemy) enemies.get(i);
 

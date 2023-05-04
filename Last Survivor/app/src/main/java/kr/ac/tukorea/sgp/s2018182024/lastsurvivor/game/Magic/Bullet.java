@@ -22,9 +22,9 @@ public class Bullet extends Magic {
         if(bullet == null) {
             return new Bullet(x, y, dx, dy, angle, damage, attackType);
         }
-        bullet.init(dx, dy, angle, damage, attackType);
         bullet.x = x;
         bullet.y = y;
+        bullet.init(dx, dy, angle, damage, attackType);
         return bullet;
     }
 

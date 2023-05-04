@@ -14,9 +14,9 @@ public class Swam extends Enemy implements Recyclable {
         if(swam == null) {
             return new Swam(x, y, level);
         }
-        swam.init(level);
         swam.x = x;
         swam.y = y;
+        swam.init(level);
         return swam;
     }
 
@@ -37,12 +37,6 @@ public class Swam extends Enemy implements Recyclable {
     @Override
     public void onRecycle() {
 
-    }
-
-    @Override
-    public void update() {
-        super.update();
-        setCollisionRect();
     }
 
     @Override

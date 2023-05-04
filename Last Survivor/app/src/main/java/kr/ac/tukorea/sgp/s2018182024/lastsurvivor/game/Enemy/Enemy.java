@@ -45,11 +45,11 @@ public class Enemy extends AnimationSprite implements CollisionObject {
             frames = 0;
         }
 
-        float time = BaseScene.frameTime;
-        x += dx * time;
-        y += dy * time;
+        x += dx * BaseScene.frameTime;
+        y += dy * BaseScene.frameTime;
 
         fixRect();
+        setCollisionRect();
     }
 
     public float getX() {

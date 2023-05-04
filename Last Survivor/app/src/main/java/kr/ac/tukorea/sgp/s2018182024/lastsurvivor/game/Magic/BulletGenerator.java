@@ -9,6 +9,7 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameObject;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.Enemy;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.FLOAT;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Generator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Player;
@@ -34,11 +35,11 @@ public class BulletGenerator extends Generator {
         this.player = player;
     }
 
-    public float getDistance(float x1, float y1, float x2, float y2) {
+    private float getDistance(float x1, float y1, float x2, float y2) {
         return (float) (Math.pow((x2 - x1), 2.0) + Math.pow((y2 - y1), 2.0));
     }
 
-    public void getCloseEnemyDir(ArrayList<GameObject> enemies) {
+    private void getCloseEnemyDir(ArrayList<GameObject> enemies) {
         float playerX = player.getX();
         float playerY = player.getY();
         float dist, min = 100000.0f;
