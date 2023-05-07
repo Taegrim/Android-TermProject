@@ -29,6 +29,8 @@ public class MagicManager extends Generator {
         float increaseRate() { return increaseRates[this.ordinal()]; }
         float damage() { return damages[this.ordinal()]; }
         int count() { return counts[this.ordinal()]; }
+        int level() { return levels[this.ordinal()]; }
+        int maxLevel() { return maxLevels[this.ordinal()]; }
         float defaultCooldown() { return defaultCooldowns[this.ordinal()]; }
         float cooldown() { return cooldowns[this.ordinal()].get(); }
         AttackType attackType() { return attackTypes[this.ordinal()]; }
@@ -49,6 +51,8 @@ public class MagicManager extends Generator {
         static float[] increaseRates = { 1.0f, 1.0f };
         static float[] damages = { 1.0f, 1.0f };
         static int[] counts = { 1, 1 };
+        static int[] levels = { 1, 1 };
+        static int[] maxLevels = { 7, 7 };
         static final float[] defaultCooldowns = { 0.75f, 2.2f };
         static FLOAT[] cooldowns = new FLOAT[COUNT.ordinal()];
         static AttackType[] attackTypes = {
@@ -86,6 +90,51 @@ public class MagicManager extends Generator {
         Log.d(TAG, "cooldown : " + type.cooldown());
     }
 
+    public static void onLevelUp(MagicType type, Player player) {
+        int magicId = type.ordinal();
+        int level = MagicType.levels[magicId] + 1;
+        int maxLevel = MagicType.maxLevels[magicId];
+        if(level > maxLevel) {
+            MagicType.levels[magicId] = maxLevel;
+            return ;
+        }
+        MagicType.levels[magicId] = level;
+
+        switch(type) {
+            case BULLET:
+                switch(level) {
+                    case 2:
+                    case 5:
+                        MagicType.counts[magicId] += 1;
+                        break;
+                    case 3:
+                    case 6:
+                        changeIncreaseRate(type, player, 0.5f);
+                        break;
+                    case 4:
+                    case 7:
+                        Log.d(TAG, "마력탄 특성 습득!");
+                        break;
+                }
+                break;
+
+            case THUNDER:
+                switch (level) {
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 6:
+                        MagicType.counts[magicId] += 1;
+                        changeIncreaseRate(type, player, 0.2f);
+                        break;
+                    case 7:
+                        Log.d(TAG, "낙뢰 특성 습득!");
+                        break;
+                }
+                break;
+        }
+    }
 
     // 적 타겟팅 함수
     protected float getDistance(float x1, float y1, float x2, float y2) {
