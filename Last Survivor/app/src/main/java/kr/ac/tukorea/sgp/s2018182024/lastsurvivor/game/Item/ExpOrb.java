@@ -9,6 +9,7 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.EventCollision;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.RecycleBin;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.FLOAT;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Player;
 
 public class ExpOrb extends Item implements EventCollision {
@@ -20,7 +21,7 @@ public class ExpOrb extends Item implements EventCollision {
     private RectF eventCollision = new RectF();
     private float dx, dy;
     private boolean isAbsorption;
-    private float absorptionRange = 0.3f;
+    private float absorptionRange;
     private float time;
 
     public enum Type {
@@ -30,6 +31,7 @@ public class ExpOrb extends Item implements EventCollision {
         float size() { return sizes[this.ordinal()]; }
         float offset() { return offsets[this.ordinal()]; }
         float exp() { return exps[this.ordinal()]; }
+        int rate() { return rates[this.ordinal()]; }
 
         static final int[] resIds = {
                 R.mipmap.exp_orb_small,
@@ -39,33 +41,47 @@ public class ExpOrb extends Item implements EventCollision {
         static final float[] sizes = { 1.0f, 1.2f, 1.5f };
         static final float[] offsets = { 0.22f, 0.37f, 0.55f };
         static final float[] exps = { 10.0f, 20.0f, 40.0f };
+        static final int[] rates = { 60, 30, 10 };
+
         static Type random(Random random) {
-            return Type.values()[random.nextInt(3)];
+            int random_num = random.nextInt(100);
+            if(0 <= random_num && random_num < Type.SMALL.rate()) {
+                return Type.SMALL;
+            }
+            else if(Type.SMALL.rate() <= random_num &&
+                    random_num < Type.SMALL.rate() + Type.MEDIUM.rate())
+            {
+                return Type.MEDIUM;
+            }
+            else {
+                return Type.LARGE;
+            }
         }
     }
 
-    public static ExpOrb get(Type type, float x, float y) {
+    public static ExpOrb get(Type type, float x, float y, float absorptionRange) {
         ExpOrb orb = (ExpOrb) RecycleBin.get(ExpOrb.class);
         if(orb == null) {
-            return new ExpOrb(type, x, y);
+            return new ExpOrb(type, x, y, absorptionRange);
         }
         orb.x = x;
         orb.y = y;
-        orb.init(type);
+        orb.init(type, absorptionRange);
         return orb;
     }
 
-    private ExpOrb(Type type, float x, float y) {
+    private ExpOrb(Type type, float x, float y, float absorptionRange) {
         super(type.resId(), x, y, type.size(), type.size());
-        init(type);
+        init(type, absorptionRange);
     }
 
-    public void init(Type type) {
+    public void init(Type type, float absorptionRange) {
         this.type = type;
         width = type.size();
         height = type.size();
         dx = dy = 0.0f;
         isAbsorption = false;
+        this.absorptionRange = absorptionRange;
         time = 0;
         setBitmapResource(type.resId());
         fixRect();
@@ -125,8 +141,10 @@ public class ExpOrb extends Item implements EventCollision {
     }
 
     public void setEventCollisionRect() {
-        eventCollision.set(collisionRect);
-        eventCollision.offset(absorptionRange, absorptionRange);
+        eventCollision.set(collisionRect.left - absorptionRange,
+                collisionRect.top - absorptionRange,
+                collisionRect.right + absorptionRange,
+                collisionRect.bottom + absorptionRange);
     }
 
     public float getExp() {

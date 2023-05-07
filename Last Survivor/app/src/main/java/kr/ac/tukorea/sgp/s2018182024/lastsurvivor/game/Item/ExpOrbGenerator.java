@@ -2,20 +2,21 @@ package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Item;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.FLOAT;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Generator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Player;
 
 public class ExpOrbGenerator extends Generator {
-    private static final int SMALL_RATE = 60;
-    private static final int MEDIUM_RATE = 30;
-    private static final int LARGE_RATE = 10;
+    private static final float DEFAULT_ABSORPTION_RANGE = 0.35f;
     private Player player;
+    private FLOAT absorptionRange = new FLOAT();
 
     public ExpOrbGenerator(Player player) {
         generation_interval = 5.0f;
         generation_number = 1;
         this.player = player;
+        this.absorptionRange.set(DEFAULT_ABSORPTION_RANGE);
     }
 
     private void generate() {
@@ -35,19 +36,8 @@ public class ExpOrbGenerator extends Generator {
                 y = (float)r.nextInt((int)Metrics.gameHeight);
             }
 
-            int random_number = r.nextInt(100);
-            ExpOrb.Type type = ExpOrb.Type.SMALL;
-            if(0 <= random_number && random_number < SMALL_RATE) {
-                type = ExpOrb.Type.SMALL;
-            }
-            else if(SMALL_RATE <= random_number && random_number < SMALL_RATE + MEDIUM_RATE) {
-                type = ExpOrb.Type.MEDIUM;
-            }
-            else {
-                type = ExpOrb.Type.LARGE;
-            }
-
-            scene.addObject(MainScene.Layer.ITEM, ExpOrb.get(type, x, y));
+            scene.addObject(MainScene.Layer.ITEM, ExpOrb.get(ExpOrb.Type.random(r), x, y,
+                    absorptionRange.get()));
         }
     }
 
