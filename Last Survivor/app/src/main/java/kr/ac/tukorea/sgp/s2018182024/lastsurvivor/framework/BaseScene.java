@@ -5,12 +5,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.BuildConfig;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.Enemy;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
 
 public class BaseScene {
     private static ArrayList<BaseScene> stack = new ArrayList<>();
@@ -148,6 +150,22 @@ public class BaseScene {
     }
 
     public boolean onTouchEvent(MotionEvent event) {
+        int layer = MainScene.Layer.TOUCH.ordinal();
+        if(-1 == layer)
+            return false;
+
+        ArrayList<GameObject> objects = layers.get(layer);
+        for(GameObject obj : objects) {
+            if(obj instanceof Touchable) {
+                boolean touched = ((Touchable) obj).onTouchEvent(event);
+                if(touched)
+                    return true;
+            }
+        }
         return false;
+    }
+
+    protected int getTouchLayer() {
+        return -1;
     }
 }

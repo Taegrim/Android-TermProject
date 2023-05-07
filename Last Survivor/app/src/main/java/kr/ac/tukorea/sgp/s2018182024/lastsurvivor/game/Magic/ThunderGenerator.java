@@ -39,7 +39,6 @@ public class ThunderGenerator extends MagicManager {
 
         for(int index : enemyIndices) {
             Enemy enemy = (Enemy) enemies.get(index);
-            Log.d(TAG, "generate index : " + index);
 
             scene.addObject(MainScene.Layer.MAGIC,
                     Thunder.get(magicType, enemy.getX(), enemy.getY(), magicType.damage(),
