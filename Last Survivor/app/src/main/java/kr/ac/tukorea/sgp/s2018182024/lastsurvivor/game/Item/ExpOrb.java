@@ -39,7 +39,9 @@ public class ExpOrb extends Item implements EventCollision {
         static final float[] sizes = { 1.0f, 1.2f, 1.5f };
         static final float[] offsets = { 0.22f, 0.37f, 0.55f };
         static final float[] exps = { 10.0f, 20.0f, 40.0f };
-        static Type random(Random random) { return Type.values()[random.nextInt(3)]; }
+        static Type random(Random random) {
+            return Type.values()[random.nextInt(3)];
+        }
     }
 
     public static ExpOrb get(Type type, float x, float y) {
