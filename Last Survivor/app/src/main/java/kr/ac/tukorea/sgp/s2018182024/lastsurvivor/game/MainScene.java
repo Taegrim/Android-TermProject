@@ -9,6 +9,7 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.SwamGenerator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Item.ExpOrb;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Item.ExpOrbGenerator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Item.HealthOrb;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Item.HealthOrbGenerator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.BulletGenerator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.MagicManager;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.ThunderGenerator;
@@ -29,9 +30,6 @@ public class MainScene extends BaseScene {
         player = new Player();
         addObject(Layer.PLAYER, player);
 
-        // item
-        addObject(Layer.ITEM, HealthOrb.get(3, 3));
-
         // generators
         // Enemy Generator
         generator = new Generator();
@@ -44,6 +42,7 @@ public class MainScene extends BaseScene {
 
         // Item Generator
         generator.addGenerator(new ExpOrbGenerator(player));
+        generator.addGenerator(new HealthOrbGenerator());
 
         // collision
         addObject(Layer.CONTROLLER, new CollisionChecker());
