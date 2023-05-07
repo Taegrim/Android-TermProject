@@ -3,17 +3,23 @@ package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import javax.security.auth.callback.Callback;
+
 public class Button extends Sprite implements Touchable {
     private static final String TAG = Button.class.getSimpleName();
-
-
+    private final Callback callback;
 
     public enum Action {
         PRESSED, RELEASED;
     }
 
-    public Button(int resId, float x, float y, float width, float height) {
+    public interface Callback {
+        public boolean onTouch(Action action);
+    }
+
+    public Button(int resId, float x, float y, float width, float height, Callback callback) {
         super(resId, x, y, width, height);
+        this.callback = callback;
         fixRect();
     }
 
@@ -27,10 +33,10 @@ public class Button extends Sprite implements Touchable {
 
         int action = event.getAction();
         if(MotionEvent.ACTION_DOWN == action) {
-            Log.d(TAG, "pressed!");
+            callback.onTouch(Action.PRESSED);
         }
         else if(MotionEvent.ACTION_UP == action) {
-            Log.d(TAG, "released!");
+            callback.onTouch(Action.RELEASED);
         }
 
         return true;

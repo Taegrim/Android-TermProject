@@ -141,13 +141,22 @@ public class MagicManager extends Generator {
         return (float) (Math.pow((x2 - x1), 2.0) + Math.pow((y2 - y1), 2.0));
     }
 
-    protected void getCloseEnemyDir(ArrayList<GameObject> enemies) {
+    protected boolean getCloseEnemyDir(ArrayList<GameObject> enemies) {
+        for(int i = enemies.size() - 1; i >= 0; --i) {
+            Enemy enemy = (Enemy) enemies.get(i);
+
+            // 화면 내에 있는 적들만 처리
+            if(Metrics.isInGameView(enemy.getX(), enemy.getY())) {
+                enemyIndices.add(i);
+            }
+        }
+
         float playerX = player.getX();
         float playerY = player.getY();
         float dist, min = 100000.0f;
-        int index = 0;
+        int index = -1;
 
-        for(int i = enemies.size() - 1; i >= 0; --i) {
+        for(int i : enemyIndices) {
             Enemy enemy = (Enemy) enemies.get(i);
 
             dist = getDistance(playerX, playerY, enemy.getX(), enemy.getY());
@@ -157,6 +166,9 @@ public class MagicManager extends Generator {
             }
         }
 
+        if(-1 == index)
+            return false;
+
         Enemy enemy = (Enemy) enemies.get(index);
         float directionX = enemy.getX() - playerX;
         float directionY = enemy.getY() - playerY;
@@ -164,6 +176,8 @@ public class MagicManager extends Generator {
         this.dx = (float) (speed * Math.cos(radian));
         this.dy = (float) (speed * Math.sin(radian));
         this.angle = (float) Math.toDegrees(radian);
+
+        return true;
     }
 
     protected void getRandomTargetEnemy(ArrayList<GameObject> enemies) {

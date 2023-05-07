@@ -1,10 +1,13 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game;
 
+import android.util.Log;
 import android.view.MotionEvent;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.app.MainActivity;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Button;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameView;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.SwamGenerator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Item.ExpOrbGenerator;
@@ -51,7 +54,16 @@ public class MainScene extends BaseScene {
 
         // touch ui
         addObject(Layer.TOUCH, new Button(R.mipmap.ui_stop,
-                Metrics.gameWidth - UI_STOP_SIZE, UI_STOP_SIZE, UI_STOP_SIZE, UI_STOP_SIZE));
+                Metrics.gameWidth - UI_STOP_SIZE, UI_STOP_SIZE, UI_STOP_SIZE, UI_STOP_SIZE,
+                new Button.Callback() {
+                    @Override
+                    public boolean onTouch(Button.Action action) {
+                        if(Button.Action.PRESSED == action) {
+                            Log.d(TAG, "PAUSE");
+                        }
+                        return true;
+                    }
+                }));
     }
 
     @Override

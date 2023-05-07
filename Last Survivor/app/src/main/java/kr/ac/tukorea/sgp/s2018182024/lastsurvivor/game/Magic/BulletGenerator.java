@@ -24,10 +24,11 @@ public class BulletGenerator extends MagicManager {
         MainScene scene = (MainScene) BaseScene.getTopScene();
         ArrayList<GameObject> enemies = scene.getObjects(MainScene.Layer.ENEMY);
 
-        if(enemies.size() == 0) {
+        if(enemies.size() == 0)
             return;
-        }
-        getCloseEnemyDir(enemies);
+
+        if(!getCloseEnemyDir(enemies))
+            return;
 
         for(int i = 0; i < magicType.count(); ++i) {
             scene.addObject(MainScene.Layer.MAGIC,
