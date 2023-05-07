@@ -8,6 +8,7 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.AnimationSprite;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.CollisionObject;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Gauge;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.MagicManager;
 
@@ -28,6 +29,8 @@ public class Player extends AnimationSprite implements CollisionObject {
     private RectF collisionRect = new RectF();
     private FLOAT power = new FLOAT();
     private FLOAT damageAmp = new FLOAT();
+    private Gauge hpGauge = new Gauge(0.2f, R.color.player_hp_gauge_fg);
+    private Gauge expGauge = new Gauge(0.2f, R.color.player_exp_gauge_fg);
 
     private static final int[] resId = {
             R.mipmap.player_idle, R.mipmap.player_move_updown, R.mipmap.player_move_left,
@@ -57,6 +60,18 @@ public class Player extends AnimationSprite implements CollisionObject {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+
+        drawGauge(canvas, hpGauge, 0.0f, 0.1f, hp, maxHp);
+        drawGauge(canvas, expGauge, 0.0f, Metrics.gameHeight - 0.1f, exp, maxExp);
+    }
+
+    public void drawGauge(Canvas canvas, Gauge gauge, float x, float y,
+                          float amount, float maxAmount) {
+        canvas.save();
+        canvas.translate(x, y);
+        canvas.scale(Metrics.gameWidth, 1.0f);
+        gauge.draw(canvas, amount / maxAmount);
+        canvas.restore();
     }
 
     public void changeResource() {
