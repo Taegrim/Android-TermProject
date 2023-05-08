@@ -4,12 +4,11 @@ import android.graphics.Canvas;
 import android.graphics.RectF;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.CollisionObject;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameObject;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Recyclable;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Sprite;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Player;
 
-public class Item extends Sprite implements GameObject, CollisionObject, Recyclable {
+public class Item extends Sprite implements CollisionObject, Recyclable {
     protected RectF collisionRect = new RectF();
 
     public Item(int resId, float x, float y, float width, float height) {

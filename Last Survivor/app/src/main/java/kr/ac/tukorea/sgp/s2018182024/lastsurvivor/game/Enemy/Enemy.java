@@ -7,11 +7,12 @@ import java.util.ArrayList;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.AnimationSprite;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.CollisionObject;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Recyclable;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.MagicManager;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Player;
 
-public class Enemy extends AnimationSprite implements CollisionObject {
+public class Enemy extends AnimationSprite implements CollisionObject, Recyclable {
     private float dx, dy;
     private float tx, ty;
     protected float speed;
@@ -98,6 +99,11 @@ public class Enemy extends AnimationSprite implements CollisionObject {
 
     @Override
     public void setCollisionRect() {
+
+    }
+
+    @Override
+    public void onRecycle() {
 
     }
 }

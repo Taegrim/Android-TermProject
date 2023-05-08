@@ -5,7 +5,7 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Recyclable;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.RecycleBin;
 
-public class Swam extends Enemy implements Recyclable {
+public class Swam extends Enemy {
     private static final float WIDTH = 0.85f;
     private static final float HEIGHT = 1.0f;
 

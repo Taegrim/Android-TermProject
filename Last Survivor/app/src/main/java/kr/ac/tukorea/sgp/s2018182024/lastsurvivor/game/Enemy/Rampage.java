@@ -4,7 +4,7 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Recyclable;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.RecycleBin;
 
-public class Rampage extends Enemy implements Recyclable {
+public class Rampage extends Enemy {
     private static final float WIDTH = 1.0f;
     private static final float HEIGHT = 1.1f;
 

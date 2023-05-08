@@ -45,7 +45,7 @@ public class Player extends AnimationSprite implements CollisionObject {
         ty = y;
         dx = dy = 0;
         hp = maxHp = 100.0f;
-        maxInvincibleTime = 0.5f;
+        maxInvincibleTime = 1.0f;
         isInvincible = false;
         exp = 0.0f;
         maxExp = 20.0f;
@@ -146,7 +146,6 @@ public class Player extends AnimationSprite implements CollisionObject {
     }
 
     public void increaseHp(float amount) {
-        Log.d(TAG, "Restore Hp!");
         hp += amount;
         if(hp > maxHp) {
             hp = maxHp;
