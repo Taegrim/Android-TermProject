@@ -9,6 +9,8 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Button;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameView;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.MineGenerator;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.RampageGenerator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.SwamGenerator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Item.ExpOrbGenerator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Item.HealthOrbGenerator;
@@ -33,10 +35,13 @@ public class MainScene extends BaseScene {
         addObject(Layer.PLAYER, player);
 
         // generators
-        // Enemy Generator
         generator = new Generator();
-        generator.addGenerator(new SwamGenerator());
         addObject(Layer.CONTROLLER, generator);
+
+        // Enemy Generator
+//        generator.addGenerator(new SwamGenerator());
+//        generator.addGenerator(new RampageGenerator());
+        generator.addGenerator(new MineGenerator());
 
         // Magic Generator
         generator.addGenerator(new BulletGenerator(player));

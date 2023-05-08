@@ -6,8 +6,8 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Recyclable;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.RecycleBin;
 
 public class Swam extends Enemy implements Recyclable {
-    private static final float WIDTH = 38 * Metrics.bitmapRatio;
-    private static final float HEIGHT = 50 * Metrics.bitmapRatio;
+    private static final float WIDTH = 0.85f;
+    private static final float HEIGHT = 1.0f;
 
     public static Swam get(float x, float y, int level) {
         Swam swam = (Swam) RecycleBin.get(Swam.class);
@@ -21,7 +21,7 @@ public class Swam extends Enemy implements Recyclable {
     }
 
     private Swam(float x, float y, int level) {
-        super(R.mipmap.enemy1_move, x, y, WIDTH, HEIGHT, 5, 4);
+        super(R.mipmap.swam, x, y, WIDTH, HEIGHT, 5, 4);
         speed = 1.0f;
         init(level);
     }
@@ -29,7 +29,7 @@ public class Swam extends Enemy implements Recyclable {
     private void init(int level) {
         hp = maxHp = (level + 1) * 50.0f + 10.0f;
         damage = 10.0f;
-        exp = (level + 1) * 2;
+        exp = (level + 1) * 2.0f;
         fixRect();
         setCollisionRect();
     }
