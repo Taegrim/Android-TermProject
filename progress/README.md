@@ -2,7 +2,8 @@
 프로젝트 진행 보고서
 
 ## 게임 소개
-![게임소개](https://user-images.githubusercontent.com/100705763/227116043-728e2ff2-2a67-4c7d-a80e-0b290277a4da.gif)
+![게임 움짤](https://user-images.githubusercontent.com/100705763/236852545-4efc5924-820f-4c7b-9c47-f7a7981cdc9a.gif)
+
 
 ## 현재까지의 진행 상황
 
@@ -81,5 +82,3 @@
     - 일반형 마법은 충돌하면 마법이 사라짐
     - 관통형 마법은 충돌하면 몬스터의 collisionFlag를 변화시키고 사라지지 않음, collisionFlag 로 한번만 충돌되게끔 처리
 
-
-##### 출처1 : Youtube **Leme 채널** 매직서바이벌 영상 (https://www.youtube.com/watch?v=VsSqkfKUZJQ)
