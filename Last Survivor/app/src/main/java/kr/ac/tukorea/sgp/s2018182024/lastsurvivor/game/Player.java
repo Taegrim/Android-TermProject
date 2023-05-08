@@ -29,8 +29,8 @@ public class Player extends AnimationSprite implements CollisionObject {
     private RectF collisionRect = new RectF();
     private FLOAT power = new FLOAT();
     private FLOAT damageAmp = new FLOAT();
-    private Gauge hpGauge = new Gauge(0.2f, R.color.player_hp_gauge_fg);
-    private Gauge expGauge = new Gauge(0.2f, R.color.player_exp_gauge_fg);
+    private Gauge hpGauge = new Gauge(0.2f, R.color.player_hp_gauge_fg, R.color.player_hp_gauge_bg);
+    private Gauge expGauge = new Gauge(0.2f, R.color.player_exp_gauge_fg, R.color.player_exp_gauge_bg);
 
     private static final int[] resId = {
             R.mipmap.player_idle, R.mipmap.player_move_updown, R.mipmap.player_move_left,
@@ -61,7 +61,7 @@ public class Player extends AnimationSprite implements CollisionObject {
     public void draw(Canvas canvas) {
         super.draw(canvas);
 
-        drawGauge(canvas, hpGauge, 0.0f, 0.1f, hp, maxHp);
+        drawGauge(canvas, hpGauge, 0.0f, 0.3f, hp, maxHp);
         drawGauge(canvas, expGauge, 0.0f, Metrics.gameHeight - 0.1f, exp, maxExp);
     }
 

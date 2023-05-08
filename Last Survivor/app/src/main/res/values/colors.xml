@@ -7,6 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="player_hp_gauge_fg">#5D33A6</color>
+    <color name="player_hp_gauge_fg">#B30000</color>
     <color name="player_exp_gauge_fg">#0C22D8</color>
+    <color name="player_hp_gauge_bg">#AE645E</color>
+    <color name="player_exp_gauge_bg">#7511366F</color>
 </resources>
