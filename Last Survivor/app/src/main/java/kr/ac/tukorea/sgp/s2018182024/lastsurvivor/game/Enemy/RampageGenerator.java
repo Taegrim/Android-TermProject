@@ -11,6 +11,7 @@ public class RampageGenerator extends Generator {
     public RampageGenerator() {
         generation_interval = 2.0f;
         generation_number = 5;
+        genType = GenType.RAMPAGE;
     }
 
     private void generate() {
@@ -43,5 +44,10 @@ public class RampageGenerator extends Generator {
             generate();
             time -= generation_interval;
         }
+    }
+
+    @Override
+    protected GenType getGenType() {
+        return genType;
     }
 }

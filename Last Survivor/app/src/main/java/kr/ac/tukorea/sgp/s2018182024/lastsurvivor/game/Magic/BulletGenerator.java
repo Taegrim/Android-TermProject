@@ -18,6 +18,8 @@ public class BulletGenerator extends MagicManager {
         magicType = MagicType.BULLET;
         magicType.calculateDamage(player);
         magicType.setCooldown(magicType.defaultCooldown());
+
+        genType = GenType.BULLET;
     }
 
     private void generate() {
@@ -44,5 +46,10 @@ public class BulletGenerator extends MagicManager {
             generate();
             time -= magicType.cooldown();
         }
+    }
+
+    @Override
+    protected GenType getGenType() {
+        return genType;
     }
 }

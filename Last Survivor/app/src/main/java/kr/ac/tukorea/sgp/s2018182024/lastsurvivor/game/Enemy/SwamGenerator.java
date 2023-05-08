@@ -13,6 +13,7 @@ public class SwamGenerator extends Generator {
     public SwamGenerator() {
         generation_interval = 2.0f;
         generation_number = 6;
+        genType = GenType.SWAM;
     }
 
     private void generate() {
@@ -45,5 +46,10 @@ public class SwamGenerator extends Generator {
             generate();
             time -= generation_interval;
         }
+    }
+
+    @Override
+    protected GenType getGenType() {
+        return genType;
     }
 }

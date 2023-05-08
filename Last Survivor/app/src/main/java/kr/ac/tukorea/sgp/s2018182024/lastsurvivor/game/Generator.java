@@ -5,33 +5,65 @@ import android.graphics.Canvas;
 import java.util.ArrayList;
 import java.util.Random;
 
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameObject;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.MineGenerator;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.RampageGenerator;
 
 public class Generator implements GameObject {
     private static final String TAG = Generator.class.getSimpleName();
+    private final float RAMPAGE_SPAWN_TIME = 10.0f;
+    private final float MINE_SPAWN_TIME = 20.0f;
+    private boolean isSpawnsRampage = false, isSpawnsMine = false;
+
     protected float time;
     protected int generation_number;
     protected float generation_interval;
     protected Random r = new Random();
     private ArrayList<Generator> generators = new ArrayList<>();
+    protected GenType genType;
+    protected enum GenType {
+        SWAM, RAMPAGE, MINE, BULLET, THUNDER, COUNT
+    }
 
     public void addGenerator(Generator gen) {
         generators.add(gen);
     }
 
-    public void removeGenerator(Generator gen) {
-        generators.remove(gen);
+    private void removeGenerator(GenType type) {
+        for(int i = generators.size() - 1; i >= 0; --i) {
+            if(generators.get(i).getGenType() == type) {
+                generators.remove(i);
+                return;
+            }
+        }
     }
 
     @Override
     public void update() {
-        for(Generator gen : generators) {
-            gen.update();
+        time += BaseScene.frameTime;
+        if(time > MINE_SPAWN_TIME && !isSpawnsMine) {
+            generators.add(new MineGenerator());
+            isSpawnsMine = true;
+            removeGenerator(GenType.RAMPAGE);
+        }
+        else if(time > RAMPAGE_SPAWN_TIME && !isSpawnsRampage) {
+            generators.add(new RampageGenerator());
+            isSpawnsRampage = true;
+            removeGenerator(GenType.SWAM);
+        }
+
+        for(int i = generators.size() - 1; i >= 0; --i) {
+            generators.get(i).update();
         }
     }
 
     @Override
     public void draw(Canvas canvas) {
 
+    }
+
+    protected GenType getGenType() {
+        return GenType.COUNT;
     }
 }

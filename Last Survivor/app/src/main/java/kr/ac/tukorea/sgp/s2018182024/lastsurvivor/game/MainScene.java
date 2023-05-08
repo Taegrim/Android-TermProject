@@ -39,9 +39,7 @@ public class MainScene extends BaseScene {
         addObject(Layer.CONTROLLER, generator);
 
         // Enemy Generator
-//        generator.addGenerator(new SwamGenerator());
-//        generator.addGenerator(new RampageGenerator());
-        generator.addGenerator(new MineGenerator());
+        generator.addGenerator(new SwamGenerator());
 
         // Magic Generator
         generator.addGenerator(new BulletGenerator(player));

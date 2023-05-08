@@ -10,7 +10,8 @@ public class MineGenerator extends Generator {
 
     public MineGenerator() {
         generation_interval = 3.0f;
-        generation_number = 4;
+        generation_number = 7;
+        genType = GenType.MINE;
     }
 
     private void generate() {
@@ -43,5 +44,10 @@ public class MineGenerator extends Generator {
             generate();
             time -= generation_interval;
         }
+    }
+
+    @Override
+    protected GenType getGenType() {
+        return genType;
     }
 }

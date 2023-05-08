@@ -157,6 +157,8 @@ public class MagicManager extends Generator {
         int index = -1;
 
         for(int i : enemyIndices) {
+            if(i >= enemies.size()) continue;
+
             Enemy enemy = (Enemy) enemies.get(i);
 
             dist = getDistance(playerX, playerY, enemy.getX(), enemy.getY());

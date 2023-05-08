@@ -26,6 +26,8 @@ public class ThunderGenerator extends MagicManager {
         magicType = MagicType.THUNDER;
         magicType.calculateDamage(player);
         magicType.setCooldown(magicType.defaultCooldown());
+
+        genType = GenType.THUNDER;
     }
 
     private void generate() {
@@ -38,6 +40,8 @@ public class ThunderGenerator extends MagicManager {
         getRandomTargetEnemy(enemies);
 
         for(int index : enemyIndices) {
+            if(index >= enemies.size()) continue;
+
             Enemy enemy = (Enemy) enemies.get(index);
 
             scene.addObject(MainScene.Layer.MAGIC,
@@ -62,5 +66,10 @@ public class ThunderGenerator extends MagicManager {
             generate();
             time -= magicType.cooldown();
         }
+    }
+
+    @Override
+    protected GenType getGenType() {
+        return genType;
     }
 }
