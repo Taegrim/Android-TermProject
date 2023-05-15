@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".app.SelectActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="현재 레벨 : 1"
+            android:textSize="20dp"
+            android:textColor="@color/select_activity_current_level"
+            android:layout_marginBottom="8dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="마법선택"
+            android:textSize="40dp"
+            android:textColor="@color/select_activity_magic_selection"
+            android:layout_marginBottom="30dp"
+            />
+
+        <ImageButton
+            android:layout_width="300dp"
+            android:layout_height="110dp"
+            android:src="@mipmap/select_background"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:layout_marginBottom="6dp"
+            />
+        <ImageButton
+            android:layout_width="300dp"
+            android:layout_height="110dp"
+            android:src="@mipmap/select_background"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:layout_marginBottom="6dp"
+            />
+        <ImageButton
+            android:layout_width="300dp"
+            android:layout_height="110dp"
+            android:src="@mipmap/select_background"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:layout_marginBottom="6dp"
+            />
+
+        <ImageButton
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/select_background"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:layout_marginTop="10dp"
+            />
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>
