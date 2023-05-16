@@ -1,13 +1,19 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
+
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameObject;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.RecycleBin;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
 
 public class Cyclone extends Magic {
     private static final String TAG = Cyclone.class.getSimpleName();
@@ -44,7 +50,6 @@ public class Cyclone extends Magic {
                     long lifeTime, MagicManager.AttackType attackType) {
         super(resIds[0], x, y, WIDTH, HEIGHT);
         magicType = type;
-        createAnimator();
         init(damage, lifeTime, attackType);
     }
 
@@ -57,8 +62,11 @@ public class Cyclone extends Magic {
         fixRect();
         setCollisionRect();
 
+        createAnimator();
         if(animator != null) {
-            animator.start();
+            if(!animator.isRunning()) {
+                animator.start();
+            }
         }
     }
 
@@ -77,25 +85,60 @@ public class Cyclone extends Magic {
 
     private void createAnimator() {
         if(animator == null) {
-            animator = ValueAnimator.ofFloat(1.0f, 2.0f);
+            animator = ValueAnimator.ofFloat(0.0f, 1.0f);
             animator.setDuration(lifeTime);
             animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(@NonNull ValueAnimator valueAnimator) {
-                    width = WIDTH * (float)valueAnimator.getAnimatedValue() * sizeRatio;
+                    width = WIDTH * (float)valueAnimator.getAnimatedValue() + 1.0f * sizeRatio;
                     height = width;
-                    fixRect();
-                    setCollisionRect();
+
+                    ArrayList<GameObject> magics = BaseScene.getTopScene().getObjects(MainScene.Layer.MAGIC);
+                    for(int i = magics.size() - 1; i >= 0; --i) {
+                        Magic magic = (Magic) magics.get(i);
+                        if(MagicManager.MagicType.CYCLONE == magic.getMagicType()) {
+                            Cyclone cyclone = (Cyclone) magic;
+                            cyclone.setSize(width, width);
+                            cyclone.setCollisionRect();
+                        }
+                    }
+                }
+            });
+            animator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    ArrayList<GameObject> magics = BaseScene.getTopScene().getObjects(MainScene.Layer.MAGIC);
+                    for(int i = magics.size() - 1; i >= 0; --i) {
+                        Magic magic = (Magic) magics.get(i);
+                        if(MagicManager.MagicType.CYCLONE == magic.getMagicType()) {
+                            Cyclone cyclone = (Cyclone) magic;
+                            cyclone.removeCyclone();
+                        }
+                    }
                 }
             });
         }
+        else {
+            if(animator.getDuration() != lifeTime) {
+                animator.setDuration(lifeTime);
+            }
+        }
+    }
+
+    private void removeCyclone() {
+        BaseScene.getTopScene().removeObject(MainScene.Layer.MAGIC, this, false);
     }
 
     @Override
     public void onRecycle() {
         if(animator != null) {
             animator.cancel();
-            animator = null;
+            animator.setCurrentPlayTime(0);
         }
+    }
+
+    @Override
+    public void setCollisionRect() {
+        collisionRect.set(rect);
     }
 }

@@ -50,7 +50,7 @@ public class MagicManager extends Generator {
         static final float[] coefficients = { 2.0f, 5.8f, 1.7f }; // 데미지 계수
         static float[] increaseRates = { 1.0f, 1.0f, 1.0f };
         static float[] damages = { 1.0f, 1.0f, 1.0f };  // 결과 데미지, 초기 값으로 1.0 선언
-        static int[] counts = { 1, 1, 1 };
+        static int[] counts = { 1, 1, 3 };
         static int[] levels = { 1, 1, 1 };
         static int[] maxLevels = { 7, 7, 7 };
         static final float[] defaultCooldowns = { 0.75f, 2.2f, 3.5f };
