@@ -1,6 +1,9 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic;
 
+import android.animation.ValueAnimator;
 import android.graphics.Canvas;
+
+import androidx.annotation.NonNull;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
@@ -15,6 +18,8 @@ public class Cyclone extends Magic {
     private float lifeTime;
     private long createdTime;
     private float size = WIDTH;
+    private float sizeRatio = 1.0f;
+    private static ValueAnimator animator;
 
     private static final int resIds[] = {
             R.mipmap.cyclone_a1, R.mipmap.cyclone_a2, R.mipmap.cyclone_a3, R.mipmap.cyclone_a4,
@@ -40,6 +45,7 @@ public class Cyclone extends Magic {
                     float lifeTime, MagicManager.AttackType attackType) {
         super(resIds[0], x, y, WIDTH, HEIGHT);
         magicType = type;
+        createAnimator();
         init(damage, lifeTime, attackType);
     }
 
@@ -51,6 +57,10 @@ public class Cyclone extends Magic {
         this.resIndex = 0;
         fixRect();
         setCollisionRect();
+
+        if(animator != null) {
+            animator.start();
+        }
     }
 
     @Override
@@ -64,5 +74,29 @@ public class Cyclone extends Magic {
         }
 
         canvas.drawBitmap(bitmap, null, rect, null);
+    }
+
+    private void createAnimator() {
+        if(animator == null) {
+            animator = ValueAnimator.ofFloat(1.0f, 2.0f);
+            animator.setDuration(3000);
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(@NonNull ValueAnimator valueAnimator) {
+                    width = WIDTH * (float)valueAnimator.getAnimatedValue() * sizeRatio;
+                    height = width;
+                    fixRect();
+                    setCollisionRect();
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onRecycle() {
+        if(animator != null) {
+            animator.cancel();
+            animator = null;
+        }
     }
 }
