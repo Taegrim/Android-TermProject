@@ -23,7 +23,7 @@ public class Generator implements GameObject {
     private ArrayList<Generator> generators = new ArrayList<>();
     protected GenType genType;
     protected enum GenType {
-        SWAM, RAMPAGE, MINE, BULLET, THUNDER, COUNT
+        SWAM, RAMPAGE, MINE, BULLET, THUNDER, CYCLONE, COUNT
     }
 
     public void addGenerator(Generator gen) {
@@ -64,6 +64,6 @@ public class Generator implements GameObject {
     }
 
     protected GenType getGenType() {
-        return GenType.COUNT;
+        return genType;
     }
 }

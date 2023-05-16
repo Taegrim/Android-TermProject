@@ -48,8 +48,4 @@ public class SwamGenerator extends Generator {
         }
     }
 
-    @Override
-    protected GenType getGenType() {
-        return genType;
-    }
 }

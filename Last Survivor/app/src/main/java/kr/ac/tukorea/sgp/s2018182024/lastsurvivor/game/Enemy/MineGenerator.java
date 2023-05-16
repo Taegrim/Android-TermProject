@@ -46,8 +46,4 @@ public class MineGenerator extends Generator {
         }
     }
 
-    @Override
-    protected GenType getGenType() {
-        return genType;
-    }
 }

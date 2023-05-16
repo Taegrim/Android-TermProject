@@ -14,10 +14,9 @@ public class Cyclone extends Magic {
     private static final float WIDTH = 1.0f;
     private static final float HEIGHT = 1.0f;
     private static final int FRAME = 10;
-    private static final int FRAME_COUNT = 4;
-    private float lifeTime;
+    public static final int FRAME_COUNT = 4;
+    private long lifeTime;
     private long createdTime;
-    private float size = WIDTH;
     private float sizeRatio = 1.0f;
     private static ValueAnimator animator;
 
@@ -27,8 +26,8 @@ public class Cyclone extends Magic {
 
     private int resIndex;
 
-    public static Cyclone get(MagicManager.MagicType type, float x, float y, float damage, float lifeTime,
-                       MagicManager.AttackType attackType)
+    public static Cyclone get(MagicManager.MagicType type, float x, float y, float damage,
+                              long lifeTime, MagicManager.AttackType attackType)
     {
         Cyclone cyclone = (Cyclone) RecycleBin.get(Cyclone.class);
         if(cyclone == null) {
@@ -42,14 +41,14 @@ public class Cyclone extends Magic {
     }
 
     private Cyclone(MagicManager.MagicType type, float x, float y, float damage,
-                    float lifeTime, MagicManager.AttackType attackType) {
+                    long lifeTime, MagicManager.AttackType attackType) {
         super(resIds[0], x, y, WIDTH, HEIGHT);
         magicType = type;
         createAnimator();
         init(damage, lifeTime, attackType);
     }
 
-    public void init(float damage, float lifeTime, MagicManager.AttackType attackType) {
+    public void init(float damage, long lifeTime, MagicManager.AttackType attackType) {
         this.damage = damage;
         this.lifeTime = lifeTime;
         this.attackType = attackType;
@@ -79,7 +78,7 @@ public class Cyclone extends Magic {
     private void createAnimator() {
         if(animator == null) {
             animator = ValueAnimator.ofFloat(1.0f, 2.0f);
-            animator.setDuration(3000);
+            animator.setDuration(lifeTime);
             animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(@NonNull ValueAnimator valueAnimator) {

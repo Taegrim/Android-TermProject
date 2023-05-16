@@ -46,8 +46,4 @@ public class RampageGenerator extends Generator {
         }
     }
 
-    @Override
-    protected GenType getGenType() {
-        return genType;
-    }
 }

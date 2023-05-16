@@ -67,9 +67,4 @@ public class ThunderGenerator extends MagicManager {
             time -= magicType.cooldown();
         }
     }
-
-    @Override
-    protected GenType getGenType() {
-        return genType;
-    }
 }

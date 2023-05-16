@@ -4,48 +4,55 @@ import java.util.ArrayList;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameObject;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.Enemy;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Player;
 
-public class BulletGenerator extends MagicManager {
-    private static final String TAG = BulletGenerator.class.getSimpleName();
+public class CycloneGenerator extends MagicManager {
+    private static final String TAG = CycloneGenerator.class.getSimpleName();
+    private static long LIFE_TIME = 2000;   // ms 단위
 
-    public BulletGenerator(Player player) {
-        generation_interval = 1.0f;
+    public CycloneGenerator(Player player) {
+        generation_interval = 7.0f;
         this.player = player;
-        speed = 8.0f;
 
-        magicType = MagicType.BULLET;
+        magicType = MagicType.CYCLONE;
         magicType.calculateDamage(player);
         magicType.setCooldown(magicType.defaultCooldown());
 
-        genType = GenType.BULLET;
+        genType = GenType.CYCLONE;
     }
 
     private void generate() {
         MainScene scene = (MainScene) BaseScene.getTopScene();
         ArrayList<GameObject> enemies = scene.getObjects(MainScene.Layer.ENEMY);
 
-        if(enemies.size() == 0)
+        if(enemies.size() == 0) {
             return;
-
-        if(!getCloseEnemyDir(enemies))
-            return;
-
-        for(int i = 0; i < magicType.count(); ++i) {
-            scene.addObject(MainScene.Layer.MAGIC,
-                    Bullet.get(magicType, player.getX(), player.getY(), this.dx, this.dy, this.angle,
-                            magicType.damage(), magicType.attackType()));
         }
+        getRandomTargetEnemy(enemies);
+
+        for(int index : enemyIndices) {
+            if(index >= enemies.size()) continue;
+
+            Enemy enemy = (Enemy) enemies.get(index);
+
+            scene.addObject(MainScene.Layer.MAGIC,
+                    Cyclone.get(magicType, enemy.getX(), enemy.getY(), magicType.damage(),
+                            LIFE_TIME, magicType.attackType()));
+        }
+
+        // 비우기
+        enemyIndices.clear();
     }
 
     @Override
     public void update() {
         time += BaseScene.frameTime;
+
         if(time > magicType.cooldown()) {
             generate();
             time -= magicType.cooldown();
         }
     }
-
 }
