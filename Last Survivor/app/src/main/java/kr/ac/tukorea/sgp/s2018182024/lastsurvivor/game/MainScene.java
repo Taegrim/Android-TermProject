@@ -53,7 +53,7 @@ public class MainScene extends BaseScene {
 
         Satellite.setPlayer(player);
         addObject(Layer.MAGIC, Satellite.get(MagicManager.MagicType.CYCLONE, player.getX(), player.getY(),
-                0, 1, 30.0f, MagicManager.AttackType.PENETRATION));
+                0, 2.0f, 30.0f, 1.5f, MagicManager.AttackType.PENETRATION));
 
 
         // Item Generator
