@@ -135,6 +135,24 @@ public class MagicManager extends Generator {
                         break;
                 }
                 break;
+            case CYCLONE:
+                switch(level) {
+                    case 2:
+                    case 5:
+                        MagicType.counts[magicId] += 1;
+                        break;
+                    case 3:
+                    case 6:
+                        changeIncreaseRate(type, player, 0.5f);
+                        break;
+                    case 4:
+                        Log.d(TAG, "돌개바람 4레벨 달성!");
+                        break;
+                    case 7:
+                        Log.d(TAG, "마력탄 특성 습득!");
+                        break;
+                }
+                break;
         }
     }
 
@@ -184,6 +202,13 @@ public class MagicManager extends Generator {
         return true;
     }
 
+    protected void getRandomDir() {
+        int sign = (r.nextInt(2) == 0) ? 1 : -1;
+        float radian = r.nextFloat() * 3.14f * sign;
+        this.dx = (float) (speed * Math.cos(radian));
+        this.dy = (float) (speed * Math.sin(radian));
+    }
+
     protected void getRandomTargetEnemy(ArrayList<GameObject> enemies) {
         if(AttackType.PENETRATION == magicType.attackType()) {
             for(int i = enemies.size() - 1; i >= 0; --i) {
@@ -222,5 +247,15 @@ public class MagicManager extends Generator {
                 enemyIndices.remove(i);
             }
         }
+    }
+
+    protected boolean isEvenOneOnScreen(ArrayList<GameObject> objects) {
+        for(int i = objects.size() - 1; i >= 0; --i) {
+            Enemy enemy = (Enemy) objects.get(i);
+            if(Metrics.isInGameView(enemy.getX(), enemy.getY())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

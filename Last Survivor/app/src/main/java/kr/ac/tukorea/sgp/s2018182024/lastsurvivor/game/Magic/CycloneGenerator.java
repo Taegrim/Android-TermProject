@@ -15,6 +15,7 @@ public class CycloneGenerator extends MagicManager {
     public CycloneGenerator(Player player) {
         generation_interval = 7.0f;
         this.player = player;
+        speed = 3.0f;
 
         magicType = MagicType.CYCLONE;
         magicType.calculateDamage(player);
@@ -27,19 +28,18 @@ public class CycloneGenerator extends MagicManager {
         MainScene scene = (MainScene) BaseScene.getTopScene();
         ArrayList<GameObject> enemies = scene.getObjects(MainScene.Layer.ENEMY);
 
-        if(enemies.size() == 0) {
+        if(enemies.size() == 0)
             return;
-        }
-        getRandomTargetEnemy(enemies);
 
-        for(int index : enemyIndices) {
-            if(index >= enemies.size()) continue;
+        if(!isEvenOneOnScreen(enemies))
+            return;
 
-            Enemy enemy = (Enemy) enemies.get(index);
+        for(int i = 0; i < magicType.count(); ++i) {
+            getRandomDir();
 
             scene.addObject(MainScene.Layer.MAGIC,
-                    Cyclone.get(magicType, enemy.getX(), enemy.getY(), magicType.damage(),
-                            LIFE_TIME, magicType.attackType()));
+                    Cyclone.get(magicType, player.getX(), player.getY(), this.dx, this.dy,
+                            magicType.damage(), LIFE_TIME, magicType.attackType()));
         }
 
         // 비우기

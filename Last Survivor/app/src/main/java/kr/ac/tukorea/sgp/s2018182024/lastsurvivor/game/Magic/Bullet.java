@@ -49,6 +49,11 @@ public class Bullet extends Magic {
 
     @Override
     public void update() {
+        x += dx * BaseScene.frameTime;
+        y += dy * BaseScene.frameTime;
+        fixRect();
+        setCollisionRect();
+
         super.update();
     }
 
@@ -57,12 +62,8 @@ public class Bullet extends Magic {
         canvas.save();
         canvas.rotate(angle, x, y);
         super.draw(canvas);
-        fixRect();
-        setCollisionRect();
         canvas.restore();
 
-        x += dx * BaseScene.frameTime;
-        y += dy * BaseScene.frameTime;
     }
 
     @Override

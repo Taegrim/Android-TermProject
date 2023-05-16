@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -24,6 +25,7 @@ public class Cyclone extends Magic {
     private long lifeTime;
     private long createdTime;
     private float sizeRatio = 1.0f;
+    private float dx, dy;
     private static ValueAnimator animator;
 
     private static final int resIds[] = {
@@ -32,42 +34,58 @@ public class Cyclone extends Magic {
 
     private int resIndex;
 
-    public static Cyclone get(MagicManager.MagicType type, float x, float y, float damage,
-                              long lifeTime, MagicManager.AttackType attackType)
+    public static Cyclone get(MagicManager.MagicType type, float x, float y, float dx, float dy,
+                              float damage, long lifeTime, MagicManager.AttackType attackType)
     {
         Cyclone cyclone = (Cyclone) RecycleBin.get(Cyclone.class);
         if(cyclone == null) {
-            return new Cyclone(type, x, y, damage, lifeTime, attackType);
+            return new Cyclone(type, x, y, dx, dy, damage, lifeTime, attackType);
         }
         cyclone.x = x;
         cyclone.y = y;
-        cyclone.init(damage, lifeTime, attackType);
+        cyclone.init(dx, dy, damage, lifeTime, attackType);
         cyclone.setBitmapResource(resIds[cyclone.resIndex]);
         return cyclone;
     }
 
-    private Cyclone(MagicManager.MagicType type, float x, float y, float damage,
+    private Cyclone(MagicManager.MagicType type, float x, float y, float dx, float dy, float damage,
                     long lifeTime, MagicManager.AttackType attackType) {
         super(resIds[0], x, y, WIDTH, HEIGHT);
         magicType = type;
-        init(damage, lifeTime, attackType);
+        init(dx, dy, damage, lifeTime, attackType);
     }
 
-    public void init(float damage, long lifeTime, MagicManager.AttackType attackType) {
+    public void init(float dx, float dy, float damage, long lifeTime,
+                     MagicManager.AttackType attackType) {
+        this.dx = dx;
+        this.dy = dy;
         this.damage = damage;
         this.lifeTime = lifeTime;
         this.attackType = attackType;
         this.createdTime = System.currentTimeMillis();
         this.resIndex = 0;
-        fixRect();
-        setCollisionRect();
 
         createAnimator();
         if(animator != null) {
             if(!animator.isRunning()) {
+                animator.setCurrentPlayTime(0);
                 animator.start();
             }
         }
+        this.width = 1.0f;
+        this.height = 1.0f;
+        fixRect();
+        setCollisionRect();
+    }
+
+    @Override
+    public void update() {
+        x += dx * BaseScene.frameTime;
+        y += dy * BaseScene.frameTime;
+        fixRect();
+        setCollisionRect();
+
+        super.update();
     }
 
     @Override
@@ -80,7 +98,7 @@ public class Cyclone extends Magic {
             setBitmapResource(resIds[resIndex]);
         }
 
-        canvas.drawBitmap(bitmap, null, rect, null);
+        super.draw(canvas);
     }
 
     private void createAnimator() {
@@ -98,8 +116,8 @@ public class Cyclone extends Magic {
                         Magic magic = (Magic) magics.get(i);
                         if(MagicManager.MagicType.CYCLONE == magic.getMagicType()) {
                             Cyclone cyclone = (Cyclone) magic;
-                            cyclone.setSize(width, width);
-                            cyclone.setCollisionRect();
+                            cyclone.width = width;
+                            cyclone.height = height;
                         }
                     }
                 }
@@ -132,8 +150,7 @@ public class Cyclone extends Magic {
     @Override
     public void onRecycle() {
         if(animator != null) {
-            animator.cancel();
-            animator.setCurrentPlayTime(0);
+            animator.end();
         }
     }
 
