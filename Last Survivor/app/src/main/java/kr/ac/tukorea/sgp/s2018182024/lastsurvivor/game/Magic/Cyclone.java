@@ -56,7 +56,8 @@ public class Cyclone extends Magic {
     }
 
     public void init(float dx, float dy, float damage, long lifeTime,
-                     MagicManager.AttackType attackType) {
+                     MagicManager.AttackType attackType)
+    {
         this.dx = dx;
         this.dy = dy;
         this.damage = damage;
