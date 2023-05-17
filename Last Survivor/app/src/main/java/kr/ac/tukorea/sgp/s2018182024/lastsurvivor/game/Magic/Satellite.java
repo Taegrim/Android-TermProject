@@ -3,6 +3,7 @@ package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic;
 import android.util.Log;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.RecycleBin;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Player;
 
@@ -54,7 +55,7 @@ public class Satellite extends Magic {
 
     @Override
     public void update() {
-        angle = (angle + speed) % 360;
+        angle = (angle + speed * BaseScene.frameTime) % 360;
         double radian = Math.toRadians(this.angle);
         x = player.getX() + (float) (radius * Math.cos(radian));
         y = player.getY() + (float) (radius * Math.sin(radian));

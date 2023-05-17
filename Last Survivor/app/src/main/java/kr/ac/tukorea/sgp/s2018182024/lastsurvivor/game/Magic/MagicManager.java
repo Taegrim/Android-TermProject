@@ -13,9 +13,9 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Player;
 
 public class MagicManager extends Generator {
     private static final String TAG = MagicManager.class.getSimpleName();
-    protected Player player;
-    protected MagicType magicType;
-    protected float dx, dy, angle, speed;
+    protected static Player player;
+    protected static MagicType magicType;
+    protected static float dx, dy, angle, speed;
     protected ArrayList<Integer> enemyIndices = new ArrayList<>();
 
     public enum AttackType {
