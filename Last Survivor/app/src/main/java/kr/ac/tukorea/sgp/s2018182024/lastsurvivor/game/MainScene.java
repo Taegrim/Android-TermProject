@@ -51,15 +51,8 @@ public class MainScene extends BaseScene {
 //        generator.addGenerator(new ThunderGenerator(player));
 //        generator.addGenerator(new CycloneGenerator(player));
 
-
-//        addObject(Layer.MAGIC, Satellite.get(MagicManager.MagicType.CYCLONE, player.getX(), player.getY(),
-//                0, 2.0f, 30.0f, 1.5f, MagicManager.AttackType.PENETRATION));
-
-//        generator.addGenerator(new SatelliteManager((player)));
-//        SatelliteManager.generate();
         SatelliteManager.init(player);
-        SatelliteManager.generate();
-
+        SatelliteManager.generate(this);
 
         // Item Generator
         generator.addGenerator(new ExpOrbGenerator(player));

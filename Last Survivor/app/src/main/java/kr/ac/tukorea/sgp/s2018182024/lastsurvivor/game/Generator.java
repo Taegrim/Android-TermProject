@@ -21,9 +21,9 @@ public class Generator implements GameObject {
     protected float generation_interval;
     protected Random r = new Random();
     private ArrayList<Generator> generators = new ArrayList<>();
-    protected GenType genType;
+    protected static GenType genType;
     protected enum GenType {
-        SWAM, RAMPAGE, MINE, BULLET, THUNDER, CYCLONE, COUNT
+        SWAM, RAMPAGE, MINE, BULLET, THUNDER, CYCLONE, SATELLITE, COUNT
     }
 
     public void addGenerator(Generator gen) {
