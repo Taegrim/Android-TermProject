@@ -3,6 +3,7 @@ package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.RectF;
+import android.util.Log;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
@@ -17,8 +18,8 @@ public class Meteor extends Magic {
     private static final float HEIGHT = 15.0f;
     private static final float EXPLOSION_WIDTH = 3.0f;
     private static final int EXPLOSION_START_OFFSET = 4;
-    private int resIndex;
     private static final float fps = 20.0f;
+    public static final float SPEED = 8.0f;
     private long createdTime;
     private Bitmap explosionBitmap;
     private RectF explosionRect = new RectF();
@@ -94,8 +95,8 @@ public class Meteor extends Magic {
             setBitmapResource(meteorResIds[index]);
 
             if(index < meteorResIds.length - EXPLOSION_START_OFFSET) {
-                x += 8.0f * BaseScene.frameTime;
-                y += 16.0f * BaseScene.frameTime;
+                x += SPEED * BaseScene.frameTime;
+                y += SPEED * 2.0f * BaseScene.frameTime;
 
                 fixRect();
                 setCollisionRect();
@@ -120,5 +121,17 @@ public class Meteor extends Magic {
             canvas.drawBitmap(explosionBitmap, null, explosionRect, null);
         }
 
+    }
+
+    public static float getMoveTime() {
+        return (meteorResIds.length - EXPLOSION_START_OFFSET) / fps;
+    }
+
+    public static float getBitmapWidth() {
+        return WIDTH;
+    }
+
+    public static float getBitmapHeight() {
+        return HEIGHT;
     }
 }

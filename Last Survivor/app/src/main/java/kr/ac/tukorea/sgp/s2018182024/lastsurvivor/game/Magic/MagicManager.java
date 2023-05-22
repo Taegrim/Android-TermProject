@@ -53,7 +53,7 @@ public class MagicManager extends Generator {
         static int[] counts = { 1, 1, 1, 1, 1 };
         static int[] levels = { 1, 1, 1, 1, 1 };
         static int[] maxLevels = { 7, 7, 7, 7, 7 };
-        static final float[] defaultCooldowns = { 0.75f, 2.2f, 3.5f, 0.0f, 1.5f };
+        static final float[] defaultCooldowns = { 0.75f, 2.2f, 3.5f, 0.0f, 4.5f };
         static FLOAT[] cooldowns = new FLOAT[COUNT.ordinal()];
         static AttackType[] attackTypes = {
                 AttackType.NORMAL,
