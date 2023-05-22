@@ -47,8 +47,8 @@ public class Thunder extends Magic {
     }
 
     public void init(float damage, float lifeTime, MagicManager.AttackType attackType, Paint paint) {
-        this.damage = damage;
         this.createdTime = System.currentTimeMillis();
+        this.damage = damage;
         this.lifeTime = lifeTime;
         this.attackType = attackType;
         this.sharedPaint = paint;
