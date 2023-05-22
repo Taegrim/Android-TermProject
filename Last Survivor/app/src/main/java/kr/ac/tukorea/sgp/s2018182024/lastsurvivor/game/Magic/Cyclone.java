@@ -35,34 +35,32 @@ public class Cyclone extends Magic {
     private int resIndex;
 
     public static Cyclone get(MagicManager.MagicType type, float x, float y, float dx, float dy,
-                              float damage, long lifeTime, MagicManager.AttackType attackType)
+                              long lifeTime)
     {
         Cyclone cyclone = (Cyclone) RecycleBin.get(Cyclone.class);
         if(cyclone == null) {
-            return new Cyclone(type, x, y, dx, dy, damage, lifeTime, attackType);
+            return new Cyclone(type, x, y, dx, dy, lifeTime);
         }
         cyclone.x = x;
         cyclone.y = y;
-        cyclone.init(dx, dy, damage, lifeTime, attackType);
+        cyclone.init(dx, dy, lifeTime);
         cyclone.setBitmapResource(resIds[cyclone.resIndex]);
         return cyclone;
     }
 
-    private Cyclone(MagicManager.MagicType type, float x, float y, float dx, float dy, float damage,
-                    long lifeTime, MagicManager.AttackType attackType) {
+    private Cyclone(MagicManager.MagicType type, float x, float y, float dx, float dy, long lifeTime) {
         super(resIds[0], x, y, WIDTH, HEIGHT);
         magicType = type;
-        init(dx, dy, damage, lifeTime, attackType);
+        init(dx, dy, lifeTime);
     }
 
-    public void init(float dx, float dy, float damage, long lifeTime,
-                     MagicManager.AttackType attackType)
+    public void init(float dx, float dy, long lifeTime)
     {
         this.dx = dx;
         this.dy = dy;
-        this.damage = damage;
+        this.damage = magicType.damage();
         this.lifeTime = lifeTime;
-        this.attackType = attackType;
+        this.attackType = magicType.attackType();
         this.createdTime = System.currentTimeMillis();
         this.resIndex = 0;
 

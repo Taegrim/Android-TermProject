@@ -1,5 +1,7 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
@@ -11,13 +13,10 @@ public class BulletGenerator extends MagicManager {
     private static final String TAG = BulletGenerator.class.getSimpleName();
 
     public BulletGenerator(Player player) {
-        generation_interval = 1.0f;
         this.player = player;
         speed = 8.0f;
 
-        magicType = MagicType.BULLET;
-        magicType.calculateDamage(player);
-        magicType.setCooldown(magicType.defaultCooldown());
+        setMagicType(MagicType.BULLET);
 
         genType = GenType.BULLET;
     }
@@ -34,8 +33,7 @@ public class BulletGenerator extends MagicManager {
 
         for(int i = 0; i < magicType.count(); ++i) {
             scene.addObject(MainScene.Layer.MAGIC,
-                    Bullet.get(magicType, player.getX(), player.getY(), this.dx, this.dy, this.angle,
-                            magicType.damage(), magicType.attackType()));
+                    Bullet.get(magicType, player.getX(), player.getY(), this.dx, this.dy, this.angle));
         }
     }
 

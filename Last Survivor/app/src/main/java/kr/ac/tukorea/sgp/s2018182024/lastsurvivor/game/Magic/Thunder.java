@@ -24,33 +24,33 @@ public class Thunder extends Magic {
             R.mipmap.thunder_strom_a,R.mipmap.thunder_strom_b, R.mipmap.thunder_strom_c
     };
 
-    public static Thunder get(MagicManager.MagicType type, float x, float y, float damage, int resIndex, float lifeTime,
-                              MagicManager.AttackType attackType, Paint paint)
+    public static Thunder get(MagicManager.MagicType type, float x, float y, int resIndex, float lifeTime,
+                              Paint paint)
     {
         Thunder thunder = (Thunder) RecycleBin.get(Thunder.class);
         if(thunder == null) {
-            return new Thunder(type, x, y, damage, resIndex, lifeTime, attackType, paint);
+            return new Thunder(type, x, y, resIndex, lifeTime, paint);
         }
         thunder.x = x;
         thunder.y = y;
         thunder.setBitmapResource(resIds[resIndex]);
-        thunder.init(damage, lifeTime, attackType, paint);
+        thunder.init(lifeTime, paint);
         return thunder;
     }
 
-    private Thunder(MagicManager.MagicType type, float x, float y, float damage, int resIndex,
-                    float lifeTime, MagicManager.AttackType attackType, Paint paint)
+    private Thunder(MagicManager.MagicType type, float x, float y, int resIndex, float lifeTime,
+                    Paint paint)
     {
         super(resIds[resIndex], x, y, WIDTH, HEIGHT);
         magicType = type;
-        init(damage, lifeTime, attackType, paint);
+        init(lifeTime, paint);
     }
 
-    public void init(float damage, float lifeTime, MagicManager.AttackType attackType, Paint paint) {
+    public void init(float lifeTime, Paint paint) {
         this.createdTime = System.currentTimeMillis();
-        this.damage = damage;
+        this.damage = magicType.damage();
         this.lifeTime = lifeTime;
-        this.attackType = attackType;
+        this.attackType = magicType.attackType();
         this.sharedPaint = paint;
         this.isCollision = true;
         fixRect();

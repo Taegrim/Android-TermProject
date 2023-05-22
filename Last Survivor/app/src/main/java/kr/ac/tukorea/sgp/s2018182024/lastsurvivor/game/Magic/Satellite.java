@@ -15,33 +15,32 @@ public class Satellite extends Magic {
     private float angle, radius, speed;
 
     public static Satellite get(MagicManager.MagicType type, float x, float y, float angle, float radius,
-                                float damage, float speed, MagicManager.AttackType attackType)
+                                float speed)
     {
         Satellite satellite = (Satellite) RecycleBin.get(Satellite.class);
         if(satellite == null) {
-            return new Satellite(type, x, y, angle, radius, damage, speed, attackType);
+            return new Satellite(type, x, y, angle, radius, speed);
         }
         satellite.x = x;
         satellite.y = y;
-        satellite.init(angle, radius, damage, speed, attackType);
+        satellite.init(angle, radius, speed);
         return satellite;
     }
 
     public Satellite(MagicManager.MagicType type, float x, float y, float angle, float radius,
-                     float damage, float speed, MagicManager.AttackType attackType)
+                     float speed)
     {
         super(R.mipmap.satellite, x, y, WIDTH, HEIGHT);
         magicType = type;
-        init(angle, radius, damage, speed, attackType);
+        init(angle, radius, speed);
     }
 
-    public void init(float angle, float radius, float damage, float speed,
-                     MagicManager.AttackType attackType)
+    public void init(float angle, float radius, float speed)
     {
         this.angle = angle;
         this.radius = radius;
-        this.damage = damage;
-        this.attackType = attackType;
+        this.damage = magicType.damage();
+        this.attackType = magicType.attackType();
         this.speed = speed;
         fixRect();
         setCollisionRect();

@@ -9,6 +9,8 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Player;
 public class SatelliteManager extends MagicManager {
     private static final String TAG = SatelliteManager.class.getSimpleName();
     private static float radius = 2.0f;
+    private static float speed;
+    private static MagicType magicType;
 
     public SatelliteManager(Player player) {
         init(player);
@@ -16,7 +18,7 @@ public class SatelliteManager extends MagicManager {
 
     public static void init(Player player) {
         SatelliteManager.player = player;
-        speed = 90.0f;
+        SatelliteManager.speed = 90.0f;
 
         magicType = MagicType.SATELLITE;
         magicType.calculateDamage(player);
@@ -41,8 +43,7 @@ public class SatelliteManager extends MagicManager {
         for(int i = 0; i < 2; ++i) {
 
             scene.addObject(MainScene.Layer.MAGIC,
-                    Satellite.get(magicType, player.getX(), player.getY(), angle, radius,
-                            magicType.damage(), speed, magicType.attackType()));
+                    Satellite.get(magicType, player.getX(), player.getY(), angle, radius, speed));
             angle += amount;
         }
     }

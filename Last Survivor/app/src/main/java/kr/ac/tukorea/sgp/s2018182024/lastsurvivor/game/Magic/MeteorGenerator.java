@@ -4,21 +4,18 @@ import java.util.ArrayList;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameObject;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.Enemy;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Player;
 
-public class CycloneGenerator extends MagicManager {
-    private static final String TAG = CycloneGenerator.class.getSimpleName();
-    private static long LIFE_TIME = 2000;   // ms 단위
+public class MeteorGenerator extends MagicManager {
+    private static final String TAG = MeteorGenerator.class.getSimpleName();
 
-    public CycloneGenerator(Player player) {
+    public MeteorGenerator(Player player) {
         this.player = player;
-        speed = 3.0f;
 
-        setMagicType(MagicType.CYCLONE);
+        setMagicType(MagicType.METEOR);
 
-        genType = GenType.CYCLONE;
+        genType = GenType.METEOR;
     }
 
     private void generate() {
@@ -32,20 +29,17 @@ public class CycloneGenerator extends MagicManager {
             return;
 
         for(int i = 0; i < magicType.count(); ++i) {
-            getRandomDir();
+            setRandomPosition();
 
             scene.addObject(MainScene.Layer.MAGIC,
-                    Cyclone.get(magicType, player.getX(), player.getY(), this.dx, this.dy, LIFE_TIME));
+                    Meteor.get(MagicManager.MagicType.METEOR, dx, dy));
         }
 
-        // 비우기
-        enemyIndices.clear();
     }
 
     @Override
     public void update() {
         time += BaseScene.frameTime;
-
         if(time > magicType.cooldown()) {
             generate();
             time -= magicType.cooldown();

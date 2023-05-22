@@ -171,7 +171,8 @@ public class Player extends AnimationSprite implements CollisionObject {
         // 레벨업 했을 때 하는 처리
 //        MagicManager.onLevelUp(MagicManager.MagicType.BULLET, this);
 //        MagicManager.onLevelUp(MagicManager.MagicType.THUNDER, this);
-        MagicManager.onLevelUp(MagicManager.MagicType.CYCLONE, this);
+//        MagicManager.onLevelUp(MagicManager.MagicType.CYCLONE, this);
+        MagicManager.onLevelUp(MagicManager.MagicType.METEOR, this);
     }
 
     public void setCollisionRect() {

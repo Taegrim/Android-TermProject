@@ -14,8 +14,8 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Player;
 public class MagicManager extends Generator {
     private static final String TAG = MagicManager.class.getSimpleName();
     protected static Player player;
-    protected static MagicType magicType;
-    protected static float dx, dy, angle, speed;
+    protected MagicType magicType;
+    protected float dx, dy, angle, speed;
     protected ArrayList<Integer> enemyIndices = new ArrayList<>();
 
     public enum AttackType {
@@ -23,7 +23,7 @@ public class MagicManager extends Generator {
     }
 
     public enum MagicType {
-        BULLET, THUNDER, CYCLONE, SATELLITE, COUNT;
+        BULLET, THUNDER, CYCLONE, SATELLITE, METEOR, COUNT;
 
         float coefficient() { return coefficients[this.ordinal()]; }
         float increaseRate() { return increaseRates[this.ordinal()]; }
@@ -47,19 +47,20 @@ public class MagicManager extends Generator {
                     this.increaseRate() * player.getDamageAmp();
         }
 
-        static final float[] coefficients = { 2.0f, 5.8f, 1.7f, 1.2f }; // 데미지 계수
-        static float[] increaseRates = { 1.0f, 1.0f, 1.0f, 1.0f };
-        static float[] damages = { 1.0f, 1.0f, 1.0f, 1.0f };  // 결과 데미지, 초기 값으로 1.0 선언
-        static int[] counts = { 1, 1, 3, 1 };
-        static int[] levels = { 1, 1, 1, 1 };
-        static int[] maxLevels = { 7, 7, 7, 7 };
-        static final float[] defaultCooldowns = { 0.75f, 2.2f, 3.5f, 0.0f };
+        static final float[] coefficients = { 2.0f, 5.8f, 1.7f, 1.2f, 7.0f }; // 데미지 계수
+        static float[] increaseRates = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
+        static float[] damages = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };  // 결과 데미지, 초기 값으로 1.0 선언
+        static int[] counts = { 1, 1, 1, 1, 1 };
+        static int[] levels = { 1, 1, 1, 1, 1 };
+        static int[] maxLevels = { 7, 7, 7, 7, 7 };
+        static final float[] defaultCooldowns = { 0.75f, 2.2f, 3.5f, 0.0f, 1.5f };
         static FLOAT[] cooldowns = new FLOAT[COUNT.ordinal()];
         static AttackType[] attackTypes = {
                 AttackType.NORMAL,
                 AttackType.PENETRATION,
                 AttackType.PENETRATION,
                 AttackType.PENETRATION,
+                AttackType.PENETRATION
         };
     }
 
@@ -68,6 +69,12 @@ public class MagicManager extends Generator {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public void setMagicType(MagicType type) {
+        magicType = type;
+        magicType.calculateDamage(player);
+        magicType.setCooldown(magicType.defaultCooldown());
     }
 
     // 스킬 피해 증가량 변경 set/change
@@ -151,6 +158,38 @@ public class MagicManager extends Generator {
                         break;
                     case 7:
                         Log.d(TAG, "마력탄 특성 습득!");
+                        break;
+                }
+                break;
+            case SATELLITE:
+                switch (level) {
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 6:
+                        changeIncreaseRate(type, player, 0.2f);
+                        MagicType.counts[magicId] += 1;
+                        break;
+                    case 7:
+                        Log.d(TAG, "위성 특성 습득!");
+                        break;
+                }
+                break;
+            case METEOR:
+                switch(level) {
+                    case 2:
+                    case 5:
+                        MagicType.counts[magicId] += 1;
+                        break;
+                    case 3:
+                    case 6:
+                        changeIncreaseRate(type, player, 0.5f);
+                    case 4:
+                        Log.d(TAG, "메테오 4레벨 달성!");
+                        break;
+                    case 7:
+                        Log.d(TAG, "메테오 특성 습득!");
                         break;
                 }
                 break;
@@ -250,6 +289,13 @@ public class MagicManager extends Generator {
         }
     }
 
+    protected void setRandomPosition() {
+        float offset = 3.0f;
+        this.dx = r.nextFloat() * (Metrics.gameWidth - offset) + offset / 2.0f;
+        this.dy = r.nextFloat() * (Metrics.gameHeight - offset) + offset / 2.0f;
+    }
+
+    // 화면내 적이 없다면 false, 하나라도 있다면 true
     protected boolean isEvenOneOnScreen(ArrayList<GameObject> objects) {
         for(int i = objects.size() - 1; i >= 0; --i) {
             Enemy enemy = (Enemy) objects.get(i);

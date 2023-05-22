@@ -20,6 +20,7 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.CycloneGenerator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.Magic;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.MagicManager;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.Meteor;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.MeteorGenerator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.Satellite;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.SatelliteManager;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.ThunderGenerator;
@@ -49,14 +50,14 @@ public class MainScene extends BaseScene {
         generator.addGenerator(new SwamGenerator());
 
         // Magic Generator
-//        generator.addGenerator(new BulletGenerator(player));
+        generator.addGenerator(new BulletGenerator(player));
 //        generator.addGenerator(new ThunderGenerator(player));
 //        generator.addGenerator(new CycloneGenerator(player));
-
+//
 //        SatelliteManager.init(player);
 //        SatelliteManager.generate(this);
 
-        addObject(Layer.MAGIC, Meteor.get(MagicManager.MagicType.BULLET, -1.0f, -1.0f));
+        generator.addGenerator(new MeteorGenerator(player));
 
         // Item Generator
         generator.addGenerator(new ExpOrbGenerator(player));

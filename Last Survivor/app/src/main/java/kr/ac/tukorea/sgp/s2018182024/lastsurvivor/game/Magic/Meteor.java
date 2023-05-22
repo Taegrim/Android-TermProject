@@ -9,6 +9,7 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BitmapPool;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.RecycleBin;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
 
 public class Meteor extends Magic {
     private static final String TAG = Meteor.class.getSimpleName();
@@ -54,6 +55,7 @@ public class Meteor extends Magic {
     private Meteor(MagicManager.MagicType type, float x, float y) {
         super(meteorResIds[0], x, y, WIDTH, HEIGHT);
         magicType = type;
+        landBitmap = BitmapPool.get(landResId);
         init();
     }
 
@@ -63,7 +65,6 @@ public class Meteor extends Magic {
         this.attackType = magicType.attackType();
 
         explosionBitmap = BitmapPool.get(explosionResIds[0]);
-        landBitmap = BitmapPool.get(landResId);
 
         fixRect();
         setCollisionRect();
@@ -110,6 +111,10 @@ public class Meteor extends Magic {
 
             if(index < meteorResIds.length + explosionResIds.length - EXPLOSION_START_OFFSET) {
                 explosionBitmap = BitmapPool.get(explosionResIds[index - startOffset]);
+            }
+            else{
+                MainScene scene = (MainScene) BaseScene.getTopScene();
+                scene.removeObject(MainScene.Layer.MAGIC, this, false);
             }
             canvas.drawBitmap(landBitmap, null, explosionRect, null);
             canvas.drawBitmap(explosionBitmap, null, explosionRect, null);

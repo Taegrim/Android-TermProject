@@ -16,33 +16,32 @@ public class Bullet extends Magic {
     private float dx, dy, angle;
 
     public static Bullet get(MagicManager.MagicType type, float x, float y, float dx, float dy,
-                             float angle, float damage, MagicManager.AttackType attackType)
+                             float angle)
     {
         Bullet bullet = (Bullet) RecycleBin.get(Bullet.class);
         if(bullet == null) {
-            return new Bullet(type, x, y, dx, dy, angle, damage, attackType);
+            return new Bullet(type, x, y, dx, dy, angle);
         }
         bullet.x = x;
         bullet.y = y;
-        bullet.init(dx, dy, angle, damage, attackType);
+        bullet.init(dx, dy, angle);
         return bullet;
     }
 
 
-    private Bullet(MagicManager.MagicType type, float x, float y, float dx, float dy,
-                   float angle, float damage, MagicManager.AttackType attackType)
+    private Bullet(MagicManager.MagicType type, float x, float y, float dx, float dy, float angle)
     {
         super(R.mipmap.bullet, x, y, WIDTH, HEIGHT);
         magicType = type;
-        init(dx, dy, angle, damage, attackType);
+        init(dx, dy, angle);
     }
 
-    public void init(float dx, float dy, float angle, float damage, MagicManager.AttackType attackType) {
+    public void init(float dx, float dy, float angle) {
         this.dx = dx;
         this.dy = dy;
         this.angle = angle;
-        this.damage = damage;
-        this.attackType = attackType;
+        this.damage = magicType.damage();
+        this.attackType = magicType.attackType();
         fixRect();
         setCollisionRect();
     }
