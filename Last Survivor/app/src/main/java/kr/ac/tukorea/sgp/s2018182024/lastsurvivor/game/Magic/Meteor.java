@@ -2,6 +2,7 @@ package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.RectF;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BitmapPool;
@@ -11,12 +12,15 @@ public class Meteor extends Magic {
     private static final String TAG = Meteor.class.getSimpleName();
     private static final float WIDTH = 1.5f;
     private static final float HEIGHT = 10.0f;
-    private static final int EXPLOSION_START_OFFSET = 2;
+    private static final float EXPLOSION_WIDTH = 3.0f;
+    private static final int EXPLOSION_START_OFFSET = 4;
     private int resIndex;
     private static final float fps = 11.0f;
     private long createdTime;
     private Bitmap explosionBitmap;
+    private RectF explosionRect = new RectF();
     private Bitmap landBitmap;
+
 
     private static final int meteorResIds[] = {
             R.mipmap.meteor_a01, R.mipmap.meteor_a02,R.mipmap.meteor_a03,R.mipmap.meteor_a04,
@@ -61,6 +65,12 @@ public class Meteor extends Magic {
 
         fixRect();
         setCollisionRect();
+
+        float halfWidth = EXPLOSION_WIDTH / 2.0f;
+        float xOffset = WIDTH / 2.0f;
+        float yOffset = HEIGHT / 2.0f;
+        explosionRect.set(x - halfWidth + xOffset, y - halfWidth + yOffset,
+                x + halfWidth + xOffset, y + halfWidth + yOffset);
     }
 
     @Override
@@ -82,8 +92,8 @@ public class Meteor extends Magic {
             if(index < meteorResIds.length + explosionResIds.length - EXPLOSION_START_OFFSET) {
                 explosionBitmap = BitmapPool.get(explosionResIds[index - startOffset]);
             }
-            canvas.drawBitmap(landBitmap, null, rect, null);
-            canvas.drawBitmap(explosionBitmap, null, rect, null);
+            canvas.drawBitmap(landBitmap, null, explosionRect, null);
+            canvas.drawBitmap(explosionBitmap, null, explosionRect, null);
         }
 
     }
