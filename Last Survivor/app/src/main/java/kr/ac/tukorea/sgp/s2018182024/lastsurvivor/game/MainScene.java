@@ -56,7 +56,7 @@ public class MainScene extends BaseScene {
 //        SatelliteManager.init(player);
 //        SatelliteManager.generate(this);
 
-        addObject(Layer.MAGIC, Meteor.get(MagicManager.MagicType.BULLET, 5.0f, 10.0f));
+        addObject(Layer.MAGIC, Meteor.get(MagicManager.MagicType.BULLET, -1.0f, -1.0f));
 
         // Item Generator
         generator.addGenerator(new ExpOrbGenerator(player));

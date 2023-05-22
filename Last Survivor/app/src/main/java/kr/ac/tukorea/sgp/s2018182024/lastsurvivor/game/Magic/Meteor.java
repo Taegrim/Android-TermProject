@@ -5,17 +5,19 @@ import android.graphics.Canvas;
 import android.graphics.RectF;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BitmapPool;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.RecycleBin;
 
 public class Meteor extends Magic {
     private static final String TAG = Meteor.class.getSimpleName();
-    private static final float WIDTH = 1.5f;
-    private static final float HEIGHT = 10.0f;
+    private static final float WIDTH = 5.0f;
+    private static final float HEIGHT = 15.0f;
     private static final float EXPLOSION_WIDTH = 3.0f;
     private static final int EXPLOSION_START_OFFSET = 4;
     private int resIndex;
-    private static final float fps = 11.0f;
+    private static final float fps = 20.0f;
     private long createdTime;
     private Bitmap explosionBitmap;
     private RectF explosionRect = new RectF();
@@ -65,12 +67,20 @@ public class Meteor extends Magic {
 
         fixRect();
         setCollisionRect();
+        fixExplosionRect();
+    }
 
+    private void fixExplosionRect() {
         float halfWidth = EXPLOSION_WIDTH / 2.0f;
         float xOffset = WIDTH / 2.0f;
         float yOffset = HEIGHT / 2.0f;
         explosionRect.set(x - halfWidth + xOffset, y - halfWidth + yOffset,
                 x + halfWidth + xOffset, y + halfWidth + yOffset);
+    }
+
+    @Override
+    public void update() {
+
     }
 
     @Override
@@ -81,6 +91,15 @@ public class Meteor extends Magic {
         int index = Math.round(time * fps);
         if(index < meteorResIds.length) {
             setBitmapResource(meteorResIds[index]);
+
+            if(index < meteorResIds.length - EXPLOSION_START_OFFSET) {
+                x += 8.0f * BaseScene.frameTime;
+                y += 16.0f * BaseScene.frameTime;
+
+                fixRect();
+                setCollisionRect();
+                fixExplosionRect();
+            }
         }
 
         canvas.drawBitmap(bitmap, null, rect, null);
