@@ -23,7 +23,7 @@ public class MagicManager extends Generator {
     }
 
     public enum MagicType {
-        BULLET, THUNDER, CYCLONE, SATELLITE, METEOR, COUNT;
+        BULLET, THUNDER, CYCLONE, SATELLITE, METEOR, BLIZZARD, COUNT;
 
         float coefficient() { return coefficients[this.ordinal()]; }
         float increaseRate() { return increaseRates[this.ordinal()]; }
@@ -47,20 +47,21 @@ public class MagicManager extends Generator {
                     this.increaseRate() * player.getDamageAmp();
         }
 
-        static final float[] coefficients = { 2.0f, 5.8f, 1.7f, 1.2f, 7.0f }; // 데미지 계수
-        static float[] increaseRates = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
-        static float[] damages = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };  // 결과 데미지, 초기 값으로 1.0 선언
-        static int[] counts = { 1, 1, 1, 1, 1 };
-        static int[] levels = { 1, 1, 1, 1, 1 };
-        static int[] maxLevels = { 7, 7, 7, 7, 7 };
-        static final float[] defaultCooldowns = { 0.75f, 2.2f, 3.5f, 0.0f, 4.5f };
+        static final float[] coefficients = { 2.0f, 5.8f, 1.7f, 1.2f, 7.0f, 3.6f }; // 데미지 계수
+        static float[] increaseRates = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
+        static float[] damages = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };  // 결과 데미지, 초기 값으로 1.0 선언
+        static int[] counts = { 1, 1, 1, 1, 1, 20 };
+        static int[] levels = { 1, 1, 1, 1, 1, 1 };
+        static int[] maxLevels = { 7, 7, 7, 7, 7, 7 };
+        static final float[] defaultCooldowns = { 0.75f, 2.2f, 3.5f, 0.0f, 4.5f, 6.0f };
         static FLOAT[] cooldowns = new FLOAT[COUNT.ordinal()];
         static AttackType[] attackTypes = {
                 AttackType.NORMAL,
                 AttackType.PENETRATION,
                 AttackType.PENETRATION,
                 AttackType.PENETRATION,
-                AttackType.PENETRATION
+                AttackType.PENETRATION,
+                AttackType.PENETRATION,
         };
     }
 
