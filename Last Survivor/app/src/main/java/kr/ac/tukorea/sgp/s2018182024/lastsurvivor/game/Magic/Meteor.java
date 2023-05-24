@@ -27,7 +27,7 @@ public class Meteor extends FallingMagic {
             R.mipmap.meteor_a05, R.mipmap.meteor_a06,R.mipmap.meteor_a07,R.mipmap.meteor_a08,
             R.mipmap.meteor_a09, R.mipmap.meteor_a10,R.mipmap.meteor_a11,R.mipmap.meteor_a12,
             R.mipmap.meteor_a13, R.mipmap.meteor_a14,R.mipmap.meteor_a15,R.mipmap.meteor_a16,
-            R.mipmap.meteor_a17, R.mipmap.meteor_a18
+            R.mipmap.meteor_a17, R.mipmap.transparent_image
     };
     private static final int explosionResIds[] = {
             R.mipmap.explosion_01, R.mipmap.explosion_02, R.mipmap.explosion_03,

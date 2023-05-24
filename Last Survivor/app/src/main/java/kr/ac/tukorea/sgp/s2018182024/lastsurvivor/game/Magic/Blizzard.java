@@ -4,21 +4,30 @@ import android.graphics.Canvas;
 import android.util.Log;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BitmapPool;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.RecycleBin;
 
-public class Blizzard extends Magic {
+public class Blizzard extends FallingMagic {
     private static final String TAG = Blizzard.class.getSimpleName();
     private static final float WIDTH = 2.0f;
     private static final float HEIGHT = 10.0f;
+    private static final float PARTICLE_WIDTH = 3.0f;
+    private static final int PARTICLE_START_OFFSET = 1;
 
-    private static final float fps = 5.0f;
-    public static final float SPEED = 5.0f;
-    private long createdTime;
+    private static final float FPS = 10.0f;
+    public static final float X_SPEED = 5.0f;
+    public static final float Y_SPEED = 10.0f;
 
     private static final int blizzardResIds[] = {
             R.mipmap.blizzard_a01, R.mipmap.blizzard_a02, R.mipmap.blizzard_a03, R.mipmap.blizzard_a04,
             R.mipmap.blizzard_a05, R.mipmap.blizzard_a06, R.mipmap.blizzard_a07, R.mipmap.blizzard_a08,
-            R.mipmap.blizzard_a09, R.mipmap.blizzard_a10, R.mipmap.blizzard_a11, R.mipmap.blizzard_a12
+            R.mipmap.blizzard_a09, R.mipmap.blizzard_a10, R.mipmap.transparent_image
+    };
+
+    private static final int iceResIds[] = {
+            R.mipmap.blizzard_particle_01, R.mipmap.blizzard_particle_02, R.mipmap.blizzard_particle_03,
+            R.mipmap.blizzard_particle_04, R.mipmap.blizzard_particle_05, R.mipmap.blizzard_particle_06,
+            R.mipmap.blizzard_particle_07,
     };
 
     public static Blizzard get(MagicManager.MagicType type, float x, float y) {
@@ -35,6 +44,9 @@ public class Blizzard extends Magic {
 
     private Blizzard(MagicManager.MagicType type, float x, float y) {
         super(blizzardResIds[0], x, y, WIDTH, HEIGHT);
+
+        setFallingValue();
+
         magicType = type;
         init();
     }
@@ -44,20 +56,19 @@ public class Blizzard extends Magic {
         this.damage = magicType.damage();
         this.attackType = magicType.attackType();
 
+        particleBitmap = BitmapPool.get(blizzardResIds[0]);
+
         fixRect();
-        setCollisionRect();
     }
 
-    @Override
-    public void draw(Canvas canvas) {
-        long now = System.currentTimeMillis();
-        float time = (now - createdTime) / 1000.0f;
-
-        int index = Math.round(time * fps);
-        if(index < blizzardResIds.length) {
-            setBitmapResource(blizzardResIds[index]);
-        }
-
-        canvas.drawBitmap(bitmap, null, rect, null);
+    private void setFallingValue() {
+        magicResIds = blizzardResIds;
+        particleResIds = iceResIds;
+        xSpeed = X_SPEED;
+        ySpeed = Y_SPEED;
+        fps = FPS;
+        particleSize = PARTICLE_WIDTH;
+        particleStartOffset = PARTICLE_START_OFFSET;
     }
+
 }
