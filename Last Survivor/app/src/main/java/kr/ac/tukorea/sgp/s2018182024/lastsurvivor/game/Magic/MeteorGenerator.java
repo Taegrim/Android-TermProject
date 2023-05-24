@@ -12,9 +12,9 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Player;
 public class MeteorGenerator extends MagicManager {
     private static final String TAG = MeteorGenerator.class.getSimpleName();
     private static final float START_OFFSET_X =
-            Meteor.SPEED * Meteor.getMoveTime() + Meteor.getBitmapWidth() / 2.0f;
+            Meteor.X_SPEED * Meteor.getMoveTime() + Meteor.getBitmapWidth() / 2.0f;
     private static final float START_OFFSET_Y =
-            Meteor.SPEED * Meteor.getMoveTime() * 2.0f + Meteor.getBitmapHeight() / 2.0f;
+            Meteor.Y_SPEED * Meteor.getMoveTime() + Meteor.getBitmapHeight() / 2.0f;
     // 이동 시간 * 속도 만큼 좌 상단에서 시작해서 떨어짐
 
 

@@ -9,6 +9,8 @@ public class Sprite implements GameObject {
     protected RectF rect = new RectF();
     protected float x, y, width, height;
 
+    protected Sprite() {}
+
     public Sprite(int resId, float x, float y, float width, float height) {
         this.x = x;
         this.y = y;
