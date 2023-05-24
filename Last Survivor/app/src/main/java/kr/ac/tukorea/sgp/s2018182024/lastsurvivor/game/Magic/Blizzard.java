@@ -4,24 +4,25 @@ import android.graphics.Canvas;
 import android.util.Log;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BitmapPool;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.RecycleBin;
 
 public class Blizzard extends FallingMagic {
     private static final String TAG = Blizzard.class.getSimpleName();
-    private static final float WIDTH = 2.0f;
-    private static final float HEIGHT = 10.0f;
+    private static final float WIDTH = 1.0f;
+    private static final float HEIGHT = 3.0f;
     private static final float PARTICLE_WIDTH = 3.0f;
     private static final int PARTICLE_START_OFFSET = 1;
 
-    private static final float FPS = 10.0f;
+    private static final float FPS = 7.0f;
     public static final float X_SPEED = 5.0f;
     public static final float Y_SPEED = 10.0f;
 
     private static final int blizzardResIds[] = {
             R.mipmap.blizzard_a01, R.mipmap.blizzard_a02, R.mipmap.blizzard_a03, R.mipmap.blizzard_a04,
             R.mipmap.blizzard_a05, R.mipmap.blizzard_a06, R.mipmap.blizzard_a07, R.mipmap.blizzard_a08,
-            R.mipmap.blizzard_a09, R.mipmap.blizzard_a10, R.mipmap.transparent_image
+            R.mipmap.blizzard_a09, R.mipmap.blizzard_a10, R.mipmap.blizzard_a11, R.mipmap.transparent_image
     };
 
     private static final int iceResIds[] = {
@@ -58,6 +59,7 @@ public class Blizzard extends FallingMagic {
 
         particleBitmap = BitmapPool.get(blizzardResIds[0]);
 
+        setSize(WIDTH, HEIGHT);
         fixRect();
     }
 
@@ -71,4 +73,13 @@ public class Blizzard extends FallingMagic {
         particleStartOffset = PARTICLE_START_OFFSET;
     }
 
+    @Override
+    protected void resizeMagicByIndex(int index) {
+        float xRatio = BaseScene.frameTime * X_SPEED;
+        float yRatio = BaseScene.frameTime * Y_SPEED;
+        float width = WIDTH * (1 - xRatio);
+        float height = HEIGHT * (1 - yRatio);
+
+        setSize(width, height);
+    }
 }

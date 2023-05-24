@@ -60,7 +60,7 @@ public class MainScene extends BaseScene {
 
 //        generator.addGenerator(new MeteorGenerator(player));
 
-        addObject(Layer.MAGIC, Blizzard.get(MagicManager.MagicType.BULLET, -3, -3));
+        addObject(Layer.MAGIC, Blizzard.get(MagicManager.MagicType.BULLET, -2, -2));
 
 
 

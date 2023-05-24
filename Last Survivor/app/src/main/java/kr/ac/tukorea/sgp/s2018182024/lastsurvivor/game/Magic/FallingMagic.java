@@ -59,6 +59,7 @@ public class FallingMagic extends Magic {
                 y += this.ySpeed * BaseScene.frameTime;
 
                 fixRect();
+                resizeMagicByIndex(index);
             }
         }
 
@@ -84,6 +85,10 @@ public class FallingMagic extends Magic {
             }
             canvas.drawBitmap(particleBitmap, null, particleRect, null);
         }
+
+    }
+
+    protected void resizeMagicByIndex(int index) {
 
     }
 
