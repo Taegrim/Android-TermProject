@@ -82,4 +82,16 @@ public class Blizzard extends FallingMagic {
 
         setSize(width, height);
     }
+
+    public static float getMoveTime() {
+        return (blizzardResIds.length - PARTICLE_START_OFFSET) / FPS;
+    }
+
+    public static float getBitmapWidth() {
+        return WIDTH;
+    }
+
+    public static float getBitmapHeight() {
+        return HEIGHT;
+    }
 }
