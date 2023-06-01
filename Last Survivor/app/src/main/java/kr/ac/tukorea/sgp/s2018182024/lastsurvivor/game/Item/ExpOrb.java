@@ -7,6 +7,7 @@ import java.util.Random;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.CollisionObject;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.EventCollision;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.RecycleBin;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.FLOAT;
@@ -125,7 +126,8 @@ public class ExpOrb extends Item implements EventCollision {
     }
 
     @Override
-    public void onCollision(Player player) {
+    public void onCollision(CollisionObject object) {
+        Player player = (Player) object;
         player.increaseExp(type.exp());
     }
 

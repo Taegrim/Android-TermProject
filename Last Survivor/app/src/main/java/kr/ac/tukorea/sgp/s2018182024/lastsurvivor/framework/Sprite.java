@@ -36,6 +36,22 @@ public class Sprite implements GameObject {
         rect.set(x - halfWidth, y - halfHeight, x + halfWidth, y + halfHeight);
     }
 
+    public float getWidth() {
+        return width;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
     @Override
     public void update() {
 

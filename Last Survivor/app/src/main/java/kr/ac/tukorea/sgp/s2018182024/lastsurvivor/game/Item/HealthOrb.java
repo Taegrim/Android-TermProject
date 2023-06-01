@@ -1,6 +1,7 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Item;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.CollisionObject;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.RecycleBin;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.FLOAT;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Player;
@@ -37,7 +38,8 @@ public class HealthOrb extends Item {
     }
 
     @Override
-    public void onCollision(Player player) {
+    public void onCollision(CollisionObject object) {
+        Player player = (Player) object;
         player.increaseHp(restoreAmount);
     }
 

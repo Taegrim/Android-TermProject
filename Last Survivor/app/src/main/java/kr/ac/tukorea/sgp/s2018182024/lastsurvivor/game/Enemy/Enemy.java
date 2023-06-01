@@ -61,14 +61,6 @@ public class Enemy extends AnimationSprite implements CollisionObject, Recyclabl
         setCollisionRect();
     }
 
-    public float getX() {
-        return x;
-    }
-
-    public float getY() {
-        return y;
-    }
-
     public float getDamage() {
         return damage;
     }
@@ -99,6 +91,11 @@ public class Enemy extends AnimationSprite implements CollisionObject, Recyclabl
 
     @Override
     public void setCollisionRect() {
+
+    }
+
+    @Override
+    public void onCollision(CollisionObject object) {
 
     }
 

@@ -117,14 +117,6 @@ public class Player extends AnimationSprite implements CollisionObject {
         setCollisionRect();
     }
 
-    public float getX() {
-        return this.x;
-    }
-
-    public float getY() {
-        return this.y;
-    }
-
     public boolean getIsInvincible() {
         return isInvincible;
     }
@@ -179,6 +171,12 @@ public class Player extends AnimationSprite implements CollisionObject {
         collisionRect.set(rect);
         collisionRect.inset(0.1f, 0.1f);
     }
+
+    @Override
+    public void onCollision(CollisionObject object) {
+
+    }
+
     @Override
     public RectF getCollisionRect() {
         return collisionRect;

@@ -67,7 +67,8 @@ public class FallingMagic extends Magic {
 
         int startOffset = magicResIds.length - particleStartOffset;
         if(startOffset == index) {
-            fixParticleRect();
+            createParticle();
+//            fixParticleRect();
             setCollisionRect();
         }
         else if(startOffset < index) {

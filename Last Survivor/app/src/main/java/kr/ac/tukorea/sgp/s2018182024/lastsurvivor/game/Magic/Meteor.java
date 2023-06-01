@@ -10,6 +10,7 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BitmapPool;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.RecycleBin;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.Particles.Explosion;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
 
 public class Meteor extends FallingMagic {
@@ -67,6 +68,13 @@ public class Meteor extends FallingMagic {
         particleBitmap = BitmapPool.get(explosionResIds[0]);
 
         fixRect();
+    }
+
+    @Override
+    protected void createParticle() {
+        MainScene scene = (MainScene) BaseScene.getTopScene();
+        scene.addObject(MainScene.Layer.PARTICLE,
+                Explosion.get(x + (WIDTH / 2.0f), y + (HEIGHT / 2.0f), 2000));
     }
 
     private void setFallingValue() {

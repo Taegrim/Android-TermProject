@@ -2,6 +2,12 @@ package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework;
 
 import android.graphics.RectF;
 
+import java.util.ArrayList;
+
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.CollisionObject;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.EventCollision;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Player;
+
 public class CollisionHelper {
     public static boolean collide(CollisionObject obj1, CollisionObject obj2) {
         RectF r1 = obj1.getCollisionRect();

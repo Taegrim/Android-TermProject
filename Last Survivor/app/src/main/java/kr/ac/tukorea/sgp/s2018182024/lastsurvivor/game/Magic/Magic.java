@@ -26,6 +26,9 @@ public class Magic extends Sprite implements CollisionObject, Recyclable {
         }
     }
 
+    protected void createParticle() {
+
+    }
 
     public float getDamage() {
         return damage;
@@ -38,6 +41,11 @@ public class Magic extends Sprite implements CollisionObject, Recyclable {
 
     @Override
     public void setCollisionRect() {
+
+    }
+
+    @Override
+    public void onCollision(CollisionObject object) {
 
     }
 

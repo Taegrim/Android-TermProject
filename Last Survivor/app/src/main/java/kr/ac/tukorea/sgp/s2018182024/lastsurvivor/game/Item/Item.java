@@ -15,10 +15,6 @@ public class Item extends Sprite implements CollisionObject, Recyclable {
         super(resId, x, y, width, height);
     }
 
-    public void onCollision(Player player) {
-
-    }
-
     @Override
     public RectF getCollisionRect() {
         return collisionRect;
@@ -26,6 +22,11 @@ public class Item extends Sprite implements CollisionObject, Recyclable {
 
     @Override
     public void setCollisionRect() {
+
+    }
+
+    @Override
+    public void onCollision(CollisionObject object) {
 
     }
 
