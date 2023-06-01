@@ -10,12 +10,12 @@ public class Blizzard extends FallingMagic {
     private static final String TAG = Blizzard.class.getSimpleName();
     private static final float WIDTH = 1.0f;
     private static final float HEIGHT = 3.0f;
-    private static final int PARTICLE_START_OFFSET = 1;
+    private static final int PARTICLE_START_OFFSET = 3;
 
     private static final float FPS = 7.0f;
     public static final float X_SPEED = 5.0f;
     public static final float Y_SPEED = 10.0f;
-    private static final int PARTICLE_DURATION = 700;
+    private static final int PARTICLE_DURATION = 1000;
 
     private static final int blizzardResIds[] = {
             R.mipmap.blizzard_a01, R.mipmap.blizzard_a02, R.mipmap.blizzard_a03, R.mipmap.blizzard_a04,
@@ -57,7 +57,8 @@ public class Blizzard extends FallingMagic {
     protected void createParticle() {
         MainScene scene = (MainScene) BaseScene.getTopScene();
         scene.addObject(MainScene.Layer.PARTICLE,
-                Ice.get(x + (WIDTH / 2.0f), y + (HEIGHT / 2.0f), PARTICLE_DURATION));
+                Ice.get(x + (width / 2.0f), y + (height / 2.0f), PARTICLE_DURATION,
+                        magicType.damage()));
     }
 
     private void setFallingValue() {

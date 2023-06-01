@@ -22,30 +22,30 @@ public class Explosion extends Particle {
     private Bitmap landBitmap;
     private RectF landRect = new RectF();
 
-    public static Explosion get(float x, float y, int animatedTime) {
+    public static Explosion get(float x, float y, int animatedTime, float damage) {
         Explosion explosion = (Explosion) RecycleBin.get(Explosion.class);
         if(explosion == null) {
-            return new Explosion(x, y, animatedTime);
+            return new Explosion(x, y, animatedTime, damage);
         }
         explosion.x = x;
         explosion.y = y;
         explosion.setBitmapResource(explosionResIds[0]);
-        explosion.init(explosionResIds.length, animatedTime);
+        explosion.init(explosionResIds.length, animatedTime, damage);
         return explosion;
     }
 
-    private Explosion(float x, float y, int animatedTime) {
+    private Explosion(float x, float y, int animatedTime, float damage) {
         super(explosionResIds[0], x, y, SIZE);
 
         resIds = explosionResIds;
         landBitmap = BitmapPool.get(explosionLandResId);
 
-        init(explosionResIds.length, animatedTime);
+        init(explosionResIds.length, animatedTime, damage);
     }
 
     @Override
-    protected void init(int frame, int animatedTime) {
-        super.init(frame, animatedTime);
+    protected void init(int frame, int animatedTime, float damage) {
+        super.init(frame, animatedTime, damage);
         landRect.set(rect);
     }
 
@@ -53,5 +53,11 @@ public class Explosion extends Particle {
     public void draw(Canvas canvas) {
         canvas.drawBitmap(landBitmap, null, landRect, null);
         super.draw(canvas);
+    }
+
+    @Override
+    public void setCollisionRect() {
+        collisionRect.set(rect);
+        collisionRect.inset(0.7f, 0.7f);
     }
 }

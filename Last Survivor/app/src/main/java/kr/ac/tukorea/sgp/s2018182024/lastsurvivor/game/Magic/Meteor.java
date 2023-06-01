@@ -64,7 +64,8 @@ public class Meteor extends FallingMagic {
     protected void createParticle() {
         MainScene scene = (MainScene) BaseScene.getTopScene();
         scene.addObject(MainScene.Layer.PARTICLE,
-                Explosion.get(x + (WIDTH / 2.0f), y + (HEIGHT / 2.0f), PARTICLE_DURATION));
+                Explosion.get(x + (width / 2.0f), y + (height / 2.0f), PARTICLE_DURATION,
+                        magicType.damage()));
     }
 
     private void setFallingValue() {

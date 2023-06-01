@@ -55,7 +55,7 @@ public class FallingMagic extends Magic {
         if(index == startOffset) {
             createParticle();
         }
-        else if(index == magicResIds.length - 1) {
+        else if(index == magicResIds.length) {
             MainScene scene = (MainScene) BaseScene.getTopScene();
             scene.removeObject(MainScene.Layer.MAGIC, this, false);
         }

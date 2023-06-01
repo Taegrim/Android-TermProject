@@ -2,11 +2,13 @@ package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.RecycleBin;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.Particles.Lightning;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
 
 public class Thunder extends Magic {
@@ -14,6 +16,7 @@ public class Thunder extends Magic {
     private static final float WIDTH = 1.0f;
     private static final float HEIGHT = Metrics.gameHeight + 2.0f;
     private static final float COLLISION_TIME = 0.15f;
+    private static final int PARTICLE_DURATION = 1000;
     private float lifeTime;
     private boolean isCollision;
     private float size = WIDTH;
@@ -54,7 +57,16 @@ public class Thunder extends Magic {
         this.sharedPaint = paint;
         this.isCollision = true;
         fixRect();
-        setCollisionRect();
+//        setCollisionRect();
+
+        createParticle();
+    }
+
+    @Override
+    protected void createParticle() {
+        MainScene scene = (MainScene) BaseScene.getTopScene();
+        scene.addObject(MainScene.Layer.PARTICLE,
+                Lightning.get(x, y, PARTICLE_DURATION, magicType.damage()));
     }
 
     @Override
@@ -86,12 +98,12 @@ public class Thunder extends Magic {
         rect.set(x - halfWidth, y - height, x + halfWidth, y);
     }
 
-    @Override
-    public void setCollisionRect() {
-        if(!isCollision)
-            return;
-        float halfSize = size / 2;
-        collisionRect.set(x - halfSize, y - halfSize,
-                x + halfSize, y + halfSize);
-    }
+//    @Override
+//    public void setCollisionRect() {
+//        if(!isCollision)
+//            return;
+//        float halfSize = size / 2;
+//        collisionRect.set(x - halfSize, y - halfSize,
+//                x + halfSize, y + halfSize);
+//    }
 }
