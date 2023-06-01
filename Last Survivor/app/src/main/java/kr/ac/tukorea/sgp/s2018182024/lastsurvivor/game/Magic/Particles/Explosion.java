@@ -1,8 +1,12 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.Particles;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.RectF;
+
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BitmapPool;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.RecycleBin;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Sprite;
 
 public class Explosion extends Particle {
     private static final String TAG = Explosion.class.getSimpleName();
@@ -15,6 +19,8 @@ public class Explosion extends Particle {
             R.mipmap.explosion_10
     };
     private static final int explosionLandResId = R.mipmap.meteor_land;
+    private Bitmap landBitmap;
+    private RectF landRect = new RectF();
 
     public static Explosion get(float x, float y, int animatedTime) {
         Explosion explosion = (Explosion) RecycleBin.get(Explosion.class);
@@ -23,6 +29,7 @@ public class Explosion extends Particle {
         }
         explosion.x = x;
         explosion.y = y;
+        explosion.setBitmapResource(explosionResIds[0]);
         explosion.init(explosionResIds.length, animatedTime);
         return explosion;
     }
@@ -31,7 +38,20 @@ public class Explosion extends Particle {
         super(explosionResIds[0], x, y, SIZE);
 
         resIds = explosionResIds;
+        landBitmap = BitmapPool.get(explosionLandResId);
+
         init(explosionResIds.length, animatedTime);
     }
 
+    @Override
+    protected void init(int frame, int animatedTime) {
+        super.init(frame, animatedTime);
+        landRect.set(rect);
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        canvas.drawBitmap(landBitmap, null, landRect, null);
+        super.draw(canvas);
+    }
 }

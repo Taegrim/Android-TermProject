@@ -59,11 +59,11 @@ public class MainScene extends BaseScene {
 //        SatelliteManager.init(player);
 //        SatelliteManager.generate(this);
 
-        generator.addGenerator(new MeteorGenerator(player));
+//        generator.addGenerator(new MeteorGenerator(player));
 
 //        addObject(Layer.MAGIC, Blizzard.get(MagicManager.MagicType.BULLET, -2, -2));
 
-//        generator.addGenerator(new BlizzardGenerator(player));
+        generator.addGenerator(new BlizzardGenerator(player));
 
 
         // Item Generator

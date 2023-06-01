@@ -2,13 +2,11 @@ package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.Particles;
 
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Recyclable;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.RecycleBin;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Sprite;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
 
@@ -41,6 +39,8 @@ public class Particle extends Sprite implements Recyclable {
     }
 
     protected void init(int frame, int animatedTime) {
+        fixRect();
+
         createAnimator(frame, animatedTime);
         animator.start();
     }
@@ -56,7 +56,7 @@ public class Particle extends Sprite implements Recyclable {
         animator.setCurrentPlayTime(0);
     }
 
-    private void removeParticle() {
+    protected void removeParticle() {
         MainScene scene = (MainScene) BaseScene.getTopScene();
         scene.removeObject(MainScene.Layer.PARTICLE, this, false);
     }

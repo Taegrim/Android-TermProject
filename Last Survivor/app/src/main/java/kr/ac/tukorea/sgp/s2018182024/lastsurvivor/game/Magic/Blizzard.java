@@ -1,34 +1,26 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic;
 
-import android.graphics.Canvas;
-import android.util.Log;
-
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BitmapPool;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.RecycleBin;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.Particles.Ice;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
 
 public class Blizzard extends FallingMagic {
     private static final String TAG = Blizzard.class.getSimpleName();
     private static final float WIDTH = 1.0f;
     private static final float HEIGHT = 3.0f;
-    private static final float PARTICLE_WIDTH = 3.0f;
     private static final int PARTICLE_START_OFFSET = 1;
 
     private static final float FPS = 7.0f;
     public static final float X_SPEED = 5.0f;
     public static final float Y_SPEED = 10.0f;
+    private static final int PARTICLE_DURATION = 700;
 
     private static final int blizzardResIds[] = {
             R.mipmap.blizzard_a01, R.mipmap.blizzard_a02, R.mipmap.blizzard_a03, R.mipmap.blizzard_a04,
             R.mipmap.blizzard_a05, R.mipmap.blizzard_a06, R.mipmap.blizzard_a07, R.mipmap.blizzard_a08,
             R.mipmap.blizzard_a09, R.mipmap.blizzard_a10, R.mipmap.blizzard_a11, R.mipmap.transparent_image
-    };
-
-    private static final int iceResIds[] = {
-            R.mipmap.blizzard_particle_01, R.mipmap.blizzard_particle_02, R.mipmap.blizzard_particle_03,
-            R.mipmap.blizzard_particle_04, R.mipmap.blizzard_particle_05, R.mipmap.blizzard_particle_06,
-            R.mipmap.blizzard_particle_07,
     };
 
     public static Blizzard get(MagicManager.MagicType type, float x, float y) {
@@ -57,19 +49,22 @@ public class Blizzard extends FallingMagic {
         this.damage = magicType.damage();
         this.attackType = magicType.attackType();
 
-        particleBitmap = BitmapPool.get(blizzardResIds[0]);
-
         setSize(WIDTH, HEIGHT);
         fixRect();
     }
 
+    @Override
+    protected void createParticle() {
+        MainScene scene = (MainScene) BaseScene.getTopScene();
+        scene.addObject(MainScene.Layer.PARTICLE,
+                Ice.get(x + (WIDTH / 2.0f), y + (HEIGHT / 2.0f), PARTICLE_DURATION));
+    }
+
     private void setFallingValue() {
         magicResIds = blizzardResIds;
-        particleResIds = iceResIds;
         xSpeed = X_SPEED;
         ySpeed = Y_SPEED;
         fps = FPS;
-        particleSize = PARTICLE_WIDTH;
         particleStartOffset = PARTICLE_START_OFFSET;
     }
 
