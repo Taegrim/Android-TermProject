@@ -70,6 +70,9 @@ public class Enemy extends AnimationSprite implements CollisionObject, Recyclabl
     }
 
     public boolean decreaseHp(float damage) {
+        if(hp <= 0)
+            return false;
+
         hp -= damage;
         if(hp <= 0)
             return true;
@@ -91,11 +94,6 @@ public class Enemy extends AnimationSprite implements CollisionObject, Recyclabl
 
     @Override
     public void setCollisionRect() {
-
-    }
-
-    @Override
-    public void onCollision(CollisionObject object) {
 
     }
 

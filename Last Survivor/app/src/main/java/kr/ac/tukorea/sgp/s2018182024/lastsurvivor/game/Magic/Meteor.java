@@ -1,14 +1,7 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.RectF;
-import android.util.Log;
-
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BitmapPool;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.RecycleBin;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.Particles.Explosion;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
@@ -62,6 +55,9 @@ public class Meteor extends FallingMagic {
 
     @Override
     protected void createParticle() {
+        if(createsParticle) return;
+
+        createsParticle = true;
         MainScene scene = (MainScene) BaseScene.getTopScene();
         scene.addObject(MainScene.Layer.PARTICLE,
                 Explosion.get(x + (width / 2.0f), y + (height / 2.0f), PARTICLE_DURATION,

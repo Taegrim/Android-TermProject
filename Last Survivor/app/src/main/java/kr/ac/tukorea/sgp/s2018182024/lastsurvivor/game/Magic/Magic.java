@@ -14,6 +14,7 @@ public class Magic extends Sprite implements CollisionObject, Recyclable {
     protected MagicManager.AttackType attackType;
     protected MagicManager.MagicType magicType;
     protected RectF collisionRect = new RectF();
+    protected boolean createsParticle = false;
 
     public Magic(int resId, float x, float y, float width, float height) {
         super(resId, x, y, width, height);
@@ -27,7 +28,7 @@ public class Magic extends Sprite implements CollisionObject, Recyclable {
     }
 
     protected void createParticle() {
-
+        
     }
 
     public float getDamage() {
@@ -44,11 +45,6 @@ public class Magic extends Sprite implements CollisionObject, Recyclable {
 
     }
 
-    @Override
-    public void onCollision(CollisionObject object) {
-
-    }
-
     public MagicManager.AttackType getAttackType() {
         return this.attackType;
     }
@@ -59,6 +55,6 @@ public class Magic extends Sprite implements CollisionObject, Recyclable {
 
     @Override
     public void onRecycle() {
-
+        createsParticle = false;
     }
 }

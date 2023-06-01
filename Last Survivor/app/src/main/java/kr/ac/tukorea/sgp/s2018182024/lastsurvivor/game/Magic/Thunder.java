@@ -2,7 +2,6 @@ package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.Log;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
@@ -64,6 +63,9 @@ public class Thunder extends Magic {
 
     @Override
     protected void createParticle() {
+        if(createsParticle) return;
+
+        createsParticle = true;
         MainScene scene = (MainScene) BaseScene.getTopScene();
         scene.addObject(MainScene.Layer.PARTICLE,
                 Lightning.get(x, y, PARTICLE_DURATION, magicType.damage()));

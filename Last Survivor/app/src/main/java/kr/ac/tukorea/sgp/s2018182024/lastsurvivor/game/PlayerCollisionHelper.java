@@ -2,20 +2,25 @@ package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game;
 
 import java.util.ArrayList;
 
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.CollisionHelper;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.CollisionObject;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameObject;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.Enemy;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.Particles.Particle;
 
 public class PlayerCollisionHelper {
-
-    public static void explodeCollision(Player player, CollisionObject object,
-                                        ArrayList<CollisionObject> targets)
+    public static void particleCollision(Particle particle, ArrayList<GameObject> enemies)
     {
-        for(int i = targets.size() - 1; i >= 0; --i) {
-            if(targets.get(i) == targets.get(i)) continue;
+        MainScene scene = (MainScene) BaseScene.getTopScene();
 
-            CollisionObject target = targets.get(i);
-            if(CollisionHelper.collide(object, target)) {
-                target.onCollision(player);
+        for(int i = enemies.size() - 1; i >= 0; --i) {
+            Enemy enemy = (Enemy) enemies.get(i);
+            if(CollisionHelper.collide(particle, enemy)) {
+                boolean death = enemy.decreaseHp(particle.getDamage());
+                if(death) {
+                    scene.removeObject(MainScene.Layer.ENEMY, enemy, false);
+                    scene.player.increaseExp(enemy.getExp());
+                }
             }
         }
     }

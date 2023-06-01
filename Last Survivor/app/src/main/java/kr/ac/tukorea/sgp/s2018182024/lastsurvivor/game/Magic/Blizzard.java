@@ -55,6 +55,9 @@ public class Blizzard extends FallingMagic {
 
     @Override
     protected void createParticle() {
+        if(createsParticle) return;
+
+        createsParticle = true;
         MainScene scene = (MainScene) BaseScene.getTopScene();
         scene.addObject(MainScene.Layer.PARTICLE,
                 Ice.get(x + (width / 2.0f), y + (height / 2.0f), PARTICLE_DURATION,

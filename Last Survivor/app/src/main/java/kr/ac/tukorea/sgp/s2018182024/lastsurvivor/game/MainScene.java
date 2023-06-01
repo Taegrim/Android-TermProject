@@ -53,7 +53,7 @@ public class MainScene extends BaseScene {
 
         // Magic Generator
 //        generator.addGenerator(new BulletGenerator(player));
-//        generator.addGenerator(new ThunderGenerator(player));
+        generator.addGenerator(new ThunderGenerator(player));
 //        generator.addGenerator(new CycloneGenerator(player));
 //
 //        SatelliteManager.init(player);
@@ -63,7 +63,7 @@ public class MainScene extends BaseScene {
 
 //        addObject(Layer.MAGIC, Blizzard.get(MagicManager.MagicType.BULLET, -2, -2));
 
-        generator.addGenerator(new BlizzardGenerator(player));
+//        generator.addGenerator(new BlizzardGenerator(player));
 
 
         // Item Generator

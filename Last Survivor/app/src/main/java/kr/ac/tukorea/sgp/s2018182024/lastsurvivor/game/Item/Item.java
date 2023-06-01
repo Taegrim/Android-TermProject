@@ -25,8 +25,7 @@ public class Item extends Sprite implements CollisionObject, Recyclable {
 
     }
 
-    @Override
-    public void onCollision(CollisionObject object) {
+    public void onCollision(Player player) {
 
     }
 

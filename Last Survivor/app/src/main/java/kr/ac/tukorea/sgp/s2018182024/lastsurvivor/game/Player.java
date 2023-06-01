@@ -173,11 +173,6 @@ public class Player extends AnimationSprite implements CollisionObject {
     }
 
     @Override
-    public void onCollision(CollisionObject object) {
-
-    }
-
-    @Override
     public RectF getCollisionRect() {
         return collisionRect;
     }

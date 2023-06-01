@@ -126,8 +126,7 @@ public class ExpOrb extends Item implements EventCollision {
     }
 
     @Override
-    public void onCollision(CollisionObject object) {
-        Player player = (Player) object;
+    public void onCollision(Player player) {
         player.increaseExp(type.exp());
     }
 
