@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.CollisionHelper;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameObject;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.Enemy;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.Particles.Particle;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Enemy.Enemy;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Magic.Particles.Particle;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Scene.MainScene;
 
 public class PlayerCollisionHelper {
     public static void particleCollision(Particle particle, ArrayList<GameObject> enemies)

@@ -1,17 +1,20 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game;
 
 import android.graphics.Canvas;
+import android.util.Log;
 
 import java.util.ArrayList;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.CollisionHelper;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameObject;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.Enemy;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Item.ExpOrb;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Item.Item;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.Magic;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Magic.MagicManager;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Enemy.Enemy;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Item.ExpOrb;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Item.Item;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Magic.Magic;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Magic.MagicManager;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Player;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Scene.MainScene;
 
 public class CollisionChecker implements GameObject {
     private static final String TAG = CollisionChecker.class.getSimpleName();
@@ -67,11 +70,12 @@ public class CollisionChecker implements GameObject {
                     if(MagicManager.AttackType.NORMAL == attackType) {
                         scene.removeObject(MainScene.Layer.MAGIC, magic, false);
                     }
-                    else if(MagicManager.AttackType.PENETRATION == attackType) {
-                        if(enemy.getCollisionFlag(magicType)) {
-                            break;
+                    else if(MagicManager.AttackType.PENETRATING == attackType ||
+                            MagicManager.AttackType.CONTINUOUS == attackType)
+                    {
+                        if(!enemy.checkCollisionValidation(magic)) {
+                            continue;
                         }
-                        enemy.setCollisionFlag(magicType, true);
                     }
 
                     boolean death = enemy.decreaseHp(magic.getDamage());

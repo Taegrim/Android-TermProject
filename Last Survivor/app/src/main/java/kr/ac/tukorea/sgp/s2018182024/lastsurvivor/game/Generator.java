@@ -7,8 +7,8 @@ import java.util.Random;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameObject;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.MineGenerator;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.RampageGenerator;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Enemy.MineGenerator;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Enemy.RampageGenerator;
 
 public class Generator implements GameObject {
     private static final String TAG = Generator.class.getSimpleName();

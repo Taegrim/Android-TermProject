@@ -5,14 +5,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.BuildConfig;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Enemy.Enemy;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.MainScene;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Enemy.Enemy;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Scene.MainScene;
 
 public class BaseScene {
     private static ArrayList<BaseScene> stack = new ArrayList<>();
