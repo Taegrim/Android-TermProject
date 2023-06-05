@@ -188,11 +188,30 @@ public class MagicManager extends Generator {
                     case 3:
                     case 6:
                         changeIncreaseRate(type, player, 0.5f);
+                        break;
                     case 4:
                         Log.d(TAG, "메테오 4레벨 달성!");
                         break;
                     case 7:
                         Log.d(TAG, "메테오 특성 습득!");
+                        break;
+                }
+                break;
+            case BLIZZARD:
+                switch(level) {
+                    case 2:
+                    case 5:
+                        MagicType.counts[magicId] += 8;
+                        break;
+                    case 3:
+                    case 6:
+                        changeIncreaseRate(type, player, 0.5f);
+                        break;
+                    case 4:
+                        Log.d(TAG, "눈보라 4레벨 달성!");
+                        break;
+                    case 7:
+                        Log.d(TAG, "눈보라 특성 습득!");
                         break;
                 }
                 break;

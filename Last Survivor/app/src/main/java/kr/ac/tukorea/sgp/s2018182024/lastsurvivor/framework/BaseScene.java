@@ -112,7 +112,12 @@ public class BaseScene {
         }
     }
 
-    public void draw(Canvas canvas) {
+    public void draw(Canvas canvas, int index) {
+        BaseScene scene = stack.get(index);
+        if(index > 0 && scene.isTransparent()) {
+            draw(canvas, index - 1);
+        }
+
         for(ArrayList<GameObject> objects : layers) {
             for(GameObject obj : objects){
                 obj.draw(canvas);
@@ -148,6 +153,10 @@ public class BaseScene {
         }
     }
 
+    public void draw(Canvas canvas) {
+        draw(canvas, stack.size() - 1);
+    }
+
     public boolean onTouchEvent(MotionEvent event) {
         int layer = MainScene.Layer.TOUCH.ordinal();
         if(-1 == layer)
@@ -164,7 +173,24 @@ public class BaseScene {
         return false;
     }
 
+    protected boolean isTransparent() {
+        return false;
+    }
+
     protected int getTouchLayer() {
         return -1;
+    }
+
+    protected void onPause() {
+
+    }
+
+    protected void onResume() {
+
+    }
+
+    public boolean onBackPressed() {
+        popScene();
+        return true;
     }
 }

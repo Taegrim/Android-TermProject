@@ -1,6 +1,7 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Enemy;
 
 import android.graphics.RectF;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -93,13 +94,6 @@ public class Enemy extends AnimationSprite implements CollisionObject, Recyclabl
         setCollisionRect();
     }
 
-    public void collidePenetrating(Magic magic) {
-
-    }
-
-    public void collideContinuous(Magic magic) {
-    }
-
     // 같은 유형의 마법에 대해선 하나씩만 충돌하도록 함
     public boolean checkCollisionValidation(Magic magic) {
         MagicManager.MagicType type = magic.getMagicType();
@@ -122,13 +116,15 @@ public class Enemy extends AnimationSprite implements CollisionObject, Recyclabl
         return true;
     }
 
-    public boolean isCollision(Magic magic) {
-        for(int i = magics.size() - 1; i >= 0; --i) {
-            if(magic == magics.get(i)) {
-                return true;
+    public void removeCollision(Magic magic) {
+        Iterator<Magic> it = magics.iterator();
+        while(it.hasNext()) {
+            Magic collisionMagic = it.next();
+            if(collisionMagic == magic) {
+                collisionTime.remove(magic);
+                it.remove();
             }
         }
-        return false;
     }
 
     public float getDamage() {

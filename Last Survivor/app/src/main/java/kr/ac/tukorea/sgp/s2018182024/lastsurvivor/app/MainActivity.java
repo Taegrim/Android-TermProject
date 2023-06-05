@@ -37,4 +37,12 @@ public class MainActivity extends AppCompatActivity {
         BaseScene.popAllScene();
         super.onDestroy();
     }
+
+    @Override
+    public void onBackPressed() {
+        if(gameView.onBackPressed()) {
+            return;
+        }
+        super.onBackPressed();
+    }
 }

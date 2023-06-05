@@ -8,11 +8,13 @@ import android.graphics.Canvas;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameObject;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.RecycleBin;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Enemy.Enemy;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Scene.MainScene;
 
 public class Cyclone extends Magic {
@@ -149,6 +151,15 @@ public class Cyclone extends Magic {
     public void onRecycle() {
         if(animator != null) {
             animator.end();
+        }
+        MainScene scene = (MainScene) BaseScene.getTopScene();
+        ArrayList<GameObject> enemies = scene.getObjects(MainScene.Layer.ENEMY);
+
+        // 삭제할 때 충돌중인 객체가 있다면 삭제
+        Iterator<GameObject> it = enemies.iterator();
+        while(it.hasNext()) {
+            Enemy enemy = (Enemy) it.next();
+            enemy.removeCollision(this);
         }
     }
 

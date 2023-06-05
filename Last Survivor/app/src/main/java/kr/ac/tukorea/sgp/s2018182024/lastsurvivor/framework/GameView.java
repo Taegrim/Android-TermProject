@@ -134,4 +134,13 @@ public class GameView extends View implements Choreographer.FrameCallback {
         previousTime = 0;
         Choreographer.getInstance().postFrameCallback(this);
     }
+
+
+    public boolean onBackPressed() {
+        BaseScene scene = BaseScene.getTopScene();
+        if (scene == null)
+            return false;
+
+        return scene.onBackPressed();
+    }
 }
