@@ -19,6 +19,7 @@ public class BaseScene {
     public static float frameTime;
     protected static Handler handler = new Handler();
     private static Paint collisionPaint, debugPaint;
+    protected long previousNanos;
 
     protected <E extends Enum<E>> void initLayers(E enumCount) {
         int layerCount = enumCount.ordinal();
@@ -51,13 +52,29 @@ public class BaseScene {
     }
 
     public int pushScene() {
+        BaseScene scene = getTopScene();
+        if(scene != null) {
+            scene.onPause();
+        }
         stack.add(this);
+        this.onStart();
         return stack.size();
     }
 
-    public int popScene() {
+    public void popScene() {
+        this.onEnd();
         stack.remove(this);
-        return stack.size();
+        BaseScene scene = getTopScene();
+        if(scene != null) {
+            scene.resumeScene();
+            return;
+        }
+
+        finishActivity();
+    }
+
+    private void finishActivity() {
+        GameView.view.getActivity().finish();
     }
 
     public <E extends Enum<E>> void addObject(E layerIndex, GameObject object, boolean immediate) {
@@ -103,7 +120,13 @@ public class BaseScene {
         return layers.get(layerIndex.ordinal());
     }
 
-    public void update(long timeElapsed) {
+    public void update(long nanos) {
+        long prev = previousNanos;
+        previousNanos = nanos;
+        if(prev == 0) {
+            return;
+        }
+        long timeElapsed = nanos - prev;
         frameTime = timeElapsed / 1_000_000_000f;
         for(ArrayList<GameObject> objects : layers) {
             for(int i = objects.size() - 1; i >= 0; --i){
@@ -118,6 +141,7 @@ public class BaseScene {
             draw(canvas, index - 1);
         }
 
+        ArrayList<ArrayList<GameObject>> layers = scene.layers;
         for(ArrayList<GameObject> objects : layers) {
             for(GameObject obj : objects){
                 obj.draw(canvas);
@@ -158,11 +182,11 @@ public class BaseScene {
     }
 
     public boolean onTouchEvent(MotionEvent event) {
-        int layer = MainScene.Layer.TOUCH.ordinal();
-        if(-1 == layer)
+        int touchLayer = getTouchLayer();
+        if(touchLayer < 0)
             return false;
 
-        ArrayList<GameObject> objects = layers.get(layer);
+        ArrayList<GameObject> objects = layers.get(touchLayer);
         for(GameObject obj : objects) {
             if(obj instanceof Touchable) {
                 boolean touched = ((Touchable) obj).onTouchEvent(event);
@@ -171,6 +195,11 @@ public class BaseScene {
             }
         }
         return false;
+    }
+
+    public void resumeScene() {
+        previousNanos = 0;
+        onResume();
     }
 
     protected boolean isTransparent() {
@@ -186,6 +215,14 @@ public class BaseScene {
     }
 
     protected void onResume() {
+
+    }
+
+    protected void onStart() {
+
+    }
+
+    protected void onEnd() {
 
     }
 

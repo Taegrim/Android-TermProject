@@ -1,6 +1,8 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -17,6 +19,7 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.BuildConfig;
  */
 public class GameView extends View implements Choreographer.FrameCallback {
     private static final String TAG = GameView.class.getSimpleName();
+    public static GameView view;
     public static Resources res;
     protected Paint fpsPaint;
     protected Paint borderPaint;
@@ -37,7 +40,12 @@ public class GameView extends View implements Choreographer.FrameCallback {
         init(attrs, defStyle);
     }
 
+    public static void clear() {
+        view = null;
+    }
+
     private void init(AttributeSet attrs, int defStyle) {
+        GameView.view = this;
         GameView.res = getResources();
         running = true;
 
@@ -75,14 +83,13 @@ public class GameView extends View implements Choreographer.FrameCallback {
         }
     }
 
-    private long previousTime;
     @Override
     public void doFrame(long currentTime) {
-        if(previousTime != 0){
-            long timeElapsed = currentTime - previousTime;
-            BaseScene.getTopScene().update(timeElapsed);
+        BaseScene scene = BaseScene.getTopScene();
+        if(scene != null) {
+            scene.update(currentTime);
         }
-        previousTime = currentTime;
+
         invalidate();
         if(running){
             Choreographer.getInstance().postFrameCallback(this);
@@ -124,6 +131,10 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     public void pauseGame(){
         running = false;
+        BaseScene scene = BaseScene.getTopScene();
+        if(scene == null)
+            return;
+        scene.onPause();
     }
 
     public void resumeGame(){
@@ -131,7 +142,8 @@ public class GameView extends View implements Choreographer.FrameCallback {
             return;
         }
         running = true;
-        previousTime = 0;
+
+        BaseScene.getTopScene().resumeScene();
         Choreographer.getInstance().postFrameCallback(this);
     }
 
@@ -142,5 +154,16 @@ public class GameView extends View implements Choreographer.FrameCallback {
             return false;
 
         return scene.onBackPressed();
+    }
+
+    public Activity getActivity() {
+        Context context = getContext();
+        while(context instanceof ContextWrapper) {
+            if(context instanceof Activity) {
+                return (Activity)context;
+            }
+            context = ((ContextWrapper)context).getBaseContext();
+        }
+        return null;
     }
 }

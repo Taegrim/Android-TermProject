@@ -63,6 +63,16 @@ public class Generator implements GameObject {
 
     }
 
+    @Override
+    public void onPause() {
+
+    }
+
+    @Override
+    public void onResume() {
+
+    }
+
     protected GenType getGenType() {
         return genType;
     }

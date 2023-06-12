@@ -93,4 +93,14 @@ public class CollisionChecker implements GameObject {
     public void draw(Canvas canvas) {
 
     }
+
+    @Override
+    public void onPause() {
+
+    }
+
+    @Override
+    public void onResume() {
+
+    }
 }

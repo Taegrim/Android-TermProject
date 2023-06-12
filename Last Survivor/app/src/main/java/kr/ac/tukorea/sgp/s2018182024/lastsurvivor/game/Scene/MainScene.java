@@ -3,9 +3,14 @@ package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Scene;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import java.util.ArrayList;
+
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.databinding.SelectMagicBinding;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Button;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameObject;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameView;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Background;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.CollisionChecker;
@@ -22,6 +27,7 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Magic.MeteorGener
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Magic.SatelliteManager;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Magic.ThunderGenerator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Player;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Option;
 
 public class MainScene extends BaseScene {
     private static final String TAG = MainScene.class.getSimpleName();
@@ -35,6 +41,8 @@ public class MainScene extends BaseScene {
 
     public MainScene() {
         initLayers(Layer.COUNT);
+
+        Option.loadOptions(GameView.view.getContext(), "data.json");
 
         // player
         player = new Player();
@@ -77,6 +85,7 @@ public class MainScene extends BaseScene {
                     public boolean onTouch(Button.Action action) {
                         if(Button.Action.PRESSED == action) {
                             Log.d(TAG, "PAUSE");
+                            new SelectScene().pushScene();
                         }
                         return true;
                     }
@@ -100,6 +109,24 @@ public class MainScene extends BaseScene {
                 return true;
         }
         return false;
+    }
+
+    @Override
+    protected void onPause() {
+        for(ArrayList<GameObject> objects  : layers) {
+            for(GameObject object : objects) {
+                object.onPause();
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        for(ArrayList<GameObject> objects  : layers) {
+            for(GameObject object : objects) {
+                object.onResume();
+            }
+        }
     }
 
     @Override

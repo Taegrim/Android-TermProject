@@ -61,4 +61,14 @@ public class Sprite implements GameObject {
     public void draw(Canvas canvas) {
         canvas.drawBitmap(bitmap, null, rect, null);
     }
+
+    @Override
+    public void onPause() {
+
+    }
+
+    @Override
+    public void onResume() {
+
+    }
 }

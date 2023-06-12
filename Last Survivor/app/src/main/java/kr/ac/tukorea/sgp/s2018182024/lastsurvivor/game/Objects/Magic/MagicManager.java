@@ -90,17 +90,21 @@ public class MagicManager extends Generator {
         setIncreaseRate(type, player, type.increaseRate() + value);
     }
 
+    public static void setCooldownRatio(MagicType type, float value) {
+        MagicType.cooldowns[type.ordinal()].increaseRatio(value);
+        Log.d(TAG, "cooldown : " + type.cooldown());
+    }
+
+    public static void changeCooldownRatio(MagicType type, float value) {
+        setCooldownRatio(type, type.cooldown() + value);
+    }
+
     public static void setMagicCount(MagicType type, int value) {
         MagicType.counts[type.ordinal()] = value;
     }
 
     public static void changeMagicCount(MagicType type, int value) {
         setMagicCount(type, type.count() + value);
-    }
-
-    public static void increaseCooldownRatio(MagicType type, float value) {
-        MagicType.cooldowns[type.ordinal()].increaseRatio(value);
-        Log.d(TAG, "cooldown : " + type.cooldown());
     }
 
     public static void onLevelUp(MagicType type, Player player) {
@@ -154,10 +158,8 @@ public class MagicManager extends Generator {
                         break;
                     case 3:
                     case 6:
-                        changeIncreaseRate(type, player, 0.5f);
-                        break;
                     case 4:
-                        Log.d(TAG, "돌개바람 4레벨 달성!");
+                        changeIncreaseRate(type, player, 0.5f);
                         break;
                     case 7:
                         Log.d(TAG, "마력탄 특성 습득!");
@@ -187,10 +189,8 @@ public class MagicManager extends Generator {
                         break;
                     case 3:
                     case 6:
-                        changeIncreaseRate(type, player, 0.5f);
-                        break;
                     case 4:
-                        Log.d(TAG, "메테오 4레벨 달성!");
+                        changeIncreaseRate(type, player, 0.5f);
                         break;
                     case 7:
                         Log.d(TAG, "메테오 특성 습득!");
@@ -205,10 +205,8 @@ public class MagicManager extends Generator {
                         break;
                     case 3:
                     case 6:
-                        changeIncreaseRate(type, player, 0.5f);
-                        break;
                     case 4:
-                        Log.d(TAG, "눈보라 4레벨 달성!");
+                        changeIncreaseRate(type, player, 0.5f);
                         break;
                     case 7:
                         Log.d(TAG, "눈보라 특성 습득!");

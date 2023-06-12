@@ -6,6 +6,10 @@ android {
     namespace 'kr.ac.tukorea.sgp.s2018182024.lastsurvivor'
     compileSdk 33
 
+    viewBinding {
+        enabled = true
+    }
+
     defaultConfig {
         applicationId "kr.ac.tukorea.sgp.s2018182024.lastsurvivor"
         minSdk 21

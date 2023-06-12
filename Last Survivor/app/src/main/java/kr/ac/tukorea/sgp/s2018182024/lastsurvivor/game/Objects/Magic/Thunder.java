@@ -17,7 +17,6 @@ public class Thunder extends Magic {
     private static final float COLLISION_TIME = 0.15f;
     private static final int PARTICLE_DURATION = 1000;
     private float lifeTime;
-    private boolean isCollision;
     private float size = WIDTH;
     private long createdTime;
     private Paint sharedPaint;
@@ -54,7 +53,6 @@ public class Thunder extends Magic {
         this.lifeTime = lifeTime;
         this.attackType = magicType.attackType();
         this.sharedPaint = paint;
-        this.isCollision = true;
         fixRect();
 //        setCollisionRect();
 
@@ -78,7 +76,6 @@ public class Thunder extends Magic {
 
         if(time > COLLISION_TIME) {
             collisionRect.setEmpty();
-            isCollision = false;
         }
 
         if(time > lifeTime) {

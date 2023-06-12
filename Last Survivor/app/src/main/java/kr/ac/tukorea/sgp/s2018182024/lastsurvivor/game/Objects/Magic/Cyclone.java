@@ -164,6 +164,16 @@ public class Cyclone extends Magic {
     }
 
     @Override
+    public void onResume() {
+        animator.resume();
+    }
+
+    @Override
+    public void onPause() {
+        animator.pause();
+    }
+
+    @Override
     public void setCollisionRect() {
         collisionRect.set(rect);
     }

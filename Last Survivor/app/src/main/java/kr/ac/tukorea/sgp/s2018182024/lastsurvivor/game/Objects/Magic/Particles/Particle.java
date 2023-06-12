@@ -88,6 +88,16 @@ public class Particle extends Sprite implements Recyclable, CollisionObject {
     }
 
     @Override
+    public void onPause() {
+        animator.pause();
+    }
+
+    @Override
+    public void onResume() {
+        animator.resume();
+    }
+
+    @Override
     public void setCollisionRect() {
 
     }

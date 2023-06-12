@@ -66,6 +66,16 @@ public class Player extends AnimationSprite implements CollisionObject {
         drawGauge(canvas, expGauge, 0.0f, Metrics.gameHeight - 0.1f, exp, maxExp);
     }
 
+    @Override
+    public void onPause() {
+
+    }
+
+    @Override
+    public void onResume() {
+
+    }
+
     public void drawGauge(Canvas canvas, Gauge gauge, float x, float y,
                           float amount, float maxAmount) {
         canvas.save();
