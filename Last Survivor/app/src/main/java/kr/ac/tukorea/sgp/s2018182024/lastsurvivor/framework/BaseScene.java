@@ -197,6 +197,10 @@ public class BaseScene {
         return false;
     }
 
+    public void pauseScene() {
+        onPause();
+    }
+
     public void resumeScene() {
         previousNanos = 0;
         onResume();

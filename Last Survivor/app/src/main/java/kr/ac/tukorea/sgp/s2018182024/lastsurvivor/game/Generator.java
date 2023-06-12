@@ -19,11 +19,15 @@ public class Generator implements GameObject {
     protected float time;
     protected int generation_number;
     protected float generation_interval;
-    protected Random r = new Random();
+    protected static Random r;
     private ArrayList<Generator> generators = new ArrayList<>();
     protected static GenType genType;
     protected enum GenType {
         SWAM, RAMPAGE, MINE, BULLET, THUNDER, CYCLONE, SATELLITE, METEOR, BLIZZARD, COUNT
+    }
+
+    public static void setRandom(Random random) {
+        Generator.r = random;
     }
 
     public void addGenerator(Generator gen) {

@@ -23,7 +23,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
     public static Resources res;
     protected Paint fpsPaint;
     protected Paint borderPaint;
-    protected boolean running;
+    public boolean running;
 
     public GameView(Context context) {
         super(context);

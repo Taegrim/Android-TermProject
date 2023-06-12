@@ -72,6 +72,14 @@ public class SelectScene extends BaseScene {
         binding.name03.setText(option.name);
         binding.level03.setText("Lv " + option.currentLevel);
         binding.description03.setText(option.description.get(option.currentLevel));
+
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        };
+        binding.firstItem.setOnClickListener(onClickListener);
     }
 
     @Override
