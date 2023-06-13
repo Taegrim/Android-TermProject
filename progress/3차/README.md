@@ -89,5 +89,7 @@
 
 
 
+##### 동영상 링크 : (https://youtu.be/-w9gRUSBbPg)
+
 
 ##### 출처1 : Youtube **Leme 채널** 매직서바이벌 영상 (https://www.youtube.com/watch?v=VsSqkfKUZJQ)
