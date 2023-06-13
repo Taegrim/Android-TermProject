@@ -150,6 +150,12 @@ public class Enemy extends AnimationSprite implements CollisionObject, Recyclabl
         return collisionRect;
     }
 
+
+    @Override
+    protected void fixCollisionRect() {
+        setCollisionRect();
+    }
+
     @Override
     public void setCollisionRect() {
 

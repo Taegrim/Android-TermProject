@@ -162,12 +162,6 @@ public class BaseScene {
 
             for(ArrayList<GameObject> objects : layers) {
                 for (GameObject obj : objects) {
-                    if(obj instanceof Enemy) {
-                        Enemy enemy = (Enemy) obj;
-                        canvas.drawText(Integer.toString(objects.indexOf(obj)),
-                                enemy.getX(), enemy.getY(), debugPaint);
-                    }
-
                     if (!(obj instanceof CollisionObject)) continue;
 
                     RectF rect = ((CollisionObject) obj).getCollisionRect();

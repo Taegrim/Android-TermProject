@@ -1,14 +1,11 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.app;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.databinding.OptionItemBinding;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameView;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Option;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Scene.MainScene;
 
 public class MainActivity extends AppCompatActivity {

@@ -36,6 +36,11 @@ public class HealthOrb extends Item {
     }
 
     @Override
+    protected void fixCollisionRect() {
+        setCollisionRect();
+    }
+
+    @Override
     public void onCollision(Player player) {
         player.increaseHp(restoreAmount);
     }

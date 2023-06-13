@@ -133,6 +133,12 @@ public class ExpOrb extends Item implements EventCollision {
     }
 
     @Override
+    protected void fixCollisionRect() {
+        setCollisionRect();
+        setEventCollisionRect();
+    }
+
+    @Override
     public void setCollisionRect() {
         collisionRect.set(rect);
         collisionRect.inset(type.offset(), type.offset());

@@ -77,6 +77,21 @@ public class Generator implements GameObject {
 
     }
 
+    @Override
+    public void move(float x, float y) {
+
+    }
+
+    @Override
+    public float getX() {
+        return 0;
+    }
+
+    @Override
+    public float getY() {
+        return 0;
+    }
+
     protected GenType getGenType() {
         return genType;
     }

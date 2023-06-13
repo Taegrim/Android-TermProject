@@ -7,4 +7,7 @@ public interface GameObject {
     public void draw(Canvas canvas);
     public void onPause();
     public void onResume();
+    public void move(float x, float y);
+    public float getX();
+    public float getY();
 }

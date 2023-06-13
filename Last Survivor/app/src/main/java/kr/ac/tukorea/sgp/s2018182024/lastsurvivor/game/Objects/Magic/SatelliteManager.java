@@ -1,14 +1,11 @@
 package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Magic;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameObject;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Scene.MainScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Player;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Scene.SelectScene;
 
 public class SatelliteManager extends MagicManager {
     private static final String TAG = SatelliteManager.class.getSimpleName();

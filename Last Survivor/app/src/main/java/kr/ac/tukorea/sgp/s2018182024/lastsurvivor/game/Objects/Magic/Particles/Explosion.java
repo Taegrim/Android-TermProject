@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.RectF;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BitmapPool;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.RecycleBin;
 
@@ -53,6 +54,15 @@ public class Explosion extends Particle {
     public void draw(Canvas canvas) {
         canvas.drawBitmap(landBitmap, null, landRect, null);
         super.draw(canvas);
+    }
+
+    @Override
+    public void move(float x, float y) {
+        this.x += x * BaseScene.frameTime;
+        this.y += y * BaseScene.frameTime;
+        fixRect();
+        fixCollisionRect();
+        landRect.set(rect);
     }
 
     @Override

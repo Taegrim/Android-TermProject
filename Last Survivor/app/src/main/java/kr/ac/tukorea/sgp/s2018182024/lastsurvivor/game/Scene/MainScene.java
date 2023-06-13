@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -22,6 +23,7 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Generator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Enemy.SwamGenerator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Item.ExpOrbGenerator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Item.HealthOrbGenerator;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Magic.Magic;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Magic.MagicManager;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Player;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Option;
@@ -37,9 +39,10 @@ public class MainScene extends BaseScene implements Player.Listener {
     private SelectMagicBinding binding;
     private Random r = new Random();
     private int[] optionNumbers = new int[MAX_OPTION];
+    private float tx, ty, dx, dy;
 
     public enum Layer {
-        BG, ITEM, ENEMY, PARTICLE, MAGIC, PLAYER, UI, TOUCH, CONTROLLER, COUNT
+        BG, ITEM, ENEMY, PARTICLE, MAGIC, PLAYER, TOUCH, CONTROLLER, COUNT
     }
 
     public MainScene() {
@@ -86,8 +89,7 @@ public class MainScene extends BaseScene implements Player.Listener {
                     public boolean onTouch(Button.Action action) {
                         if(Button.Action.PRESSED == action) {
                             Log.d(TAG, "PAUSE");
-//                            new SelectScene().pushScene();
-                            selectMagic();
+                            new PausedScene().pushScene();
                         }
                         return true;
                     }
@@ -106,11 +108,48 @@ public class MainScene extends BaseScene implements Player.Listener {
             case MotionEvent.ACTION_DOWN:
                 float x = Metrics.toGameX(event.getX());
                 float y = Metrics.toGameY(event.getY());
-                player.setTargetPosition(x, y);
-//                player.changeResource();
+                setTargetPosition(x, y);
+                return true;
+            case MotionEvent.ACTION_UP:
+                dx = 0;
+                dy = 0;
+                tx = 0;
+                ty = 0;
                 return true;
         }
         return false;
+    }
+
+    public void setTargetPosition(float tx, float ty) {
+        this.tx = tx;
+        this.ty = ty;
+        float dx = tx - player.getX();
+        float dy = ty - player.getY();
+        double radian = Math.atan2(dy, dx);
+        this.dx = (float) (Player.SPEED * Math.cos(radian));
+        this.dy = (float) (Player.SPEED * Math.sin(radian));
+    }
+
+    private void moveObjects(float x, float y) {
+        for(int i = 0; i < layers.size(); ++i) {
+            if(Layer.ITEM.ordinal() <= i && i <= Layer.MAGIC.ordinal()) {
+                ArrayList<GameObject> objects = layers.get(i);
+                for(int j = objects.size() - 1; j >= 0; --j) {
+                    objects.get(j).move(x, y);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void update(long nanos) {
+        super.update(nanos);
+
+        if(dx == 0 || dy == 0) {
+            return;
+        }
+
+        moveObjects(-dx, -dy);
     }
 
     private void pause() {
@@ -157,7 +196,7 @@ public class MainScene extends BaseScene implements Player.Listener {
     public void onLevelUp() {
         selectMagic();
     }
-    
+
     private void selectMagic() {
         isSelect = true;
         pause();

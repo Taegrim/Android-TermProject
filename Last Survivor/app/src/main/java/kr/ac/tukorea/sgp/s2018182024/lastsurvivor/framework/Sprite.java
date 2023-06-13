@@ -44,13 +44,6 @@ public class Sprite implements GameObject {
         return height;
     }
 
-    public float getX() {
-        return x;
-    }
-
-    public float getY() {
-        return y;
-    }
 
     @Override
     public void update() {
@@ -70,5 +63,27 @@ public class Sprite implements GameObject {
     @Override
     public void onResume() {
 
+    }
+
+    @Override
+    public void move(float x, float y) {
+        this.x += x * BaseScene.frameTime;
+        this.y += y * BaseScene.frameTime;
+        fixRect();
+        fixCollisionRect();
+    }
+
+    protected void fixCollisionRect() {
+
+    }
+
+    @Override
+    public float getX() {
+        return this.x;
+    }
+
+    @Override
+    public float getY() {
+        return this.y;
     }
 }

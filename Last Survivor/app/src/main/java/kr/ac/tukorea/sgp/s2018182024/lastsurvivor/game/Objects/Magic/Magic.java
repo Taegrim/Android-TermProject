@@ -20,13 +20,6 @@ public class Magic extends Sprite implements CollisionObject, Recyclable {
         super(resId, x, y, width, height);
     }
 
-    @Override
-    public void update() {
-        if(!Metrics.isInGameView(x, y, 2.0f)) {
-            BaseScene.getTopScene().removeObject(MainScene.Layer.MAGIC, this, false);
-        }
-    }
-
     protected void createParticle() {
         
     }
@@ -38,6 +31,11 @@ public class Magic extends Sprite implements CollisionObject, Recyclable {
     @Override
     public RectF getCollisionRect() {
         return collisionRect;
+    }
+
+    @Override
+    protected void fixCollisionRect() {
+        setCollisionRect();
     }
 
     @Override

@@ -97,12 +97,4 @@ public class Thunder extends Magic {
         rect.set(x - halfWidth, y - height, x + halfWidth, y);
     }
 
-//    @Override
-//    public void setCollisionRect() {
-//        if(!isCollision)
-//            return;
-//        float halfSize = size / 2;
-//        collisionRect.set(x - halfSize, y - halfSize,
-//                x + halfSize, y + halfSize);
-//    }
 }

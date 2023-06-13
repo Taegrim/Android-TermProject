@@ -100,6 +100,11 @@ public class Particle extends Sprite implements Recyclable, CollisionObject {
     }
 
     @Override
+    protected void fixCollisionRect() {
+        setCollisionRect();
+    }
+
+    @Override
     public void setCollisionRect() {
 
     }

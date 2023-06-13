@@ -23,12 +23,8 @@ public class Player extends AnimationSprite implements CollisionObject {
     private static final String TAG = Player.class.getSimpleName();
     private static final float PLAYER_WIDTH = 35 * Metrics.bitmapRatio;
     private static final float PLAYER_HEIGHT = 64 * Metrics.bitmapRatio;
-    private static final float SPEED = 5.f;
+    public static final float SPEED = 5.f;
     private Listener listener;
-
-    private int dir;
-    private float tx, ty;
-    private float dx, dy;
     private float hp, maxHp;
     private float exp, maxExp;
     private int level;
@@ -50,10 +46,6 @@ public class Player extends AnimationSprite implements CollisionObject {
                 PLAYER_WIDTH, PLAYER_HEIGHT, 6, 3);
         this.listener = listener;
 
-        dir = 0;
-        tx = x;
-        ty = y;
-        dx = dy = 0;
         hp = maxHp = 100.0f;
         maxInvincibleTime = 1.0f;
         isInvincible = false;
@@ -94,34 +86,8 @@ public class Player extends AnimationSprite implements CollisionObject {
         canvas.restore();
     }
 
-    public void changeResource() {
-        dir = (dir + 1) % resId.length;
-        super.changeResource(resId[dir]);
-    }
-
-    public void setTargetPosition(float tx, float ty) {
-        this.tx = tx;
-        this.ty = ty;
-        float dx = tx - this.x;
-        float dy = ty - this.y;
-        double radian = Math.atan2(dy, dx);
-        this.dx = (float) (SPEED * Math.cos(radian));
-        this.dy = (float) (SPEED * Math.sin(radian));
-    }
-
     @Override
     public void update() {
-        x += dx * BaseScene.frameTime;
-        if((dx > 0 && x > tx) || (dx < 0 & x < tx)){
-            x = tx;
-            dx = 0;
-        }
-        y += dy * BaseScene.frameTime;
-        if((dy > 0 && y > ty) || (dy < 0 && y < ty)){
-            y = ty;
-            dy = 0;
-        }
-
         // 최대 무적 시간이 0이 아닐경우 무적상태에 들어 갔음을 확인
         // 타이머를 증가시켜 일정 시간이 지나면
         if(isInvincible) {

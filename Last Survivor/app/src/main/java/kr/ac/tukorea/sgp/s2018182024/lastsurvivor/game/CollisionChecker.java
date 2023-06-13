@@ -103,4 +103,19 @@ public class CollisionChecker implements GameObject {
     public void onResume() {
 
     }
+
+    @Override
+    public void move(float x, float y) {
+
+    }
+
+    @Override
+    public float getX() {
+        return 0;
+    }
+
+    @Override
+    public float getY() {
+        return 0;
+    }
 }
