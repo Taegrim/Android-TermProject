@@ -11,7 +11,7 @@ public class FallingMagic extends Magic {
     protected int particleStartOffset;
     protected float fps;
     protected float xSpeed, ySpeed;
-    protected long createdTime;
+    protected long createdTime, elapsedTime;
 
     public FallingMagic(int resId, float x, float y, float width, float height) {
         super(resId, x, y, width, height);
@@ -57,4 +57,13 @@ public class FallingMagic extends Magic {
 
     }
 
+    @Override
+    public void onPause() {
+        elapsedTime = System.currentTimeMillis() - createdTime;
+    }
+
+    @Override
+    public void onResume() {
+        createdTime = System.currentTimeMillis() - elapsedTime;
+    }
 }

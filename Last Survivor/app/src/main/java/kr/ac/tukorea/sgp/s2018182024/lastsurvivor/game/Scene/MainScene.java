@@ -63,6 +63,7 @@ public class MainScene extends BaseScene {
         // player
         player = new Player();
         addObject(Layer.PLAYER, player);
+        MagicManager.setPlayer(player);
 
         // generators
         generator = new Generator();
@@ -72,15 +73,10 @@ public class MainScene extends BaseScene {
         generator.addGenerator(new SwamGenerator());
 
         // Magic Generator
-//        generator.addGenerator(new BulletGenerator(player));
-//        generator.addGenerator(new ThunderGenerator(player));
-        generator.addGenerator(new CycloneGenerator(player));
+        generator.addGenerator(MagicManager.Create(MagicManager.MagicType.BULLET));
 
 //        SatelliteManager.init(player);
 //        SatelliteManager.generate(this);
-
-//        generator.addGenerator(new MeteorGenerator(player));
-//        generator.addGenerator(new BlizzardGenerator(player));
 
 
         // Item Generator
@@ -158,7 +154,6 @@ public class MainScene extends BaseScene {
     public boolean onBackPressed() {
         if(isSelect) {
             removeSelectView();
-            isSelect = false;
             return true;
         }
         return super.onBackPressed();
@@ -188,16 +183,38 @@ public class MainScene extends BaseScene {
         @Override
         public void onClick(View view) {
             if(view.getId() == binding.firstItem.getId()) {
-                Log.d(TAG, "NAME : " + binding.name01.getText());
+                Option option = (Option) binding.firstOption.getTag();
+                Log.d(TAG, "NAME : " + option.magicType.name());
+                magicLevelUp(option.magicType);
             }
             else if(view.getId() == binding.secondItem.getId()) {
-                Log.d(TAG, "NAME : " + binding.name02.getText());
+                Option option = (Option) binding.secondOption.getTag();
+                Log.d(TAG, "NAME : " + option.magicType.name());
+                magicLevelUp(option.magicType);
             }
             else if(view.getId() == binding.thirdItem.getId()){
-                Log.d(TAG, "NAME : " + binding.name03.getText());
+                Option option = (Option) binding.thirdOption.getTag();
+                Log.d(TAG, "NAME : " + option.magicType.name());
+                magicLevelUp(option.magicType);
             }
+
+            removeSelectView();
         }
     };
+
+    private void magicLevelUp(MagicManager.MagicType magicType) {
+        if(magicType.level() >= magicType.maxLevel()) {
+            return;
+        }
+
+        MagicManager.onLevelUp(magicType, player);
+        if (magicType.level() == 1) {
+            Generator gen = MagicManager.Create(magicType);
+            if(gen == null)
+                return;
+            generator.addGenerator(gen);
+        }
+    }
 
     private void setContent() {
         for(int i = 0; i < OPTION_COUNT; ++i) {
@@ -212,19 +229,21 @@ public class MainScene extends BaseScene {
         binding.name01.setText(option.name);
         binding.level01.setText("Lv " + option.currentLevel);
         binding.description01.setText(option.description.get(option.currentLevel));
+        binding.firstOption.setTag(option);
 
         option = Option.get(optionNumbers[1]);
         binding.image02.setImageBitmap(option.getImage());
         binding.name02.setText(option.name);
         binding.level02.setText("Lv " + option.currentLevel);
         binding.description02.setText(option.description.get(option.currentLevel));
-
+        binding.secondOption.setTag(option);
 
         option = Option.get(optionNumbers[2]);
         binding.image03.setImageBitmap(option.getImage());
         binding.name03.setText(option.name);
         binding.level03.setText("Lv " + option.currentLevel);
         binding.description03.setText(option.description.get(option.currentLevel));
+        binding.thirdOption.setTag(option);
 
         binding.firstItem.setOnClickListener(selectOption);
         binding.secondItem.setOnClickListener(selectOption);
@@ -234,5 +253,6 @@ public class MainScene extends BaseScene {
     private void removeSelectView() {
         ((ViewGroup)binding.content.getParent()).removeView(binding.content);
         resume();
+        isSelect = false;
     }
 }

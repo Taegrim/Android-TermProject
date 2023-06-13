@@ -3,6 +3,7 @@ package kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Magic.Particles;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.graphics.RectF;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -95,6 +96,7 @@ public class Particle extends Sprite implements Recyclable, CollisionObject {
     @Override
     public void onResume() {
         animator.resume();
+        Log.d(TAG, "PARTICLE ON RESUME");
     }
 
     @Override

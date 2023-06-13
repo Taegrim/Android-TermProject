@@ -36,50 +36,11 @@ public class SelectScene extends BaseScene {
     }
 
     public SelectScene() {
-        initLayers(Layer.COUNT);
 
-//        for(int i = 0; i < 3; ++i) {
-//            addObject(Layer.TOUCH, getItem());
-//        }
-
-        ViewGroup.LayoutParams linear = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT
-        );
-        binding = SelectMagicBinding.inflate(GameView.view.getActivity().getLayoutInflater());
-
-        setContent();
-
-        GameView.view.getActivity().addContentView(binding.getRoot(), linear);
     }
 
     public void setContent() {
-        Option option = Option.get(0);
-        binding.image01.setImageBitmap(option.getImage());
-        binding.name01.setText(option.name);
-        binding.level01.setText("Lv " + option.currentLevel);
-        binding.description01.setText(option.description.get(option.currentLevel));
 
-        option = Option.get(1);
-        binding.image02.setImageBitmap(option.getImage());
-        binding.name02.setText(option.name);
-        binding.level02.setText("Lv " + option.currentLevel);
-        binding.description02.setText(option.description.get(option.currentLevel));
-
-
-        option = Option.get(2);
-        binding.image03.setImageBitmap(option.getImage());
-        binding.name03.setText(option.name);
-        binding.level03.setText("Lv " + option.currentLevel);
-        binding.description03.setText(option.description.get(option.currentLevel));
-
-        View.OnClickListener onClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        };
-        binding.firstItem.setOnClickListener(onClickListener);
     }
 
     @Override

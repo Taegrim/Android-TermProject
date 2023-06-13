@@ -15,17 +15,17 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameObject;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Magic.MagicManager;
 
-public class Option implements GameObject {
+public class Option {
     private static final String TAG = Option.class.getSimpleName();
 
     protected static ArrayList<Option> options;
     private static Context context;
     public int currentLevel = 1;
-    private ViewGroup viewGroup;
     public String name, image;
     public ArrayList<String> description;
-    private View view;
+    public MagicManager.MagicType magicType;
 
     public static ArrayList<Option> loadOptions(Context context, String fileName) {
         ArrayList<Option> options = new ArrayList<>();
@@ -86,38 +86,4 @@ public class Option implements GameObject {
         return options.get(index);
     }
 
-    public Option setPosition(float x, float y) {
-        this.viewGroup.setX(x);
-        this.viewGroup.setY(y);
-        return this;
-    }
-
-    public void setViewGroup(ViewGroup viewGroup) {
-        this.viewGroup = viewGroup;
-    }
-
-    public void setView(View view) {
-        this.view = view;
-    }
-
-    @Override
-    public void update() {
-
-    }
-
-    @Override
-    public void draw(Canvas canvas) {
-//        viewGroup.draw(canvas);
-        view.draw(canvas);
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
 }

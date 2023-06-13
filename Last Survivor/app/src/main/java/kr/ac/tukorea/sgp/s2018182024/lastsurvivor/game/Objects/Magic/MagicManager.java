@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.GameObject;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.Metrics;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Enemy.Enemy;
@@ -29,8 +30,8 @@ public class MagicManager extends Generator {
         float increaseRate() { return increaseRates[this.ordinal()]; }
         float damage() { return damages[this.ordinal()]; }
         int count() { return counts[this.ordinal()]; }
-        int level() { return levels[this.ordinal()]; }
-        int maxLevel() { return maxLevels[this.ordinal()]; }
+        public int level() { return levels[this.ordinal()]; }
+        public int maxLevel() { return maxLevels[this.ordinal()]; }
         float defaultCooldown() { return defaultCooldowns[this.ordinal()]; }
         float cooldown() { return cooldowns[this.ordinal()].get(); }
         public float collisionTime() { return collisionTimes[this.ordinal()]; }
@@ -52,7 +53,7 @@ public class MagicManager extends Generator {
         static float[] increaseRates = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
         static float[] damages = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };  // 결과 데미지, 초기 값으로 1.0 선언
         static int[] counts = { 1, 1, 1, 1, 1, 20 };
-        static int[] levels = { 1, 1, 1, 1, 1, 1 };
+        static int[] levels = { 1, 0, 0, 0, 0, 0 };
         static int[] maxLevels = { 7, 7, 7, 7, 7, 7 };
         static final float[] defaultCooldowns = { 0.75f, 2.2f, 3.5f, 0.0f, 4.5f, 6.0f };
         static FLOAT[] cooldowns = new FLOAT[COUNT.ordinal()];
@@ -70,8 +71,28 @@ public class MagicManager extends Generator {
 
     public MagicManager(){}
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public static MagicManager Create(MagicType magicType) {
+        switch(magicType) {
+            case BULLET:
+                return new BulletGenerator(player);
+            case THUNDER:
+                return new ThunderGenerator(player);
+            case CYCLONE:
+                return new CycloneGenerator(player);
+            case SATELLITE:
+                SatelliteManager.init(player);
+                SatelliteManager.generate(BaseScene.getTopScene());
+                break;
+            case METEOR:
+                return new MeteorGenerator(player);
+            case BLIZZARD:
+                return new BlizzardGenerator(player);
+        }
+        return null;
+    }
+
+    public static void setPlayer(Player player) {
+        MagicManager.player = player;
     }
 
     public void setMagicType(MagicType type) {
@@ -175,6 +196,7 @@ public class MagicManager extends Generator {
                     case 6:
                         changeIncreaseRate(type, player, 0.2f);
                         MagicType.counts[magicId] += 1;
+                        SatelliteManager.generate(BaseScene.getTopScene());
                         break;
                     case 7:
                         Log.d(TAG, "위성 특성 습득!");

@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Magic.Magic;
+import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Magic.MagicManager;
+
 public class JsonHelper {
     private static final String TAG = JsonHelper.class.getSimpleName();
 
@@ -48,6 +51,12 @@ public class JsonHelper {
                 ArrayList<String> values = readStringArray(reader);
                 Log.d(TAG, "String List " + name + ": [" + values.size() + "] - " + object);
                 field.set(object, values);
+            }
+            else if (type == MagicManager.MagicType.class) {
+                int value = reader.nextInt();
+                MagicManager.MagicType magicType = MagicManager.MagicType.values()[value];
+                Log.d(TAG, "MagicType " + name + ": " + value + " - " + object);
+                field.set(object, magicType);
             }
             else {
                 Log.e(TAG, "Not handling " + name + ". type: " + type + " - " + object);
