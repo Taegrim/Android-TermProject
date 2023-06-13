@@ -4,6 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.util.Log;
 
+import java.util.List;
+
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.R;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.AnimationSprite;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.framework.BaseScene;
@@ -14,10 +16,15 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.FLOAT;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Magic.MagicManager;
 
 public class Player extends AnimationSprite implements CollisionObject {
+    public interface Listener {
+        public void onLevelUp();
+    }
+
     private static final String TAG = Player.class.getSimpleName();
     private static final float PLAYER_WIDTH = 35 * Metrics.bitmapRatio;
     private static final float PLAYER_HEIGHT = 64 * Metrics.bitmapRatio;
     private static final float SPEED = 5.f;
+    private Listener listener;
 
     private int dir;
     private float tx, ty;
@@ -38,9 +45,11 @@ public class Player extends AnimationSprite implements CollisionObject {
             R.mipmap.player_move_on_left, R.mipmap.player_move_right, R.mipmap.player_move_on_right
     };
 
-    public Player() {
+    public Player(Listener listener) {
         super(resId[0], Metrics.gameWidth / 2, Metrics.gameHeight / 2,
                 PLAYER_WIDTH, PLAYER_HEIGHT, 6, 3);
+        this.listener = listener;
+
         dir = 0;
         tx = x;
         ty = y;
@@ -140,6 +149,10 @@ public class Player extends AnimationSprite implements CollisionObject {
         return damageAmp.get();
     }
 
+    public int getLevel() {
+        return level;
+    }
+
     public boolean decreaseHp(float damage) {
         hp -= damage;
         isInvincible = true;
@@ -166,16 +179,8 @@ public class Player extends AnimationSprite implements CollisionObject {
             ++this.level;
             this.exp -= maxExp;
             this.maxExp = (float) Math.floor(this.maxExp * 1.5f);
-            onLevelUp();
+            listener.onLevelUp();
         }
-    }
-
-    public void onLevelUp() {
-        // 레벨업 했을 때 하는 처리
-//        MagicManager.onLevelUp(MagicManager.MagicType.BULLET, this);
-//        MagicManager.onLevelUp(MagicManager.MagicType.THUNDER, this);
-//        MagicManager.onLevelUp(MagicManager.MagicType.CYCLONE, this);
-        MagicManager.onLevelUp(MagicManager.MagicType.METEOR, this);
     }
 
     public void setCollisionRect() {

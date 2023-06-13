@@ -18,6 +18,7 @@
         >
 
         <TextView
+            android:id="@+id/current_level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="현재 레벨 : 1"
@@ -188,6 +189,7 @@
             android:layout_marginTop="10dp"
             >
             <ImageButton
+                android:id="@+id/close_select"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@mipmap/select_background"

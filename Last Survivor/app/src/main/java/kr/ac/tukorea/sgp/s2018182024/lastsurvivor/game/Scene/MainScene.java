@@ -22,18 +22,11 @@ import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Generator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Enemy.SwamGenerator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Item.ExpOrbGenerator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Item.HealthOrbGenerator;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Magic.Blizzard;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Magic.BlizzardGenerator;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Magic.BulletGenerator;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Magic.CycloneGenerator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Magic.MagicManager;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Magic.MeteorGenerator;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Magic.SatelliteManager;
-import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Magic.ThunderGenerator;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Objects.Player;
 import kr.ac.tukorea.sgp.s2018182024.lastsurvivor.game.Option;
 
-public class MainScene extends BaseScene {
+public class MainScene extends BaseScene implements Player.Listener {
     private static final String TAG = MainScene.class.getSimpleName();
     private static final float UI_STOP_SIZE = 0.7f;
     private static final int MAX_OPTION = 6;
@@ -61,7 +54,7 @@ public class MainScene extends BaseScene {
         }
 
         // player
-        player = new Player();
+        player = new Player(this);
         addObject(Layer.PLAYER, player);
         MagicManager.setPlayer(player);
 
@@ -74,10 +67,6 @@ public class MainScene extends BaseScene {
 
         // Magic Generator
         generator.addGenerator(MagicManager.Create(MagicManager.MagicType.BULLET));
-
-//        SatelliteManager.init(player);
-//        SatelliteManager.generate(this);
-
 
         // Item Generator
         generator.addGenerator(new ExpOrbGenerator(player));
@@ -98,7 +87,7 @@ public class MainScene extends BaseScene {
                         if(Button.Action.PRESSED == action) {
                             Log.d(TAG, "PAUSE");
 //                            new SelectScene().pushScene();
-                            doSelect();
+                            selectMagic();
                         }
                         return true;
                     }
@@ -164,7 +153,12 @@ public class MainScene extends BaseScene {
         return Layer.TOUCH.ordinal();
     }
 
-    private void doSelect() {
+    @Override
+    public void onLevelUp() {
+        selectMagic();
+    }
+    
+    private void selectMagic() {
         isSelect = true;
         pause();
 
@@ -202,6 +196,13 @@ public class MainScene extends BaseScene {
         }
     };
 
+    private View.OnClickListener closeOption = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            removeSelectView();
+        }
+    };
+
     private void magicLevelUp(MagicManager.MagicType magicType) {
         if(magicType.level() >= magicType.maxLevel()) {
             return;
@@ -224,30 +225,47 @@ public class MainScene extends BaseScene {
             optionNumbers[i] = temp;
         }
 
+        // 선택지 옵션 설정
         Option option = Option.get(optionNumbers[0]);
         binding.image01.setImageBitmap(option.getImage());
         binding.name01.setText(option.name);
-        binding.level01.setText("Lv " + option.currentLevel);
-        binding.description01.setText(option.description.get(option.currentLevel));
+
+        int level = option.magicType.level();
+        binding.level01.setText("Lv " + (level + 1));
+        binding.description01.setText(option.description.get(level));
         binding.firstOption.setTag(option);
+
 
         option = Option.get(optionNumbers[1]);
         binding.image02.setImageBitmap(option.getImage());
         binding.name02.setText(option.name);
-        binding.level02.setText("Lv " + option.currentLevel);
-        binding.description02.setText(option.description.get(option.currentLevel));
+
+        level = option.magicType.level();
+        binding.level02.setText("Lv " + (level + 1));
+        binding.description02.setText(option.description.get(level));
         binding.secondOption.setTag(option);
+
 
         option = Option.get(optionNumbers[2]);
         binding.image03.setImageBitmap(option.getImage());
         binding.name03.setText(option.name);
-        binding.level03.setText("Lv " + option.currentLevel);
-        binding.description03.setText(option.description.get(option.currentLevel));
+
+        level = option.magicType.level();
+        binding.level03.setText("Lv " + (level + 1));
+        binding.description03.setText(option.description.get(level));
         binding.thirdOption.setTag(option);
 
+
+        // 클릭 시 호출될 함수 설정
         binding.firstItem.setOnClickListener(selectOption);
         binding.secondItem.setOnClickListener(selectOption);
         binding.thirdItem.setOnClickListener(selectOption);
+
+        // 현재 레벨 텍스트 설정
+        binding.currentLevel.setText("현재 레벨 : " + player.getLevel());
+
+        // 선택하지 않고 종료 함수 연결
+        binding.closeSelect.setOnClickListener(closeOption);
     }
 
     private void removeSelectView() {

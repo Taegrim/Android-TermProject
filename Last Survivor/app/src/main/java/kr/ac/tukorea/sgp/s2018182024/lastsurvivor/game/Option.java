@@ -22,7 +22,6 @@ public class Option {
 
     protected static ArrayList<Option> options;
     private static Context context;
-    public int currentLevel = 1;
     public String name, image;
     public ArrayList<String> description;
     public MagicManager.MagicType magicType;
